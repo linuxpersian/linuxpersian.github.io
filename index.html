@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ترجمه فارسی خط فرمان لینوکس اثر ویلیام شاتس | The Linux Command Line by William Shotts - Farsi Translation</title>
+
+  
+  <meta name="description" content="ترجمه فارسی کتاب The Linux Command Line اثر William Shotts. راهنمای جامع یادگیری خط فرمان لینوکس به زبان ساده و حرفه‌ای.">
+  <meta name="keywords" content="linux command line, william shotts, کتاب لینوکس, خط فرمان لینوکس, bash, آموزش لینوکس, ترجمه لینوکس, ویلیام شاتز, کتاب لینوکس فارسی">
+  <meta name="author" content="Linux Persian">
+  <meta name="robots" content="index, follow">
+
+  
+  <meta property="og:title" content="ترجمه فارسی کتاب Linux Command Line">
+  <meta property="og:description" content="دانلود رایگان ترجمه کامل کتاب خط فرمان لینوکس به فارسی - ویلیام شاتز">
+  <meta property="og:image" content="cover.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fa_IR">
+
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    "name": "The Linux Command Line",
+    "author": {
+      "@type": "Person",
+      "name": "William Shotts"
+    },
+    "inLanguage": "fa",
+    "bookFormat": "EBook",
+    "about": "Linux, Command Line, آموزش خط فرمان لینوکس",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Linux Persian"
+    }
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Vazirmatn', sans-serif;
+      background-color: #FFFBCE;
+      color: #000;
+    }
+
+    .cover {
+      max-width: 600px;
+      margin: 2rem auto;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      background-color: #FFFBCE;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .top-bar {
+      height: 10px;
+      background-color: #06b6d4;
+    }
+
+    
+    .version-tag {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-top: 90px solid #000000;
+      border-left: 90px solid transparent;
+      z-index: 10;
+    }
+
+    .version-text {
+      position: absolute;
+      top: 5px;
+      right: -2px;
+      writing-mode: vertical-rl;
+      text-align: center;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: bold;
+      transform: rotate(45deg);
+      transform-origin: top right;
+      line-height: 1.2;
+    }
+
+    .title-section {
+      background-color: #fefce8;
+      text-align: center;
+      padding: 2.2rem 1rem 1.2rem;
+    }
+
+    .title-section h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: #111827;
+    }
+
+    .title-section p {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+      color: #374151;
+    }
+
+    .author {
+      background-color: #000;
+      color: #fff;
+      text-align: center;
+      padding: 0.7rem 1rem;
+      font-size: 1rem;
+    }
+
+    .cover-image {
+      width: 100%;
+      display: block;
+      height: auto;
+    }
+
+    .download-btn {
+      text-align: center;
+      margin: 2rem auto;
+      padding: 2rem 0;
+      background-color: #FFFBCE;
+    }
+
+    .download-btn a {
+      display: inline-block;
+      background-color: #06b6d4;
+      color: white;
+      text-decoration: none;
+      padding: 0.8rem 2rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+
+    .download-btn a:hover {
+      background-color: #0891b2;
+    }
+
+    @media (max-width: 480px) {
+      .title-section h1 {
+        font-size: 1.5rem;
+      }
+
+      .title-section p {
+        font-size: 1rem;
+      }
+
+      .version-tag {
+        border-top: 70px solid #000000;
+        border-left: 70px solid transparent;
+      }
+
+      .version-text {
+        font-size: 0.75rem;
+        top: 5px;
+        right: -5px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cover">
+    <div class="top-bar"></div>
+
+    
+    <div class="version-tag"></div>
+    <div class="version-text">6th<br>edition</div>
+
+    <div class="title-section">
+      <h1>خط فرمان لینوکس</h1>
+      <p>درآمدی جامع بر ساختار و مفاهیم</p>
+      <p style="font-size: 0.95rem; margin-top: -0.4rem;">ویلیام شاتس</p>
+    </div>
+
+    <div class="author">ترجمه محمد مهدی نژاد</div>
+
+    <img src="cover.jpg" alt="جلد کتاب خط فرمان لینوکس" class="cover-image">
+
+    <div class="download-btn">
+      <a href="linux-command-line-fa.pdf">دریافت فایل PDF</a>
+    </div>
+  </div>
+
+</body>
+</html>
