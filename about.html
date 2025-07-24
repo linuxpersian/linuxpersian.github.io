@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ترجمه فارسی خط فرمان لینوکس | The Linux Command Line by William Shotts</title>
+  <meta name="description" content="ترجمه فارسی کتاب The Linux Command Line اثر William Shotts. راهنمای جامع یادگیری خط فرمان لینوکس به زبان ساده و حرفه‌ای.">
+  <meta name="keywords" content="linux command line, william shotts, کتاب لینوکس, خط فرمان لینوکس, bash, آموزش لینوکس, ترجمه لینوکس, ویلیام شاتز, کتاب لینوکس فارسی">
+  <meta name="author" content="Linux Persian">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="ترجمه فارسی کتاب Linux Command Line">
+  <meta property="og:description" content="دانلود رایگان ترجمه کامل کتاب خط فرمان لینوکس به فارسی - ویلیام شاتز">
+  <meta property="og:image" content="cover.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fa_IR">
+
+  <!-- Importing the markdown-it library for parsing markdown to HTML -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+
+  <!-- Importing the Vezir font from Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Vazirmatn', sans-serif; /* Applying Vazirmatn font */
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+    }
+    main {
+      margin: 20px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+    }
+    pre {
+      background-color: #f1f1f1;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>ترجمه فارسی کتاب The Linux Command Line</h1>
+  </header>
+
+  <main>
+    <h2>دریافت و مشاهده فایل README</h2>
+    <p>در اینجا متن فایل README به صورت مارک‌داون نمایش داده خواهد شد:</p>
+    
+    <!-- Container where the Markdown content will be rendered -->
+    <div id="markdown-container"></div>
+
+    <script>
+      // Function to fetch the README.md file and render it
+      fetch('README.md')
+        .then(response => response.text())
+        .then(data => {
+          // Initializing markdown-it library to parse markdown to HTML
+          const md = window.markdownit();
+          const result = md.render(data);
+
+          // Injecting the parsed HTML into the page
+          document.getElementById('markdown-container').innerHTML = result;
+        })
+        .catch(error => {
+          console.error('Error loading README.md:', error);
+          document.getElementById('markdown-container').innerHTML = '<p>خطا در بارگذاری فایل README.md</p>';
+        });
+    </script>
+  </main>
+</body>
+</html>
