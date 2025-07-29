@@ -73,18 +73,25 @@
         }
 
         .search-btn {
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #667eea;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #667eea;
+    color: white;
+    border: none;
+    width: 40px;    
+    height: 40px;  
+    border-radius: 50%; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
         .search-btn:hover {
             background: #5a67d8;
@@ -249,15 +256,6 @@
                 <button class="search-btn" onclick="performSearch()">🔍</button>
             </div>
             
-            <div class="filters">
-                <button class="filter-btn active" onclick="setFilter('all')">همه</button>
-                <button class="filter-btn" onclick="setFilter('arch')">آرچ لینوکس</button>
-                <button class="filter-btn" onclick="setFilter('ubuntu')">اوبونتو</button>
-                <button class="filter-btn" onclick="setFilter('command')">دستورات</button>
-                <button class="filter-btn" onclick="setFilter('config')">پیکربندی</button>
-                <button class="filter-btn" onclick="setFilter('troubleshoot')">عیب‌یابی</button>
-            </div>
-        </div>
 
         <div class="files-section">
             <h2 class="section-title">
