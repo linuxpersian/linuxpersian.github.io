@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویویر مارک‌دان - ویکی لینوکس فارسی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2c3e50;
+            --header-bg: #f8f9fa;
+            --border-color: #e0e0e0;
+            --accent-color: #667eea;
+            --code-bg: #f4f4f4;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #e0e0e0;
+            --header-bg: #2d3748;
+            --border-color: #4a5568;
+            --code-bg: #2d3748;
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .back-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .file-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--text-color);
+        }
+
+        .controls-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-btn {
+            background: var(--bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .control-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .control-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .font-size-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .content-area {
+            background: var(--bg-color);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Markdown styles */
+        .markdown-content {
+            font-size: 16px;
+            transition: font-size 0.3s ease;
+        }
+
+        .markdown-content.large-font {
+            font-size: 20px;
+        }
+
+        .markdown-content h1 {
+            color: var(--accent-color);
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            font-size: 2.2em;
+        }
+
+        .markdown-content h2 {
+            color: var(--text-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            margin: 30px 0 20px 0;
+            font-size: 1.8em;
+        }
+
+        .markdown-content h3 {
+            color: var(--text-color);
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+            color: var(--text-color);
+            margin: 20px 0 10px 0;
+        }
+
+        .markdown-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .markdown-content ul, .markdown-content ol {
+            margin: 15px 0;
+            padding-right: 25px;
+        }
+
+        .markdown-content li {
+            margin-bottom: 8px;
+        }
+
+        .markdown-content blockquote {
+            border-right: 4px solid var(--accent-color);
+            margin: 20px 0;
+            padding: 15px 20px;
+            background: var(--code-bg);
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .markdown-content code {
+            background: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .markdown-content pre {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .markdown-content pre code {
+            background: none;
+            padding: 0;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .markdown-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .markdown-content th, .markdown-content td {
+            border: 1px solid var(--border-color);
+            padding: 12px;
+            text-align: right;
+        }
+
+        .markdown-content th {
+            background: var(--code-bg);
+            font-weight: bold;
+        }
+
+        .markdown-content a {
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .markdown-content a:hover {
+            text-decoration: underline;
+        }
+
+        .markdown-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 60px;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .error {
+            text-align: center;
+            padding: 60px;
+            color: #e74c3c;
+            font-size: 1.1em;
+        }
+
+        /* Table of Contents */
+        .toc {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            max-width: 300px;
+            float: left;
+            margin-left: 20px;
+        }
+
+        .toc h3 {
+            margin-top: 0 !important;
+            color: var(--accent-color);
+            font-size: 1.1em;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+        }
+
+        .toc li {
+            margin: 5px 0;
+        }
+
+        .toc a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9em;
+        }
+
+        .toc a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .nav-section, .controls-section {
+                justify-content: center;
+            }
+
+            .main-content {
+                padding: 20px 10px;
+            }
+
+            .content-area {
+                padding: 20px;
+            }
+
+            .toc {
+                float: none;
+                max-width: 100%;
+                margin: 0 0 30px 0;
+            }
+        }
+    </style>
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="nav-section">
+                <a href="index.html" class="back-btn">
+                    ← بازگشت به لیست
+                </a>
+                <div class="file-title" id="fileTitle">در حال بارگذاری...</div>
+            </div>
+            
+            <div class="controls-section">
+                <button class="control-btn" id="darkModeBtn" onclick="toggleDarkMode()">
+                    🌙 حالت شب
+                </button>
+                
+                <div class="font-size-controls">
+                    <button class="control-btn active" onclick="setFontSize('normal')">
+                        📝 عادی
+                    </button>
+                    <button class="control-btn" onclick="setFontSize('large')">
+                        📖 بزرگ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="content-area">
+            <div id="markdownContent" class="markdown-content">
+                <div class="loading">در حال بارگذاری محتوا...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentFile = null;
+        let isDarkMode = false;
+        let currentFontSize = 'normal';
+
+        // GitHub repository info
+        const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/persianlinux/persianlinux.github.io/main/wiki/source';
+
+        async function init() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const fileName = urlParams.get('file');
+                
+                if (!fileName) {
+                    showError('نام فایل مشخص نشده است');
+                    return;
+                }
+
+                await loadFileFromGitHub(fileName);
+                loadPreferences();
+            } catch (error) {
+                console.error('Error initializing viewer:', error);
+                showError('خطا در بارگذاری صفحه');
+            }
+        }
+
+        async function loadFileFromGitHub(fileName) {
+            try {
+                const response = await fetch(`${GITHUB_RAW_BASE}/${fileName}`);
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('فایل پیدا نشد');
+                    } else {
+                        throw new Error(`خطا در بارگذاری فایل: ${response.status}`);
+                    }
+                }
+
+                const content = await response.text();
+                
+                currentFile = {
+                    name: fileName,
+                    content: content,
+                    title: extractTitle(content, fileName)
+                };
+
+                displayFile();
+            } catch (error) {
+                console.error('Error loading file:', error);
+                showError(error.message || 'خطا در بارگذاری فایل');
+            }
+        }
+
+        function extractTitle(content, fileName) {
+            // Try to extract title from first header
+            const titleMatch = content.match(/^#\s+(.+)$/m);
+            if (titleMatch) {
+                return titleMatch[1].trim();
+            }
+            
+            // Fallback to filename
+            return fileName.replace('.md', '').replace(/-/g, ' ');
+        }
+
+        function displayFile() {
+            if (!currentFile) return;
+
+            // Update page title and header
+            document.getElementById('fileTitle').textContent = currentFile.title;
+            document.title = `${currentFile.title} - ویکی لینوکس فارسی`;
+
+            // Convert markdown to HTML using marked.js
+            try {
+                // Configure marked for RTL and better rendering
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    headerIds: true,
+                    headerPrefix: 'header-'
+                });
+
+                let htmlContent = marked.parse(currentFile.content);
+                
+                // Post-process the HTML for better RTL support
+                htmlContent = processHTMLForRTL(htmlContent);
+                
+                document.getElementById('markdownContent').innerHTML = htmlContent;
+                
+                // Generate table of contents
+                generateTOC();
+                
+                // Add syntax highlighting for code blocks if needed
+                highlightCodeBlocks();
+                
+            } catch (error) {
+                console.error('Error parsing markdown:', error);
+                showError('خطا در تجزیه محتوای مارک‌دان');
+            }
+        }
+
+        function processHTMLForRTL(html) {
+            // Add RTL direction to text content while preserving LTR for code
+            html = html.replace(/<p>/g, '<p dir="auto">');
+            html = html.replace(/<li>/g, '<li dir="auto">');
+            html = html.replace(/<blockquote>/g, '<blockquote dir="auto">');
+            
+            // Ensure code blocks remain LTR
+            html = html.replace(/<code([^>]*)>/g, '<code$1 dir="ltr">');
+            html = html.replace(/<pre>/g, '<pre dir="ltr">');
+            
+            return html;
+        }
+
+        function generateTOC() {
+            const content = document.getElementById('markdownContent');
+            const headers = content.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            
+            if (headers.length < 2) return; // Only show TOC if there are multiple headers
+
+            let tocHTML = '<div class="toc"><h3>📋 فهرست مطالب</h3><ul>';
+            
+            headers.forEach((header, index) => {
+                const id = `header-${index}`;
+                header.id = id;
+                const level = parseInt(header.tagName.charAt(1));
+                const indent = '&nbsp;'.repeat((level - 1) * 2);
+                tocHTML += `<li>${indent}<a href="#${id}">${header.textContent}</a></li>`;
+            });
+            
+            tocHTML += '</ul></div>';
+            
+            content.insertAdjacentHTML('afterbegin', tocHTML);
+        }
+
+        function highlightCodeBlocks() {
+            // Simple syntax highlighting for common languages
+            const codeBlocks = document.querySelectorAll('pre code');
+            codeBlocks.forEach(block => {
+                const text = block.textContent;
+                
+                // Basic bash/shell highlighting
+                if (text.includes('sudo') || text.includes('apt') || text.includes('pacman')) {
+                    block.classList.add('language-bash');
+                }
+                
+                // You can expand this with more sophisticated highlighting
+                // or integrate with libraries like Prism.js or highlight.js
+            });
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            
+            const btn = document.getElementById('darkModeBtn');
+            btn.innerHTML = isDarkMode ? '☀️ حالت روز' : '🌙 حالت شب';
+            btn.classList.toggle('active', isDarkMode);
+            
+            savePreferences();
+        }
+
+        function setFontSize(size) {
+            currentFontSize = size;
+            const content = document.getElementById('markdownContent');
+            
+            content.classList.remove('large-font');
+            if (size === 'large') {
+                content.classList.add('large-font');
+            }
+            
+            // Update button states
+            document.querySelectorAll('.font-size-controls .control-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+            
+            savePreferences();
+        }
+
+        function savePreferences() {
+            // In a real implementation, you could save to localStorage
+            // but since we're avoiding it per instructions, we'll just keep in memory
+            console.log('Preferences saved:', { darkMode: isDarkMode, fontSize: currentFontSize });
+        }
+
+        function loadPreferences() {
+            // In a real implementation, you could load from localStorage
+            // For now, we'll use default preferences
+            
+            // Set default font size button as active
+            const normalFontBtn = document.querySelector('.font-size-controls .control-btn');
+            if (normalFontBtn) {
+                normalFontBtn.classList.add('active');
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('markdownContent').innerHTML = 
+                `<div class="error">❌ ${message}</div>`;
+        }
+
+        // Smooth scrolling for TOC links
+        document.addEventListener('click', function(e) {
+            if (e.target.matches('.toc a')) {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+        });
+
+        // Initialize the page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

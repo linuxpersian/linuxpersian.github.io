@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویکی لینوکس فارسی</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .search-section {
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-btn {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            background: #5a67d8;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .filters {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .files-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .file-card {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .file-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .file-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .file-preview {
+            color: #555;
+            font-size: 0.95em;
+            line-height: 1.4;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .page-btn {
+            padding: 10px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-btn:hover, .page-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #e74c3c;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 ویکی لینوکس فارسی</h1>
+            <p>مجموعه کامل سوالات و پاسخ‌های لینوکس به زبان فارسی</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="جستجو در عنوان‌ها و محتوا...">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
+            </div>
+            
+            <div class="filters">
+                <button class="filter-btn active" onclick="setFilter('all')">همه</button>
+                <button class="filter-btn" onclick="setFilter('arch')">آرچ لینوکس</button>
+                <button class="filter-btn" onclick="setFilter('ubuntu')">اوبونتو</button>
+                <button class="filter-btn" onclick="setFilter('command')">دستورات</button>
+                <button class="filter-btn" onclick="setFilter('config')">پیکربندی</button>
+                <button class="filter-btn" onclick="setFilter('troubleshoot')">عیب‌یابی</button>
+            </div>
+        </div>
+
+        <div class="files-section">
+            <h2 class="section-title">
+                📁 فایل‌های آموزشی 
+                <span id="fileCount">(در حال بارگذاری...)</span>
+            </h2>
+            
+            <div id="fileGrid" class="file-grid">
+                <div class="loading">در حال بارگذاری فایل‌ها...</div>
+            </div>
+        </div>
+
+        <div class="pagination" id="pagination" style="display: none;">
+            <button class="page-btn" onclick="changePage('prev')" id="prevBtn">قبلی</button>
+            <span id="pageInfo">صفحه 1 از 1</span>
+            <button class="page-btn" onclick="changePage('next')" id="nextBtn">بعدی</button>
+        </div>
+    </div>
+
+    <script>
+        let allFiles = [];
+        let filteredFiles = [];
+        let currentPage = 1;
+        let filesPerPage = 12;
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // GitHub repository info
+        const GITHUB_API_BASE = 'https://api.github.com/repos/persianlinux/persianlinux.github.io/contents/wiki/source';
+        const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/persianlinux/persianlinux.github.io/main/wiki/source';
+
+        async function init() {
+            try {
+                await loadFilesFromGitHub();
+                displayFiles();
+                updateFileCount();
+            } catch (error) {
+                console.error('Error loading files:', error);
+                showError('خطا در بارگذاری فایل‌ها. لطفاً دوباره تلاش کنید.');
+            }
+        }
+
+        async function loadFilesFromGitHub() {
+            try {
+                const response = await fetch(GITHUB_API_BASE);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const files = await response.json();
+                const mdFiles = files.filter(file => file.name.endsWith('.md'));
+                
+                // Load metadata for each file
+                allFiles = await Promise.all(mdFiles.map(async (file) => {
+                    try {
+                        const content = await loadFileContent(file.name);
+                        const metadata = extractMetadata(content, file.name);
+                        return {
+                            name: file.name,
+                            ...metadata,
+                            lastModified: new Date(file.last_modified || Date.now()).toLocaleDateString('fa-IR'),
+                            size: file.size
+                        };
+                    } catch (error) {
+                        console.error(`Error loading ${file.name}:`, error);
+                        return {
+                            name: file.name,
+                            title: file.name.replace('.md', '').replace(/-/g, ' '),
+                            preview: 'خطا در بارگذاری محتوا',
+                            category: 'unknown',
+                            lastModified: 'نامشخص',
+                            size: file.size || 0
+                        };
+                    }
+                }));
+
+                filteredFiles = [...allFiles];
+            } catch (error) {
+                console.error('Error loading from GitHub:', error);
+                // Fallback: show error message
+                throw error;
+            }
+        }
+
+        async function loadFileContent(fileName) {
+            const response = await fetch(`${GITHUB_RAW_BASE}/${fileName}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${fileName}`);
+            }
+            return await response.text();
+        }
+
+        function extractMetadata(content, fileName) {
+            const lines = content.split('\n');
+            let title = fileName.replace('.md', '').replace(/-/g, ' ');
+            let preview = '';
+            let category = 'general';
+
+            // Extract title from first header
+            const titleMatch = content.match(/^#\s+(.+)$/m);
+            if (titleMatch) {
+                title = titleMatch[1].trim();
+            }
+
+            // Extract preview from first paragraph
+            const paragraphs = content.split('\n\n');
+            for (let para of paragraphs) {
+                para = para.trim();
+                if (para && !para.startsWith('#') && !para.startsWith('```') && !para.startsWith('-')) {
+                    preview = para.substring(0, 150) + (para.length > 150 ? '...' : '');
+                    break;
+                }
+            }
+
+            // Determine category based on content and filename
+            const lowerContent = content.toLowerCase();
+            const lowerFileName = fileName.toLowerCase();
+            
+            if (lowerContent.includes('آرچ') || lowerFileName.includes('arch')) {
+                category = 'arch';
+            } else if (lowerContent.includes('اوبونتو') || lowerFileName.includes('ubuntu')) {
+                category = 'ubuntu';
+            } else if (lowerContent.includes('دستور') || lowerFileName.includes('command')) {
+                category = 'command';
+            } else if (lowerContent.includes('پیکربندی') || lowerFileName.includes('config')) {
+                category = 'config';
+            } else if (lowerContent.includes('عیب‌یابی') || lowerFileName.includes('troubleshoot')) {
+                category = 'troubleshoot';
+            }
+
+            return { title, preview, category };
+        }
+
+        function displayFiles() {
+            const startIndex = (currentPage - 1) * filesPerPage;
+            const endIndex = startIndex + filesPerPage;
+            const filesToShow = filteredFiles.slice(startIndex, endIndex);
+            
+            const fileGrid = document.getElementById('fileGrid');
+            
+            if (filesToShow.length === 0) {
+                fileGrid.innerHTML = '<div class="no-results">هیچ فایلی پیدا نشد</div>';
+            } else {
+                fileGrid.innerHTML = filesToShow.map(file => `
+                    <div class="file-card" onclick="openFile('${file.name}')">
+                        <div class="file-title">${file.title}</div>
+                        <div class="file-meta">
+                            📅 ${file.lastModified} | 🏷️ ${getCategoryName(file.category)} | 📄 ${formatFileSize(file.size)}
+                        </div>
+                        <div class="file-preview">${file.preview}</div>
+                    </div>
+                `).join('');
+            }
+            
+            updatePagination();
+        }
+
+        function getCategoryName(category) {
+            const names = {
+                'arch': 'آرچ لینوکس',
+                'ubuntu': 'اوبونتو',
+                'command': 'دستورات',
+                'config': 'پیکربندی',
+                'troubleshoot': 'عیب‌یابی',
+                'general': 'عمومی',
+                'unknown': 'نامشخص'
+            };
+            return names[category] || category;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredFiles.length / filesPerPage);
+            const pagination = document.getElementById('pagination');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const pageInfo = document.getElementById('pageInfo');
+            
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+            } else {
+                pagination.style.display = 'flex';
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
+            }
+        }
+
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredFiles.length / filesPerPage);
+            
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            }
+            
+            displayFiles();
+        }
+
+        function setFilter(filter) {
+            currentFilter = filter;
+            currentPage = 1;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            applyFilters();
+        }
+
+        function performSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            currentPage = 1;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            filteredFiles = allFiles.filter(file => {
+                const matchesCategory = currentFilter === 'all' || file.category === currentFilter;
+                const matchesSearch = searchQuery === '' || 
+                    file.title.toLowerCase().includes(searchQuery) ||
+                    file.preview.toLowerCase().includes(searchQuery) ||
+                    file.name.toLowerCase().includes(searchQuery);
+                
+                return matchesCategory && matchesSearch;
+            });
+            
+            displayFiles();
+            updateFileCount();
+        }
+
+        function updateFileCount() {
+            const count = filteredFiles.length;
+            document.getElementById('fileCount').textContent = `(${count} فایل)`;
+        }
+
+        function openFile(fileName) {
+            window.location.href = `viewer.html?file=${encodeURIComponent(fileName)}`;
+        }
+
+        function showError(message) {
+            document.getElementById('fileGrid').innerHTML = 
+                `<div class="error">❌ ${message}</div>`;
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Initialize the page
+        init();
+    </script>
+</body>
+</html>
