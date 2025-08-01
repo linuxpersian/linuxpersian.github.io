@@ -1533,10 +1533,13 @@
         }
         
         @media (max-width: 768px) {
-            .container {
-                width: 95%;
-                padding: 1rem;
-            }
+    /* کدهای موجود قبلی */
+    
+    /* مخفی کردن دکمه بازگشت به خانه در موبایل */
+    .header-content > a:first-child {
+        display: none;
+    }
+ 
             
             .header-content {
                 flex-direction: row;
