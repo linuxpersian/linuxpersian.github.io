@@ -4,7 +4,298 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ویویر مارک‌دان - ویکی لینوکس فارسی</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استفاده از نسخه محلی Tailwind CSS به جای CDN -->
+    <style>
+        /* استایل‌های Tailwind CSS به صورت مستقیم */
+        *, ::before, ::after {
+            box-sizing: border-box;
+            border-width: 0;
+            border-style: solid;
+            border-color: #e5e7eb;
+        }
+        
+        ::before, ::after {
+            --tw-content: '';
+        }
+        
+        html {
+            line-height: 1.5;
+            -webkit-text-size-adjust: 100%;
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            font-feature-settings: normal;
+            font-variation-settings: normal;
+        }
+        
+        body {
+            margin: 0;
+            line-height: inherit;
+        }
+        
+        hr {
+            height: 0;
+            color: inherit;
+            border-top-width: 1px;
+        }
+        
+        abbr:where([title]) {
+            -webkit-text-decoration: underline dotted;
+            text-decoration: underline dotted;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-size: inherit;
+            font-weight: inherit;
+        }
+        
+        a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+        
+        b, strong {
+            font-weight: bolder;
+        }
+        
+        code, kbd, samp, pre {
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 1em;
+        }
+        
+        small {
+            font-size: 80%;
+        }
+        
+        sub, sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        
+        sub {
+            bottom: -0.25em;
+        }
+        
+        sup {
+            top: -0.5em;
+        }
+        
+        table {
+            text-indent: 0;
+            border-color: inherit;
+            border-collapse: collapse;
+        }
+        
+        button, input, optgroup, select, textarea {
+            font-family: inherit;
+            font-size: 100%;
+            font-weight: inherit;
+            line-height: inherit;
+            color: inherit;
+            margin: 0;
+            padding: 0;
+        }
+        
+        button, select {
+            text-transform: none;
+        }
+        
+        button, [type='button'], [type='reset'], [type='submit'] {
+            -webkit-appearance: button;
+            background-color: transparent;
+            background-image: none;
+        }
+        
+        :-moz-focusring {
+            outline: auto;
+        }
+        
+        :-moz-ui-invalid {
+            box-shadow: none;
+        }
+        
+        progress {
+            vertical-align: baseline;
+        }
+        
+        ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+            height: auto;
+        }
+        
+        [type='search'] {
+            -webkit-appearance: textfield;
+            outline-offset: -2px;
+        }
+        
+        ::-webkit-search-decoration {
+            -webkit-appearance: none;
+        }
+        
+        ::-webkit-file-upload-button {
+            -webkit-appearance: button;
+            font: inherit;
+        }
+        
+        summary {
+            display: list-item;
+        }
+        
+        blockquote, dd, dl, figure, h1, h2, h3, h4, h5, h6, hr, p, pre {
+            margin: 0;
+        }
+        
+        fieldset {
+            margin: 0;
+            padding: 0;
+        }
+        
+        legend {
+            padding: 0;
+        }
+        
+        menu, ol, ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        input::placeholder, textarea::placeholder {
+            opacity: 1;
+            color: #9ca3af;
+        }
+        
+        button, [role="button"] {
+            cursor: pointer;
+        }
+        
+        :disabled {
+            cursor: default;
+        }
+        
+        img, svg, video, canvas, audio, iframe, embed, object {
+            display: block;
+            vertical-align: middle;
+        }
+        
+        img, video {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        [hidden] {
+            display: none;
+        }
+        
+        /* استایل‌های کمکی */
+        .flex {
+            display: flex;
+        }
+        
+        .flex-col {
+            flex-direction: column;
+        }
+        
+        .items-center {
+            align-items: center;
+        }
+        
+        .justify-center {
+            justify-content: center;
+        }
+        
+        .gap-4 {
+            gap: 1rem;
+        }
+        
+        .mb-4 {
+            margin-bottom: 1rem;
+        }
+        
+        .p-8 {
+            padding: 2rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .text-gray-600 {
+            color: #4b5563;
+        }
+        
+        .text-red-500 {
+            color: #ef4444;
+        }
+        
+        .text-xl {
+            font-size: 1.25rem;
+            line-height: 1.75rem;
+        }
+        
+        .font-bold {
+            font-weight: 700;
+        }
+        
+        .mt-4 {
+            margin-top: 1rem;
+        }
+        
+        .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        
+        .py-2 {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        
+        .bg-red-500 {
+            background-color: #ef4444;
+        }
+        
+        .text-white {
+            color: #ffffff;
+        }
+        
+        .rounded-lg {
+            border-radius: 0.5rem;
+        }
+        
+        .hover\:bg-red-600:hover {
+            background-color: #dc2626;
+        }
+        
+        .transition {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+        
+        .mr-2 {
+            margin-left: 0.5rem;
+        }
+        
+        .bg-blue-500 {
+            background-color: #3b82f6;
+        }
+        
+        .hover\:bg-blue-600:hover {
+            background-color: #2563eb;
+        }
+        
+        .w-full {
+            width: 100%;
+        }
+        
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.2/marked.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
@@ -1530,17 +1821,6 @@
                         </div>
                     </div>
                 </div>
-                
-                <!-- مقالات مرتبط -->
-                <div class="sidebar-section">
-                    <h3 class="sidebar-title">
-                        <i class="fas fa-bookmark"></i>
-                        مقالات مرتبط
-                    </h3>
-                    <div id="relatedArticles">
-                        <!-- مقالات مرتبط از طریق جاوا اسکریپت بارگذاری می‌شوند -->
-                    </div>
-                </div>
             </aside>
         </div>
     </div>
@@ -1604,17 +1884,6 @@
                         اندازه فونت: <span id="fontSizeValue">16</span>px
                     </label>
                     <input type="range" id="fontSizeSlider" min="12" max="24" value="16" step="1" onchange="setFontSizeFromSlider(this.value)">
-                </div>
-                <div class="settings-option">
-                    <label>
-                        فونت:
-                    </label>
-                    <select id="fontFamily" onchange="setFontFamily(this.value)">
-                        <option value="Vazirmatn">وزیر متن</option>
-                        <option value="Samim">سامیم</option>
-                        <option value="Shabnam">شبنم</option>
-                        <option value="Parastoo">پرستو</option>
-                    </select>
                 </div>
             </div>
             
@@ -2196,7 +2465,6 @@
             setupEventListeners();
             generateTableOfContents();
             updateViewCount();
-            loadRelatedArticles();
             setupReadingProgress();
             setupTextSelection();
         }
@@ -2222,11 +2490,6 @@
             
             if (settings.theme) {
                 setTheme(settings.theme);
-            }
-            
-            if (settings.fontFamily) {
-                document.getElementById('fontFamily').value = settings.fontFamily;
-                setFontFamily(settings.fontFamily);
             }
             
             if (settings.textSize) {
@@ -2842,11 +3105,6 @@
             }
         }
         
-        // تنظیم فونت
-        function setFontFamily(font) {
-            document.body.style.fontFamily = `'${font}', sans-serif`;
-        }
-        
         // تنظیم اندازه متن
         function setTextSize(size) {
             document.getElementById('markdownContent').style.fontSize = `${size}%`;
@@ -2936,7 +3194,10 @@
             });
             
             // افزودن کلاس فعال به گزینه انتخاب شده
-            document.querySelector(`.theme-${theme}`).classList.add('active');
+            const selectedOption = document.querySelector(`.theme-${theme}`);
+            if (selectedOption) {
+                selectedOption.classList.add('active');
+            }
             
             // ذخیره تنظیمات
             const settings = JSON.parse(localStorage.getItem('settings') || '{}');
@@ -2952,8 +3213,7 @@
                 isDarkMode: isDarkMode,
                 fontSize: fontSize,
                 viewMode: currentViewMode,
-                theme: document.querySelector('.theme-option.active')?.className.replace('theme-option active ', '') || 'default',
-                fontFamily: document.getElementById('fontFamily').value,
+                theme: document.querySelector('.theme-option.active')?.className.split(' ')[1] || 'default',
                 textSize: document.getElementById('textSizeSlider').value,
                 lineHeight: document.getElementById('lineHeightSlider').value,
                 justifyText: document.getElementById('justifyText').checked,
@@ -3074,41 +3334,6 @@
                 const newViews = currentViews + 1;
                 viewsElement.textContent = `${newViews.toLocaleString('fa-IR')} بازدید`;
             }
-        }
-        
-        // بارگذاری مقالات مرتبط
-        function loadRelatedArticles() {
-            const relatedContainer = document.getElementById('relatedArticles');
-            
-            // در یک پیاده‌سازی واقعی، مقالات مرتبط از سرور دریافت می‌شوند
-            // اینجا چند مقاله نمونه نمایش داده می‌شود
-            const sampleArticles = [
-                {
-                    title: 'نصب اوبونتو ۲۲.۰۴',
-                    url: 'viewer.html?file=ubuntu-install.md'
-                },
-                {
-                    title: 'پیکربندی فایروال در لینوکس',
-                    url: 'viewer.html?file=firewall-config.md'
-                },
-                {
-                    title: 'مدیریت کاربران در لینوکس',
-                    url: 'viewer.html?file=user-management.md'
-                }
-            ];
-            
-            relatedContainer.innerHTML = '';
-            
-            sampleArticles.forEach(article => {
-                const articleElement = document.createElement('div');
-                articleElement.className = 'mb-2';
-                articleElement.innerHTML = `
-                    <a href="${article.url}" class="text-blue-600 hover:text-blue-800 hover:underline">
-                        ${article.title}
-                    </a>
-                `;
-                relatedContainer.appendChild(articleElement);
-            });
         }
         
         // تنظیم نوار پیشرفت خواندن
