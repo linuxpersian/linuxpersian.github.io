@@ -2120,72 +2120,100 @@
             setFontSize(fontSize);
         }
         
-        // بارگذاری فایل
-        async function loadFile() {
-            try {
-                const urlParams = new URLSearchParams(window.location.search);
-                let fileName = urlParams.get('file');
+// بارگذاری فایل
+async function loadFile() {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        let fileName = urlParams.get('file');
+        
+        if (!fileName) {
+            showError('نام فایل مشخص نشده است.');
+            return;
+        }
+        
+        // اطمینان از اینکه نام فایل دارای پسوند .md است
+        if (!fileName.endsWith('.md')) {
+            fileName += '.md';
+        }
+        
+        // تبدیل نام فایل به حروف کوچک برای سازگاری با گیت‌هاب
+        fileName = fileName.toLowerCase();
+        
+        currentFile = fileName;
+        
+        // استفاده از آدرس صحیح گیت‌هاب
+        const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
+        const fileUrl = `${GITHUB_RAW_BASE}/${fileName}`;
+        
+        console.log('Loading file from:', fileUrl);
+        
+        const response = await fetch(fileUrl);
+        
+        if (!response.ok) {
+            if (response.status === 404) {
+                // تلاش برای پیدا کردن فایل با نام‌های مشابه
+                const possibleNames = [
+                    fileName.replace(/_/g, '-'), // جایگزینی _ با -
+                    fileName.replace(/-/g, '_'), // جایگزینی - با _
+                    fileName.replace(/\s+/g, '_'), // جایگزینی فاصله با _
+                    fileName.replace(/\s+/g, '-')  // جایگزینی فاصله با -
+                ];
                 
-                if (!fileName) {
-                    showError('نام فایل مشخص نشده است.');
-                    return;
-                }
-                
-                // اطمینان از اینکه نام فایل دارای پسوند .md است
-                if (!fileName.endsWith('.md')) {
-                    fileName += '.md';
-                }
-                
-                currentFile = fileName;
-                
-                // استفاده از آدرس صحیح گیت‌هاب
-                const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
-                const fileUrl = `${GITHUB_RAW_BASE}/${fileName}`;
-                
-                console.log('Loading file from:', fileUrl);
-                
-                const response = await fetch(fileUrl);
-                
-                if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error('فایل مورد نظر یافت نشد. ممکن است حذف شده یا نام آن تغییر کرده باشد.');
-                    } else {
-                        throw new Error(`خطا در بارگذاری فایل: ${response.status} - ${response.statusText}`);
+                for (const name of possibleNames) {
+                    const altUrl = `${GITHUB_RAW_BASE}/${name}`;
+                    const altResponse = await fetch(altUrl);
+                    if (altResponse.ok) {
+                        const content = await altResponse.text();
+                        currentFile = name;
+                        currentContent = content;
+                        processContent(content, name);
+                        return;
                     }
                 }
                 
-                const content = await response.text();
-                currentContent = content;
-                
-                // استخراج عنوان
-                const titleMatch = content.match(/^#\s+(.+)$/m);
-                const title = titleMatch ? titleMatch[1].trim() : fileName.replace('.md', '');
-                
-                document.getElementById('articleTitle').textContent = title;
-                document.title = `${title} - ویکی لینوکس فارسی`;
-                
-                // پردازش و نمایش محتوا
-                displayContent(content);
-                
-                // استخراج و نمایش تگ‌ها
-                const tags = tagSystem.extractTags(content);
-                displayTags(tags);
-                
-                // به‌روزرسانی اطلاعات متا
-                updateMetadata(content);
-                
-                // بررسی وضعیت نشان‌گذاری
-                checkBookmarkStatus();
-                
-                // بازیابی موقعیت خواندن
-                restoreReadingPosition();
-                
-                showToast('مقاله با موفقیت بارگذاری شد.', 'success');
-            } catch (error) {
-                console.error('Error loading file:', error);
-                showError(`خطا در بارگذاری مقاله: ${error.message}`);
+                throw new Error('فایل مورد نظر یافت نشد. ممکن است حذف شده یا نام آن تغییر کرده باشد.');
+            } else {
+                throw new Error(`خطا در بارگذاری فایل: ${response.status} - ${response.statusText}`);
             }
         }
+        
+        const content = await response.text();
+        currentContent = content;
+        processContent(content, fileName);
+        
+    } catch (error) {
+        console.error('Error loading file:', error);
+        showError(`خطا در بارگذاری مقاله: ${error.message}`);
+    }
+}
+
+// پردازش محتوا
+function processContent(content, fileName) {
+    // استخراج عنوان
+    const titleMatch = content.match(/^#\s+(.+)$/m);
+    const title = titleMatch ? titleMatch[1].trim() : fileName.replace('.md', '');
+    
+    document.getElementById('articleTitle').textContent = title;
+    document.title = `${title} - ویکی لینوکس فارسی`;
+    
+    // پردازش و نمایش محتوا
+    displayContent(content);
+    
+    // استخراج و نمایش تگ‌ها
+    const tags = tagSystem.extractTags(content);
+    displayTags(tags);
+    
+    // به‌روزرسانی اطلاعات متا
+    updateMetadata(content);
+    
+    // بررسی وضعیت نشان‌گذاری
+    checkBookmarkStatus();
+    
+    // بازیابی موقعیت خواندن
+    restoreReadingPosition();
+    
+    showToast('مقاله با موفقیت بارگذاری شد.', 'success');
+}
         
         // نمایش محتوا
         function displayContent(content) {
