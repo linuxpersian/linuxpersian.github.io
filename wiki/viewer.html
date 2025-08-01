@@ -156,7 +156,37 @@
             100% { background-color: rgba(255, 255, 0, 0); }
         }
         
-        /* استایل‌های اصلی */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px var(--primary); }
+            50% { box-shadow: 0 0 20px var(--primary), 0 0 30px var(--primary); }
+            100% { box-shadow: 0 0 5px var(--primary); }
+        }
+        
+        /* نوار پیشرفت خواندن */
+        .reading-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--outline-variant);
+            z-index: 1000;
+        }
+        
+        .reading-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--tertiary));
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        /* کانتینر اصلی */
         .container {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -169,6 +199,7 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 0.5s ease;
         }
         
         .dark-mode .container {
@@ -185,6 +216,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            animation: slideDown 0.5s ease;
         }
         
         .header-content {
@@ -201,6 +233,10 @@
             color: var(--on-surface);
             flex-grow: 1;
             text-align: center;
+            background: linear-gradient(90deg, var(--primary), var(--tertiary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
         /* نوار ابزار */
@@ -211,6 +247,7 @@
             gap: 1rem;
             margin-bottom: 1.5rem;
             flex-wrap: wrap;
+            animation: slideDown 0.6s ease;
         }
         
         .toolbar-section {
@@ -229,16 +266,37 @@
             font-size: 0.9rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
         
         .btn:hover {
             background: var(--primary);
             color: var(--on-primary);
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.3);
         }
         
         .btn-primary {
@@ -287,7 +345,7 @@
         
         .search-btn {
             position: absolute;
-            right: 0.75rem;
+            left: 0.75rem;
             top: 50%;
             transform: translateY(-50%);
             background: var(--primary);
@@ -300,12 +358,19 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.4);
         }
         
         /* محتوای اصلی */
         .content-wrapper {
             display: flex;
             gap: 2rem;
+            animation: fadeIn 0.7s ease;
         }
         
         .main-content {
@@ -316,6 +381,11 @@
         .sidebar {
             width: 300px;
             flex-shrink: 0;
+            position: sticky;
+            top: 120px;
+            height: fit-content;
+            max-height: calc(100vh - 140px);
+            overflow-y: auto;
         }
         
         /* مارک‌دان */
@@ -327,6 +397,20 @@
             line-height: 1.8;
             direction: rtl;
             text-align: justify;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .markdown-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
         }
         
         .markdown-content h1 {
@@ -336,6 +420,17 @@
             margin: 1.5rem 0 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 3px solid var(--primary);
+            position: relative;
+        }
+        
+        .markdown-content h1::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            right: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--tertiary);
         }
         
         .markdown-content h2 {
@@ -356,6 +451,7 @@
         
         .markdown-content p {
             margin-bottom: 1rem;
+            text-align: justify;
         }
         
         .markdown-content ul, .markdown-content ol {
@@ -365,6 +461,15 @@
         
         .markdown-content li {
             margin-bottom: 0.5rem;
+            position: relative;
+        }
+        
+        .markdown-content li::before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            right: -1rem;
         }
         
         .markdown-content blockquote {
@@ -374,6 +479,17 @@
             background: var(--primary-container);
             border-radius: 0 1rem 1rem 0;
             font-style: italic;
+            position: relative;
+        }
+        
+        .markdown-content blockquote::before {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary);
+            opacity: 0.3;
+            position: absolute;
+            top: -10px;
+            right: 10px;
         }
         
         .markdown-content code {
@@ -382,6 +498,7 @@
             border-radius: 0.3rem;
             font-family: monospace;
             font-size: 0.9em;
+            color: var(--primary);
         }
         
         .markdown-content pre {
@@ -391,17 +508,22 @@
             overflow-x: auto;
             margin: 1.5rem 0;
             position: relative;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
         .markdown-content pre code {
             background: none;
             padding: 0;
+            color: inherit;
         }
         
         .markdown-content table {
             width: 100%;
             border-collapse: collapse;
             margin: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-radius: 1rem;
+            overflow: hidden;
         }
         
         .markdown-content th, .markdown-content td {
@@ -413,6 +535,11 @@
         .markdown-content th {
             background: var(--secondary-container);
             font-weight: 600;
+            color: var(--on-secondary-container);
+        }
+        
+        .markdown-content tr:nth-child(even) {
+            background: var(--surface-variant);
         }
         
         .markdown-content img {
@@ -422,22 +549,38 @@
             margin: 1.5rem 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .markdown-content img:hover {
             transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
         }
         
         .markdown-content a {
             color: var(--primary);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .markdown-content a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
         }
         
         .markdown-content a:hover {
             color: var(--primary-container);
-            text-decoration: underline;
+        }
+        
+        .markdown-content a:hover::after {
+            width: 100%;
         }
         
         /* نوار کناری */
@@ -447,6 +590,12 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
         }
         
         .sidebar-title {
@@ -474,29 +623,71 @@
             font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .tag:hover::before {
+            width: 100px;
+            height: 100px;
         }
         
         .tag:hover {
             background: var(--primary);
             color: var(--on-primary);
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 4px 8px rgba(103, 80, 164, 0.3);
         }
         
         .tag.active {
             background: var(--primary);
             color: var(--on-primary);
+            animation: pulse 2s infinite;
         }
         
         /* فهرست مطالب */
         .toc {
             max-height: 400px;
             overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        
+        .toc::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .toc::-webkit-scrollbar-track {
+            background: var(--surface-variant);
+            border-radius: 3px;
+        }
+        
+        .toc::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
         }
         
         .toc-item {
             padding: 0.5rem 0;
             border-bottom: 1px solid var(--outline-variant);
+            transition: all 0.3s ease;
+        }
+        
+        .toc-item:hover {
+            padding-right: 0.5rem;
         }
         
         .toc-item:last-child {
@@ -507,16 +698,40 @@
             color: var(--on-surface-variant);
             text-decoration: none;
             display: block;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .toc-link::before {
+            content: '▶';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: all 0.3s ease;
         }
         
         .toc-link:hover {
             color: var(--primary);
+            padding-right: 0.5rem;
+        }
+        
+        .toc-link:hover::before {
+            opacity: 1;
+            right: -1.5rem;
         }
         
         .toc-link.active {
             color: var(--primary);
             font-weight: 600;
+            padding-right: 0.5rem;
+        }
+        
+        .toc-link.active::before {
+            opacity: 1;
+            right: -1.5rem;
         }
         
         /* اطلاعات مقاله */
@@ -532,10 +747,21 @@
             gap: 0.5rem;
             color: var(--on-surface-variant);
             font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .meta-item:hover {
+            color: var(--primary);
+            transform: translateX(-5px);
         }
         
         .meta-item i {
             color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .meta-item:hover i {
+            transform: scale(1.2);
         }
         
         /* دکمه‌های شناور */
@@ -557,11 +783,13 @@
             font-size: 1.5rem;
             transition: all 0.3s ease;
             z-index: 100;
+            animation: float 3s ease-in-out infinite;
         }
         
         .fab:hover {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(15deg);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            animation: glow 2s ease-in-out infinite;
         }
         
         /* مودال‌ها */
@@ -601,11 +829,12 @@
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
-            transition: color 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         .close-button:hover {
             color: var(--on-surface);
+            transform: rotate(90deg);
         }
         
         /* اعلان‌ها */
@@ -634,6 +863,26 @@
             text-align: center;
             font-size: 0.9rem;
             pointer-events: auto;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .toast::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary);
+        }
+        
+        .toast.error::before {
+            background: var(--error);
+        }
+        
+        .toast.success::before {
+            background: var(--success);
         }
         
         .toast.error {
@@ -662,6 +911,7 @@
             gap: 0.5rem;
             margin: 1rem 0;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .theme-option {
@@ -670,15 +920,29 @@
             border-radius: 50%;
             cursor: pointer;
             border: 3px solid transparent;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
         }
         
         .theme-option:hover {
             transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
         }
         
         .theme-option.active {
             border-color: var(--on-surface);
+            transform: scale(1.2);
+        }
+        
+        .theme-option.active::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
         }
         
         .theme-default { background: var(--primary); }
@@ -705,17 +969,39 @@
             border-radius: 0.5rem;
             padding: 0.5rem;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .view-mode-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .view-mode-btn:hover::before {
+            width: 100px;
+            height: 100px;
         }
         
         .view-mode-btn:hover {
             background: var(--primary);
             color: var(--on-primary);
+            transform: translateY(-2px);
         }
         
         .view-mode-btn.active {
             background: var(--primary);
             color: var(--on-primary);
+            animation: pulse 2s infinite;
         }
         
         /* حالت خواندن */
@@ -777,11 +1063,16 @@
             font-size: 0.8rem;
             cursor: pointer;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
         
         pre:hover .copy-code-btn {
             opacity: 1;
+        }
+        
+        .copy-code-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.4);
         }
         
         /* لایت‌باکس تصاویر */
@@ -797,17 +1088,21 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            animation: fadeIn 0.3s ease;
         }
         
         .lightbox img {
             max-width: 90%;
             max-height: 90%;
             border-radius: 1rem;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.5s ease;
         }
         
         /* نظرات */
         .comments-section {
             margin-top: 3rem;
+            animation: fadeIn 0.8s ease;
         }
         
         .comment-form {
@@ -815,6 +1110,20 @@
             border-radius: 1rem;
             padding: 1.5rem;
             margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comment-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+            opacity: 0.1;
+            border-radius: 0 0 0 100%;
         }
         
         .comment-input {
@@ -828,11 +1137,13 @@
             resize: vertical;
             min-height: 100px;
             margin-bottom: 1rem;
+            transition: all 0.3s ease;
         }
         
         .comment-input:focus {
             border-color: var(--primary);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1);
         }
         
         .comment {
@@ -841,6 +1152,26 @@
             padding: 1.5rem;
             margin-bottom: 1rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .comment::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--tertiary));
+            opacity: 0.1;
+            border-radius: 0 0 0 50%;
+        }
+        
+        .comment:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
         
         .comment-header {
@@ -853,6 +1184,14 @@
         .comment-author {
             font-weight: 600;
             color: var(--on-surface);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .comment-author::before {
+            content: '👤';
+            font-size: 1.2rem;
         }
         
         .comment-date {
@@ -874,6 +1213,8 @@
             .sidebar {
                 width: 100%;
                 order: 2;
+                position: static;
+                max-height: none;
             }
             
             .main-content {
@@ -936,6 +1277,7 @@
             text-decoration: none;
             border-radius: 0 0 4px 0;
             z-index: 100;
+            transition: top 0.3s ease;
         }
         
         .skip-link:focus {
@@ -948,6 +1290,8 @@
             justify-content: center;
             align-items: center;
             height: 200px;
+            flex-direction: column;
+            gap: 1rem;
         }
         
         .spinner {
@@ -977,7 +1321,7 @@
                 padding: 0;
             }
             
-            .header, .toolbar, .sidebar, .fab {
+            .header, .toolbar, .sidebar, .fab, .reading-progress {
                 display: none;
             }
             
@@ -986,9 +1330,35 @@
                 padding: 0;
             }
         }
+        
+        /* شماره خطوط کد */
+        .line-numbers .line-numbers-rows {
+            position: absolute;
+            pointer-events: none;
+            top: 1em;
+            font-size: 100%;
+            left: -3.8em;
+            width: 3em;
+            letter-spacing: -1px;
+            border-right: 1px solid #999;
+            user-select: none;
+        }
+        
+        .line-numbers-rows > span:before {
+            content: counter(linenumber);
+            counter-increment: linenumber;
+            display: block;
+            text-align: right;
+            color: #999;
+        }
     </style>
 </head>
 <body>
+    <!-- نوار پیشرفت خواندن -->
+    <div class="reading-progress">
+        <div class="reading-progress-bar" id="readingProgressBar"></div>
+    </div>
+    
     <!-- لینک پرش به محتوا برای دسترسی‌پذیری -->
     <a href="#content" class="skip-link">پرش به محتوا</a>
     
@@ -1075,8 +1445,9 @@
             <!-- محتوای اصلی -->
             <main class="main-content">
                 <div id="markdownContent" class="markdown-content">
-                    <div class="loading">
-                        <div class="spinner"></div>
+                    <div class="loading flex flex-col items-center justify-center py-16">
+                        <div class="spinner mb-4"></div>
+                        <p class="text-gray-600">در حال بارگذاری مقاله...</p>
                     </div>
                 </div>
                 
@@ -1249,6 +1620,7 @@
         let currentViewMode = 'normal';
         let isBookmarked = false;
         let searchHighlights = [];
+        let currentSearchIndex = 0;
         
         // سیستم تگ‌ها
         const tagSystem = {
@@ -1709,16 +2081,28 @@
             }
         };
         
+        // نمایش وضعیت بارگذاری
+        function showLoading() {
+            document.getElementById('markdownContent').innerHTML = `
+                <div class="loading flex flex-col items-center justify-center py-16">
+                    <div class="spinner mb-4"></div>
+                    <p class="text-gray-600">در حال بارگذاری مقاله...</p>
+                </div>
+            `;
+        }
+        
         // تابع اصلی برای مقداردهی اولیه
         async function init() {
             console.log('Initializing viewer...');
             loadPreferences();
+            showLoading();
             await loadFile();
             setupEventListeners();
             generateTableOfContents();
             updateViewCount();
             loadComments();
             loadRelatedArticles();
+            setupReadingProgress();
         }
         
         // بارگذاری تنظیمات
@@ -1740,22 +2124,37 @@
         async function loadFile() {
             try {
                 const urlParams = new URLSearchParams(window.location.search);
-                const fileName = urlParams.get('file');
+                let fileName = urlParams.get('file');
                 
                 if (!fileName) {
                     showError('نام فایل مشخص نشده است.');
                     return;
                 }
                 
+                // اطمینان از اینکه نام فایل دارای پسوند .md است
+                if (!fileName.endsWith('.md')) {
+                    fileName += '.md';
+                }
+                
+                currentFile = fileName;
+                
+                // استفاده از آدرس صحیح گیت‌هاب
                 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
-                const response = await fetch(`${GITHUB_RAW_BASE}/${fileName}`);
+                const fileUrl = `${GITHUB_RAW_BASE}/${fileName}`;
+                
+                console.log('Loading file from:', fileUrl);
+                
+                const response = await fetch(fileUrl);
                 
                 if (!response.ok) {
-                    throw new Error('خطا در بارگذاری فایل');
+                    if (response.status === 404) {
+                        throw new Error('فایل مورد نظر یافت نشد. ممکن است حذف شده یا نام آن تغییر کرده باشد.');
+                    } else {
+                        throw new Error(`خطا در بارگذاری فایل: ${response.status} - ${response.statusText}`);
+                    }
                 }
                 
                 const content = await response.text();
-                currentFile = fileName;
                 currentContent = content;
                 
                 // استخراج عنوان
@@ -1784,7 +2183,7 @@
                 showToast('مقاله با موفقیت بارگذاری شد.', 'success');
             } catch (error) {
                 console.error('Error loading file:', error);
-                showError('خطا در بارگذاری مقاله. لطفاً دوباره تلاش کنید.');
+                showError(`خطا در بارگذاری مقاله: ${error.message}`);
             }
         }
         
@@ -2061,16 +2460,18 @@
             
             // اسکرول به اولین نتیجه
             if (searchHighlights.length > 0) {
-                searchHighlights[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                showToast(`${searchHighlights.length} مورد یافت شد.`, 'success');
+                currentSearchIndex = 0;
+                searchHighlights[currentSearchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                showToast(`${searchHighlights.length} نتیجه یافت شد.`, 'success');
             } else {
-                showToast('موردی یافت نشد.', 'error');
+                showToast('هیچ نتیجه‌ای یافت نشد.', 'error');
             }
         }
         
         // پاک کردن هایلایت‌های جستجو
         function clearSearchHighlights() {
-            searchHighlights.forEach(highlight => {
+            const highlights = document.querySelectorAll('.search-highlight');
+            highlights.forEach(highlight => {
                 const parent = highlight.parentNode;
                 parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
                 parent.normalize();
@@ -2078,7 +2479,121 @@
             searchHighlights = [];
         }
         
-        // تنظیم حالت نمایش
+        // تنظیم رویدادها
+        function setupEventListeners() {
+            // رویداد اسکرول برای ذخیره موقعیت خواندن و نوار پیشرفت
+            window.addEventListener('scroll', () => {
+                if (document.getElementById('autoSave')?.checked) {
+                    saveReadingPosition();
+                }
+                updateReadingProgress();
+            });
+            
+            // رویداد کلید برای جستجو
+            document.getElementById('searchInput').addEventListener('keyup', (e) => {
+                if (e.key === 'Enter') {
+                    searchInArticle();
+                }
+                if (e.key === 'Escape') {
+                    clearSearchHighlights();
+                    document.getElementById('searchInput').value = '';
+                }
+            });
+            
+            // رویداد تغییر اندازه فونت
+            document.getElementById('justifyText')?.addEventListener('change', (e) => {
+                const content = document.getElementById('markdownContent');
+                if (e.target.checked) {
+                    content.style.textAlign = 'justify';
+                } else {
+                    content.style.textAlign = 'right';
+                }
+            });
+            
+            // رویداد تغییر شماره خطوط کد
+            document.getElementById('lineNumbers')?.addEventListener('change', (e) => {
+                const codes = document.querySelectorAll('pre code');
+                codes.forEach(code => {
+                    if (e.target.checked) {
+                        // افزودن شماره خطوط
+                        const lines = code.textContent.split('\n');
+                        const numberedLines = lines.map((line, i) => {
+                            return `<span class="line-number">${i + 1}</span>${line}`;
+                        }).join('\n');
+                        code.innerHTML = numberedLines;
+                    } else {
+                        // حذف شماره خطوط
+                        const lines = code.innerHTML.split('\n');
+                        const cleanLines = lines.map(line => {
+                            return line.replace(/<span class="line-number">\d+<\/span>/, '');
+                        }).join('\n');
+                        code.innerHTML = cleanLines;
+                    }
+                });
+            });
+            
+            // رویدادهای کیبورد
+            document.addEventListener('keydown', (e) => {
+                // Ctrl/Cmd + K برای جستجو
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('searchInput').focus();
+                }
+                
+                // Ctrl/Cmd + D برای حالت تاریک
+                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
+                    e.preventDefault();
+                    toggleDarkMode();
+                }
+                
+                // Ctrl/Cmd + P برای چاپ
+                if ((e.ctrlKey || e.metaKey) && e.key === 'p') {
+                    e.preventDefault();
+                    window.print();
+                }
+                
+                // Ctrl/Cmd + S برای ذخیره
+                if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                    e.preventDefault();
+                    downloadMarkdown();
+                }
+                
+                // Ctrl/Cmd + B برای نشان‌گذاری
+                if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+                    e.preventDefault();
+                    toggleBookmark();
+                }
+                
+                // F3 برای جستجوی بعدی
+                if (e.key === 'F3' && searchHighlights.length > 0) {
+                    e.preventDefault();
+                    navigateSearchResults(1);
+                }
+                
+                // Shift + F3 برای جستجوی قبلی
+                if (e.key === 'F3' && e.shiftKey && searchHighlights.length > 0) {
+                    e.preventDefault();
+                    navigateSearchResults(-1);
+                }
+            });
+        }
+        
+        // ناوبری نتایج جستجو
+        function navigateSearchResults(direction) {
+            if (searchHighlights.length === 0) return;
+            
+            currentSearchIndex += direction;
+            
+            if (currentSearchIndex >= searchHighlights.length) {
+                currentSearchIndex = 0;
+            } else if (currentSearchIndex < 0) {
+                currentSearchIndex = searchHighlights.length - 1;
+            }
+            
+            searchHighlights[currentSearchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // تغییر حالت نمایش
         function setViewMode(mode) {
             currentViewMode = mode;
             localStorage.setItem('viewMode', mode);
@@ -2087,51 +2602,54 @@
             document.body.classList.remove('reading-mode', 'night-mode', 'focus-mode');
             
             // افزودن کلاس حالت جدید
-            if (mode !== 'normal') {
-                document.body.classList.add(`${mode}-mode`);
+            switch (mode) {
+                case 'reading':
+                    document.body.classList.add('reading-mode');
+                    break;
+                case 'night':
+                    document.body.classList.add('night-mode');
+                    break;
+                case 'focus':
+                    document.body.classList.add('focus-mode');
+                    break;
             }
             
-            // به‌روزرسانی دکمه‌ها
+            // به‌روزرسانی دکمه‌های فعال
             document.querySelectorAll('.view-mode-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
-            
             event.target.closest('.view-mode-btn').classList.add('active');
+        }
+        
+        // تغییر حالت تاریک
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            localStorage.setItem('isDarkMode', isDarkMode);
             
-            showToast(`حالت نمایش به ${mode} تغییر یافت.`, 'info');
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+            } else {
+                document.body.classList.remove('dark-mode');
+            }
         }
         
         // تغییر اندازه فونت
         function setFontSize(size) {
             fontSize = size;
-            document.getElementById('markdownContent').style.fontSize = `${size}px`;
             localStorage.setItem('fontSize', size);
+            document.getElementById('markdownContent').style.fontSize = `${size}px`;
         }
         
-        // افزایش اندازه فونت
         function increaseFontSize() {
             if (fontSize < 24) {
                 setFontSize(fontSize + 2);
             }
         }
         
-        // کاهش اندازه فونت
         function decreaseFontSize() {
             if (fontSize > 12) {
                 setFontSize(fontSize - 2);
             }
-        }
-        
-        // تغییر حالت تاریک
-        function toggleDarkMode() {
-            isDarkMode = !isDarkMode;
-            document.body.classList.toggle('dark-mode');
-            localStorage.setItem('isDarkMode', isDarkMode);
-            
-            const icon = event.target.closest('button').querySelector('i');
-            icon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
-            
-            showToast(`حالت تاریک ${isDarkMode ? 'فعال' : 'غیرفعال'} شد.`, 'info');
         }
         
         // متن به گفتار (TTS)
@@ -2143,303 +2661,120 @@
             }
         }
         
-        // شروع TTS
         function startTTS() {
             if ('speechSynthesis' in window) {
-                const content = document.getElementById('markdownContent').textContent;
+                const content = document.getElementById('markdownContent').innerText;
                 const utterance = new SpeechSynthesisUtterance(content);
                 utterance.lang = 'fa-IR';
                 utterance.rate = 0.9;
                 
-                utterance.onend = () => {
-                    ttsEnabled = false;
-                    const icon = document.querySelector('.fa-volume-up').parentElement.querySelector('i');
-                    icon.className = 'fas fa-volume-up';
-                };
-                
                 speechSynthesis.speak(utterance);
                 ttsEnabled = true;
                 
-                const icon = document.querySelector('.fa-volume-up').parentElement.querySelector('i');
-                icon.className = 'fas fa-volume-mute';
-                
                 showToast('شروع خواندن متن...', 'info');
+                
+                utterance.onend = () => {
+                    ttsEnabled = false;
+                    showToast('پایان خواندن متن.', 'info');
+                };
             } else {
-                showToast('مرورگر شما از TTS پشتیبانی نمی‌کند.', 'error');
+                showToast('مرورگر شما از متن به گفتار پشتیبانی نمی‌کند.', 'error');
             }
         }
         
-        // توقف TTS
         function stopTTS() {
             speechSynthesis.cancel();
             ttsEnabled = false;
-            
-            const icon = document.querySelector('.fa-volume-mute').parentElement.querySelector('i');
-            icon.className = 'fas fa-volume-up';
-            
-            showToast('خواندن متن متوقف شد.', 'info');
+            showToast('توقف خواندن متن.', 'info');
         }
         
         // اشتراک‌گذاری مقاله
         function shareArticle() {
-            const url = window.location.href;
-            const title = document.getElementById('articleTitle').textContent;
-            
             if (navigator.share) {
                 navigator.share({
-                    title: title,
+                    title: document.getElementById('articleTitle').textContent,
                     text: 'مقاله جالبی از ویکی لینوکس فارسی',
-                    url: url
-                }).then(() => {
-                    showToast('مقاله با موفقیت به اشتراک گذاشته شد.', 'success');
-                }).catch(() => {
-                    copyToClipboard(url);
-                });
+                    url: window.location.href
+                })
+                .then(() => showToast('مقاله با موفقیت به اشتراک گذاشته شد.', 'success'))
+                .catch((error) => console.log('Error sharing:', error));
             } else {
-                copyToClipboard(url);
+                // کپی کردن لینک به کلیپ‌بورد
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showToast('لینک مقاله کپی شد.', 'success'))
+                    .catch(() => showToast('خطا در کپی لینک.', 'error'));
             }
-        }
-        
-        // کپی به کلیپ‌بورد
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                showToast('لینک کپی شد.', 'success');
-            }).catch(() => {
-                showToast('خطا در کپی لینک.', 'error');
-            });
         }
         
         // دانلود مارک‌دان
         function downloadMarkdown() {
-            if (!currentContent) return;
+            if (!currentContent) {
+                showToast('محتوایی برای دانلود وجود ندارد.', 'error');
+                return;
+            }
             
             const blob = new Blob([currentContent], { type: 'text/markdown' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
             a.download = currentFile;
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showToast('دانلود با موفقیت آغاز شد.', 'success');
+            showToast('فایل با موفقیت دانلود شد.', 'success');
         }
         
-        // بازگشت به بالا
+        // اسکرول به بالا
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            showToast('به بالای صفحه رفتید.', 'info');
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
         
         // باز کردن مودال
         function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = 'flex';
-            modal.setAttribute('aria-hidden', 'false');
+            document.getElementById(modalId).style.display = 'flex';
         }
         
         // بستن مودال
         function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = 'none';
-            modal.setAttribute('aria-hidden', 'true');
+            document.getElementById(modalId).style.display = 'none';
         }
         
-        // تنظیم تم
+        // تنظیم تم رنگی
         function setTheme(theme) {
-            // حذف کلاس‌های تم قبلی
-            document.body.classList.remove('theme-blue', 'theme-green', 'theme-red', 'theme-orange', 'theme-purple', 'theme-teal', 'theme-amber', 'theme-pink', 'theme-indigo');
-            
-            // افزودن کلاس تم جدید
-            if (theme !== 'default') {
-                document.body.classList.add(`theme-${theme}`);
-            }
-            
-            // به‌روزرسانی دکمه‌های تم
+            // حذف کلاس فعال از تمام گزینه‌ها
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.remove('active');
             });
             
-            event.target.classList.add('active');
+            // افزودن کلاس فعال به گزینه انتخاب شده
+            document.querySelector(`.theme-${theme}`).classList.add('active');
             
-            // ذخیره تم
+            // در اینجا می‌توان منطق تغییر تم را پیاده‌سازی کرد
             localStorage.setItem('theme', theme);
-            
-            // به‌روزرسانی متغیرهای CSS
-            updateThemeVariables(theme);
-        }
-        
-        // به‌روزرسانی متغیرهای CSS
-        function updateThemeVariables(theme) {
-            const root = document.documentElement;
-            
-            switch (theme) {
-                case 'blue':
-                    root.style.setProperty('--primary', '#1E88E5');
-                    root.style.setProperty('--primary-container', '#D0E8FF');
-                    break;
-                case 'green':
-                    root.style.setProperty('--primary', '#43A047');
-                    root.style.setProperty('--primary-container', '#D8F5DC');
-                    break;
-                case 'red':
-                    root.style.setProperty('--primary', '#E53935');
-                    root.style.setProperty('--primary-container', '#FFDAD6');
-                    break;
-                case 'orange':
-                    root.style.setProperty('--primary', '#FB8C00');
-                    root.style.setProperty('--primary-container', '#FFE0CC');
-                    break;
-                case 'purple':
-                    root.style.setProperty('--primary', '#8E24AA');
-                    root.style.setProperty('--primary-container', '#F8D5F0');
-                    break;
-                case 'teal':
-                    root.style.setProperty('--primary', '#00897B');
-                    root.style.setProperty('--primary-container', '#B2DFDB');
-                    break;
-                case 'amber':
-                    root.style.setProperty('--primary', '#FFB300');
-                    root.style.setProperty('--primary-container', '#FFF8E1');
-                    break;
-                case 'pink':
-                    root.style.setProperty('--primary', '#D81B60');
-                    root.style.setProperty('--primary-container', '#F8BBD0');
-                    break;
-                case 'indigo':
-                    root.style.setProperty('--primary', '#3949AB');
-                    root.style.setProperty('--primary-container', '#C5CAE9');
-                    break;
-                default:
-                    // بازگشت به مقادیر پیش‌فرض
-                    root.style.setProperty('--primary', '#6750A4');
-                    root.style.setProperty('--primary-container', '#EADDFF');
-            }
+            showToast(`تم ${theme} اعمال شد.`, 'success');
         }
         
         // ذخیره تنظیمات
         function saveSettings() {
-            const justifyText = document.getElementById('justifyText').checked;
-            const lineNumbers = document.getElementById('lineNumbers').checked;
-            const autoSave = document.getElementById('autoSave').checked;
-            const loadImages = document.getElementById('loadImages').checked;
-            
-            localStorage.setItem('justifyText', justifyText);
-            localStorage.setItem('lineNumbers', lineNumbers);
-            localStorage.setItem('autoSave', autoSave);
-            localStorage.setItem('loadImages', loadImages);
-            
-            // اعمال تنظیمات
-            const content = document.getElementById('markdownContent');
-            content.style.textAlign = justifyText ? 'justify' : 'right';
-            
-            closeModal('settingsModal');
-            showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
-        }
-        
-        // به‌روزرسانی تعداد بازدیدها
-        function updateViewCount() {
-            // شبیه‌سازی به‌روزرسانی تعداد بازدیدها
-            // در حالت واقعی، این اطلاعات از سرور دریافت می‌شود
-            console.log('View count updated');
-        }
-        
-        // بارگذاری نظرات
-        function loadComments() {
-            const commentsList = document.getElementById('commentsList');
-            
-            // شبیه‌سازی بارگذاری نظرات
-            const comments = [
-                {
-                    author: 'کاربر نمونه',
-                    date: '1403/05/15',
-                    text: 'مقاله بسیار مفیدی بود. ممنون از به اشتراک گذاری.'
-                },
-                {
-                    author: 'لینوکس کار',
-                    date: '1403/05/10',
-                    text: 'این مقاله به من در حل مشکلم کمک زیادی کرد.'
-                }
-            ];
-            
-            commentsList.innerHTML = '';
-            
-            comments.forEach(comment => {
-                const commentElement = createCommentElement(comment);
-                commentsList.appendChild(commentElement);
-            });
-        }
-        
-        // ایجاد المان نظر
-        function createCommentElement(comment) {
-            const div = document.createElement('div');
-            div.className = 'comment';
-            
-            div.innerHTML = `
-                <div class="comment-header">
-                    <span class="comment-author">${comment.author}</span>
-                    <span class="comment-date">${comment.date}</span>
-                </div>
-                <div class="comment-text">${comment.text}</div>
-            `;
-            
-            return div;
-        }
-        
-        // ارسال نظر
-        function submitComment() {
-            const input = document.getElementById('commentInput');
-            const text = input.value.trim();
-            
-            if (!text) {
-                showToast('لطفاً متن نظر را وارد کنید.', 'error');
-                return;
-            }
-            
-            // شبیه‌سازی ارسال نظر
-            const comment = {
-                author: 'کاربر مهمان',
-                date: new Date().toLocaleDateString('fa-IR'),
-                text: text
+            const settings = {
+                isDarkMode: isDarkMode,
+                fontSize: fontSize,
+                viewMode: currentViewMode,
+                theme: localStorage.getItem('theme') || 'default',
+                justifyText: document.getElementById('justifyText')?.checked || false,
+                lineNumbers: document.getElementById('lineNumbers')?.checked || false,
+                autoSave: document.getElementById('autoSave')?.checked || true,
+                loadImages: document.getElementById('loadImages')?.checked || true
             };
             
-            const commentsList = document.getElementById('commentsList');
-            const commentElement = createCommentElement(comment);
-            commentsList.insertBefore(commentElement, commentsList.firstChild);
-            
-            input.value = '';
-            showToast('نظر شما با موفقیت ارسال شد.', 'success');
-        }
-        
-        // بارگذاری مقالات مرتبط
-        function loadRelatedArticles() {
-            const container = document.getElementById('relatedArticles');
-            
-            // شبیه‌سازی مقالات مرتبط
-            const articles = [
-                { title: 'آموزش نصب اوبونتو', url: 'viewer.html?file=ubuntu-install.md' },
-                { title: 'دستورات پایه لینوکس', url: 'viewer.html?file=basic-commands.md' },
-                { title: 'مدیریت کاربران در لینوکس', url: 'viewer.html?file=user-management.md' }
-            ];
-            
-            container.innerHTML = '';
-            
-            articles.forEach(article => {
-                const link = document.createElement('a');
-                link.href = article.url;
-                link.className = 'block mb-2 text-primary hover:underline';
-                link.textContent = article.title;
-                container.appendChild(link);
-            });
-        }
-        
-        // نمایش خطا
-        function showError(message) {
-            document.getElementById('markdownContent').innerHTML = `
-                <div class="error text-center py-16 text-red-600">
-                    <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                    <p class="text-xl">${message}</p>
-                </div>
-            `;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            closeModal('settingsModal');
+            showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
         }
         
         // نمایش اعلان
@@ -2448,63 +2783,164 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             toast.textContent = message;
-            toast.setAttribute('role', 'status');
-            toast.setAttribute('aria-live', 'polite');
             
             toastContainer.appendChild(toast);
             
+            // حذف اعلان پس از 3 ثانیه
             setTimeout(() => {
-                toast.remove();
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toastContainer.removeChild(toast);
+                }, 300);
             }, 3000);
         }
         
-        // تنظیم رویدادها
-        function setupEventListeners() {
-            // ذخیره موقعیت خواندن هنگام اسکرول
-            window.addEventListener('scroll', () => {
-                if (document.getElementById('autoSave')?.checked) {
-                    saveReadingPosition();
-                }
-            });
+        // نمایش خطا
+        function showError(message) {
+            showToast(message, 'error');
+            document.getElementById('markdownContent').innerHTML = `
+                <div class="error-message p-8 bg-red-50 dark:bg-red-900/20 rounded-lg text-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-bold text-red-700 dark:text-red-300 mb-2">خطا در بارگذاری مقاله</h2>
+                    <p class="text-red-600 dark:text-red-400">${message}</p>
+                    <button class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition" onclick="window.history.back()">
+                        بازگشت
+                    </button>
+                </div>
+            `;
+        }
+        
+        // به‌روزرسانی تعداد بازدید
+        function updateViewCount() {
+            // در یک پیاده‌سازی واقعی، این اطلاعات از سرور دریافت می‌شود
+            // اینجا فقط یک نمایش شبیه‌سازی شده است
+            const viewsElement = document.getElementById('metaViews');
+            if (viewsElement) {
+                const currentViews = parseInt(viewsElement.textContent.replace(/[^\d]/g, ''));
+                const newViews = currentViews + 1;
+                viewsElement.textContent = `${newViews.toLocaleString('fa-IR')} بازدید`;
+            }
+        }
+        
+        // بارگذاری نظرات
+        function loadComments() {
+            const commentsList = document.getElementById('commentsList');
             
-            // جستجو با Enter
-            document.getElementById('searchInput').addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    searchInArticle();
+            // در یک پیاده‌سازی واقعی، نظرات از سرور دریافت می‌شوند
+            // اینجا چند نظر نمونه نمایش داده می‌شود
+            const sampleComments = [
+                {
+                    author: 'علی رضایی',
+                    date: '۱۴۰۲/۰۵/۱۰',
+                    text: 'مقاله بسیار مفیدی بود. ممنون از توضیحات کامل شما.'
+                },
+                {
+                    author: 'سارا محمدی',
+                    date: '۱۴۰۲/۰۵/۰۸',
+                    text: 'من از این راهنما برای راه‌اندازی سرور خود استفاده کردم و خیلی مفید بود.'
+                },
+                {
+                    author: 'رضا قاسمی',
+                    date: '۱۴۰۲/۰۵/۰۵',
+                    text: 'آیا می‌توانید نسخه پیشرفته‌تری از این مقاله منتشر کنید؟'
                 }
-            });
+            ];
             
-            // ناوبری کیبورد
-            document.addEventListener('keydown', (e) => {
-                // Esc برای بستن مودال‌ها
-                if (e.key === 'Escape') {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
-                    });
-                }
-                
-                // Ctrl/Cmd + K برای تمرکز روی جستجو
-                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-                    e.preventDefault();
-                    document.getElementById('searchInput').focus();
-                }
-                
-                // Ctrl/Cmd + D برای نشان‌گذاری
-                if ((e.ctrlKey || e.metaKey) && e.key === 'd') {
-                    e.preventDefault();
-                    toggleBookmark();
-                }
-            });
+            commentsList.innerHTML = '';
             
-            // بستن لایت‌باکس با کلیک خارج از تصویر
-            document.getElementById('lightbox').addEventListener('click', (e) => {
-                if (e.target.id === 'lightbox') {
-                    closeLightbox();
-                }
+            sampleComments.forEach(comment => {
+                const commentElement = document.createElement('div');
+                commentElement.className = 'comment';
+                commentElement.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-author">${comment.author}</div>
+                        <div class="comment-date">${comment.date}</div>
+                    </div>
+                    <div class="comment-text">${comment.text}</div>
+                `;
+                commentsList.appendChild(commentElement);
             });
         }
         
-        // راه‌اندازی برنامه
+        // ارسال نظر
+        function submitComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentText = commentInput.value.trim();
+            
+            if (!commentText) {
+                showToast('لطفاً متن نظر خود را وارد کنید.', 'error');
+                return;
+            }
+            
+            // در یک پیاده‌سازی واقعی، نظر به سرور ارسال می‌شود
+            // اینجا فقط یک نمایش شبیه‌سازی شده است
+            const commentsList = document.getElementById('commentsList');
+            const newComment = document.createElement('div');
+            newComment.className = 'comment';
+            newComment.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-author">کاربر مهمان</div>
+                    <div class="comment-date">${new Date().toLocaleDateString('fa-IR')}</div>
+                </div>
+                <div class="comment-text">${commentText}</div>
+            `;
+            
+            commentsList.insertBefore(newComment, commentsList.firstChild);
+            commentInput.value = '';
+            
+            showToast('نظر شما با موفقیت ارسال شد.', 'success');
+        }
+        
+        // بارگذاری مقالات مرتبط
+        function loadRelatedArticles() {
+            const relatedContainer = document.getElementById('relatedArticles');
+            
+            // در یک پیاده‌سازی واقعی، مقالات مرتبط از سرور دریافت می‌شوند
+            // اینجا چند مقاله نمونه نمایش داده می‌شود
+            const sampleArticles = [
+                {
+                    title: 'نصب اوبونتو ۲۲.۰۴',
+                    url: 'viewer.html?file=ubuntu-install.md'
+                },
+                {
+                    title: 'پیکربندی فایروال در لینوکس',
+                    url: 'viewer.html?file=firewall-config.md'
+                },
+                {
+                    title: 'مدیریت کاربران در لینوکس',
+                    url: 'viewer.html?file=user-management.md'
+                }
+            ];
+            
+            relatedContainer.innerHTML = '';
+            
+            sampleArticles.forEach(article => {
+                const articleElement = document.createElement('div');
+                articleElement.className = 'mb-2';
+                articleElement.innerHTML = `
+                    <a href="${article.url}" class="text-blue-600 hover:text-blue-800 hover:underline">
+                        ${article.title}
+                    </a>
+                `;
+                relatedContainer.appendChild(articleElement);
+            });
+        }
+        
+        // تنظیم نوار پیشرفت خواندن
+        function setupReadingProgress() {
+            window.addEventListener('scroll', updateReadingProgress);
+        }
+        
+        // به‌روزرسانی نوار پیشرفت خواندن
+        function updateReadingProgress() {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            document.getElementById('readingProgressBar').style.width = `${scrollPercent}%`;
+        }
+        
+        // اجرای تابع مقداردهی اولیه پس از بارگذاری صفحه
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
