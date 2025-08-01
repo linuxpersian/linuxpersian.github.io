@@ -3,20 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>ترجمه فارسی خط فرمان لینوکس اثر ویلیام شاتس | The Linux Command Line by William Shotts - Farsi Translation</title>
-
   <meta name="description" content="ترجمه فارسی کتاب The Linux Command Line اثر William Shotts. راهنمای جامع یادگیری خط فرمان لینوکس به زبان ساده و حرفه‌ای.">
   <meta name="keywords" content="linux command line, william shotts, کتاب لینوکس, خط فرمان لینوکس, bash, آموزش لینوکس, ترجمه لینوکس, ویلیام شاتز, کتاب لینوکس فارسی">
   <meta name="author" content="Linux Persian">
   <meta name="robots" content="index, follow">
-
   <meta property="og:title" content="ترجمه فارسی کتاب Linux Command Line">
   <meta property="og:description" content="دانلود رایگان ترجمه کامل کتاب خط فرمان لینوکس به فارسی - ویلیام شاتز">
   <meta property="og:image" content="cover.jpg">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="fa_IR">
-
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,30 +31,134 @@
     }
   }
   </script>
-
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&family=Ubuntu+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
+    :root {
+      --primary: #06b6d4;
+      --primary-dark: #0891b2;
+      --secondary: #f59e0b;
+      --dark: #111827;
+      --light: #FFFBCE;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --book-shadow: rgba(0, 0, 0, 0.15);
+      --page-shadow: rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
       font-family: 'Vazirmatn', sans-serif;
-      background-color: #FFFBCE;
-      color: #000;
-    }
-
-    .cover {
-      max-width: 600px;
-      margin: 2rem auto;
-      border: 1px solid #d4d4d4;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      background-color: #FFFBCE;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+      color: var(--dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
       position: relative;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
-    .top-bar {
-      height: 10px;
-      background-color: #06b6d4;
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.05) 0%, rgba(6, 182, 212, 0) 70%);
+      z-index: -1;
+      animation: pulse 15s infinite alternate;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.8); opacity: 0.5; }
+      100% { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    .book-container {
+      perspective: 2000px;
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .book {
+      width: 100%;
+      max-width: 600px;
+      height: 750px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+
+    .book:hover {
+      transform: rotateY(-10deg);
+    }
+
+    .book-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 0 15px 15px 0;
+      box-shadow: 0 10px 30px var(--book-shadow);
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .book-front {
+      background: linear-gradient(135deg, var(--light) 0%, #fff8e1 100%);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translateZ(25px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .book-spine {
+      position: absolute;
+      left: -50px;
+      top: 0;
+      width: 50px;
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
+      transform: rotateY(90deg) translateZ(25px);
+      transform-origin: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-weight: bold;
+      font-size: 1.2rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      padding: 20px 0;
+    }
+
+    .book-back {
+      background: var(--white);
+      transform: rotateY(180deg) translateZ(25px);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .book-top {
+      height: 15px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      position: relative;
     }
 
     .version-tag {
@@ -67,18 +167,18 @@
       right: 0;
       width: 0;
       height: 0;
-      border-top: 90px solid #000000;
+      border-top: 90px solid var(--dark);
       border-left: 90px solid transparent;
       z-index: 10;
     }
 
     .version-text {
       position: absolute;
-      top: 5px;
-      right: -2px;
+      top: 15px;
+      right: 5px;
       writing-mode: vertical-rl;
       text-align: center;
-      color: white;
+      color: var(--white);
       font-size: 0.85rem;
       font-weight: bold;
       transform: rotate(45deg);
@@ -87,107 +187,680 @@
     }
 
     .title-section {
-      background-color: #fefce8;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 252, 232, 0.9) 100%);
       text-align: center;
-      padding: 2.2rem 1rem 1.2rem;
+      padding: 2.5rem 1.5rem 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .title-section::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, rgba(6, 182, 212, 0) 70%);
+      border-radius: 50%;
+      z-index: 0;
     }
 
     .title-section h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 0.6rem;
-      color: #111827;
+      margin-bottom: 0.8rem;
+      color: var(--dark);
+      position: relative;
+      z-index: 1;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
     }
 
     .title-section p {
       font-size: 1.1rem;
       margin-bottom: 0.3rem;
-      color: #374151;
+      color: #4b5563;
+      position: relative;
+      z-index: 1;
     }
 
     .author {
-      background-color: #000;
-      color: #fff;
+      background: var(--dark);
+      color: var(--white);
       text-align: center;
-      padding: 0.7rem 1rem;
+      padding: 0.8rem 1rem;
       font-size: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .author::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
     }
 
     .cover-image {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      position: relative;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23FFFBCE"/><path d="M30,70 L30,30 L50,30 L70,50 L70,70 Z" fill="%2306b6d4" stroke="%2306b6d4" stroke-width="2"/><path d="M50,30 L50,50 L70,50" fill="none" stroke="%2306b6d4" stroke-width="2"/><text x="50" y="85" font-family="monospace" font-size="10" text-anchor="middle" fill="%23000">ls -la</text></svg>') center/contain no-repeat;
+    }
+
+    .cover-image::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
-      display: block;
-      height: auto;
+      height: 100%;
+      background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+      z-index: 1;
+    }
+
+    .linux-robot {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      z-index: 2;
+    }
+
+    .robot-head {
+      width: 100px;
+      height: 80px;
+      background: var(--primary);
+      border-radius: 50px 50px 0 0;
+      position: absolute;
+      top: 20px;
+      left: 50px;
+      overflow: hidden;
+    }
+
+    .robot-eyes {
+      display: flex;
+      justify-content: space-around;
+      padding: 20px 15px 0;
+    }
+
+    .robot-eye {
+      width: 20px;
+      height: 20px;
+      background: var(--white);
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .robot-eye::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--dark);
+      border-radius: 50%;
+      top: 5px;
+      left: 5px;
+      animation: blink 4s infinite;
+    }
+
+    @keyframes blink {
+      0%, 45%, 50%, 100% { transform: scaleY(1); }
+      48% { transform: scaleY(0.1); }
+    }
+
+    .robot-mouth {
+      width: 60px;
+      height: 20px;
+      background: var(--dark);
+      border-radius: 0 0 30px 30px;
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      overflow: hidden;
+    }
+
+    .command {
+      position: absolute;
+      color: var(--white);
+      font-family: 'Ubuntu Mono', monospace;
+      font-size: 10px;
+      white-space: nowrap;
+      animation: float-up 8s linear infinite;
+      opacity: 0;
+    }
+
+    .command:nth-child(1) {
+      top: 15px;
+      left: 10px;
+      animation-delay: 0s;
+    }
+
+    .command:nth-child(2) {
+      top: 25px;
+      left: 40px;
+      animation-delay: 1s;
+    }
+
+    .command:nth-child(3) {
+      top: 35px;
+      left: 20px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float-up {
+      0% { transform: translateY(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px); opacity: 0; }
+    }
+
+    .robot-body {
+      width: 120px;
+      height: 100px;
+      background: var(--primary-dark);
+      border-radius: 20px;
+      position: absolute;
+      top: 100px;
+      left: 40px;
+    }
+
+    .robot-arm {
+      width: 30px;
+      height: 80px;
+      background: var(--primary-dark);
+      border-radius: 15px;
+      position: absolute;
+      top: 110px;
+    }
+
+    .robot-arm.left {
+      left: 20px;
+      transform: rotate(-20deg);
+      transform-origin: top center;
+    }
+
+    .robot-arm.right {
+      right: 20px;
+      transform: rotate(20deg);
+      transform-origin: top center;
+    }
+
+    .robot-terminal {
+      width: 60px;
+      height: 40px;
+      background: var(--dark);
+      border-radius: 5px;
+      position: absolute;
+      top: 120px;
+      right: 30px;
+      overflow: hidden;
+    }
+
+    .terminal-line {
+      height: 3px;
+      background: var(--secondary);
+      margin: 5px 5px 0;
+      animation: terminal-blink 2s infinite;
+    }
+
+    .terminal-line:nth-child(2) {
+      width: 70%;
+      animation-delay: 0.2s;
+    }
+
+    .terminal-line:nth-child(3) {
+      width: 50%;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes terminal-blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .download-section {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 252, 232, 0.9) 100%);
+      padding: 2rem;
+      text-align: center;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
     .download-btn {
-      text-align: center;
-      margin: 2rem auto;
-      padding: 2rem 0;
-      background-color: #FFFBCE;
-    }
-
-    .download-btn a {
       display: inline-block;
-      background-color: #06b6d4;
-      color: white;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
       text-decoration: none;
-      padding: 0.8rem 2rem;
-      border-radius: 8px;
+      padding: 0.9rem 2.5rem;
+      border-radius: 50px;
       font-weight: bold;
       font-size: 1rem;
-      transition: background 0.3s ease;
+      transition: var(--transition);
       margin: 0 0.5rem;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+      position: relative;
+      overflow: hidden;
     }
 
-    .download-btn a:hover {
-      background-color: #0891b2;
+    .download-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
     }
 
-    @media (max-width: 480px) {
-      .title-section h1 {
-        font-size: 1.5rem;
+    .download-btn:hover::before {
+      left: 100%;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(6, 182, 212, 0.4);
+    }
+
+    .info-btn {
+      background: linear-gradient(135deg, var(--secondary) 0%, #d97706 100%);
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    .info-btn:hover {
+      box-shadow: 0 7px 20px rgba(245, 158, 11, 0.4);
+    }
+
+    .book-info {
+      padding: 20px 40px;
+    }
+
+    .book-info h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      text-align: center;
+      position: relative;
+      padding-bottom: 15px;
+    }
+
+    .book-info h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 50%;
+      transform: translateX(50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 3px;
+    }
+
+    .book-description {
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      color: #4b5563;
+      text-align: justify;
+    }
+
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+    }
+
+    .feature {
+      width: 48%;
+      background: rgba(6, 182, 212, 0.05);
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+      transition: var(--transition);
+    }
+
+    .feature:hover {
+      background: rgba(6, 182, 212, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .feature i {
+      color: var(--primary);
+      font-size: 1.5rem;
+      margin-left: 15px;
+    }
+
+    .feature-content h3 {
+      font-size: 1.1rem;
+      margin-bottom: 5px;
+      color: var(--dark);
+    }
+
+    .feature-content p {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    .version-history {
+      margin-bottom: 2rem;
+    }
+
+    .version-history h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      text-align: center;
+    }
+
+    .version-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    .version-table th, .version-table td {
+      padding: 12px 15px;
+      text-align: right;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .version-table th {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--dark);
+      font-weight: 700;
+    }
+
+    .version-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .version-table tr:hover {
+      background: rgba(6, 182, 212, 0.05);
+    }
+
+    .goals {
+      background: rgba(245, 158, 11, 0.05);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 2rem;
+    }
+
+    .goals h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      text-align: center;
+    }
+
+    .goals p {
+      line-height: 1.8;
+      color: #4b5563;
+      text-align: justify;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      color: var(--gray);
+      font-size: 0.9rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .flip-btn {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .flip-btn:hover {
+      background: var(--primary-dark);
+      transform: scale(1.1);
+    }
+
+    .book.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .book.flipped:hover {
+      transform: rotateY(190deg);
+    }
+
+    @media (max-width: 768px) {
+      .book {
+        height: 650px;
       }
-
+      
+      .title-section h1 {
+        font-size: 1.8rem;
+      }
+      
       .title-section p {
         font-size: 1rem;
       }
-
+      
       .version-tag {
-        border-top: 70px solid #000000;
+        border-top: 70px solid var(--dark);
         border-left: 70px solid transparent;
       }
-
+      
       .version-text {
         font-size: 0.75rem;
         top: 5px;
         right: -5px;
       }
+      
+      .feature {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="cover">
-    <div class="top-bar"></div>
-
-    <div class="version-tag"></div>
-    <div class="version-text">6th<br>edition</div>
-
-    <div class="title-section">
-      <h1>خط فرمان لینوکس</h1>
-      <p>درآمدی جامع بر ساختار و مفاهیم</p>
-      <p style="font-size: 0.95rem; margin-top: -0.4rem;">ویلیام شاتس</p>
-    </div>
-
-    <div class="author">ترجمه محمد مهدی نژاد</div>
-
-    <img src="cover.jpg" alt="جلد کتاب خط فرمان لینوکس" class="cover-image">
-
-    <div class="download-btn">
-      <a href="linux-command-line-fa.pdf">دریافت فایل PDF</a>
-      <a href="about.html" target="_blank">اطلاعات بیشتر</a>
+  <div class="book-container">
+    <div class="book" id="book">
+      <div class="book-face book-front">
+        <div class="book-top"></div>
+        <div class="version-tag"></div>
+        <div class="version-text">6th<br>edition</div>
+        
+        <div class="title-section">
+          <h1>خط فرمان لینوکس</h1>
+          <p>درآمدی جامع بر ساختار و مفاهیم</p>
+          <p style="font-size: 0.95rem; margin-top: -0.4rem;">ویلیام شاتس</p>
+        </div>
+        
+        <div class="author">ترجمه محمد مهدی نژاد</div>
+        
+        <div class="cover-image">
+          <div class="linux-robot">
+            <div class="robot-head">
+              <div class="robot-eyes">
+                <div class="robot-eye"></div>
+                <div class="robot-eye"></div>
+              </div>
+              <div class="robot-mouth">
+                <span class="command">$ ls</span>
+                <span class="command">$ grep</span>
+                <span class="command">$ sudo</span>
+              </div>
+            </div>
+            <div class="robot-body"></div>
+            <div class="robot-arm left"></div>
+            <div class="robot-arm right"></div>
+            <div class="robot-terminal">
+              <div class="terminal-line"></div>
+              <div class="terminal-line"></div>
+              <div class="terminal-line"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="download-section">
+          <a href="linux-command-line-fa.pdf" class="download-btn">
+            <i class="fas fa-download"></i> دریافت فایل PDF
+          </a>
+          <a href="about.html" target="_blank" class="download-btn info-btn">
+            <i class="fas fa-info-circle"></i> اطلاعات بیشتر
+          </a>
+        </div>
+      </div>
+      
+      <div class="book-face book-back">
+        <div class="book-info">
+          <h2>درباره کتاب</h2>
+          <p class="book-description">
+            کتاب *The Linux Command Line* اثری است با رویکرد آموزشی مبتنی بر تمرین و توضیح مفاهیم پایه‌ای تا پیشرفته در محیط پوسته‌ی Bash. این کتاب ابتدا به اصول اولیه‌ی کار با ترمینال می‌پردازد و سپس ابزارها، ساختار فایل‌ها، مدیریت فرایندها، متغیرها، و در نهایت مبانی اسکریپت‌نویسی را به زبان ساده و فنی ارائه می‌کند.
+          </p>
+          
+          <div class="features">
+            <div class="feature">
+              <i class="fas fa-book"></i>
+              <div class="feature-content">
+                <h3>ترجمه کامل</h3>
+                <p>ترجمه کامل بر اساس نسخه‌ی ششم کتاب</p>
+              </div>
+            </div>
+            <div class="feature">
+              <i class="fas fa-code"></i>
+              <div class="feature-content">
+                <h3>حفظ ساختار فنی</h3>
+                <p>حفظ ساختار محتوایی و فنی متن اصلی</p>
+              </div>
+            </div>
+            <div class="feature">
+              <i class="fas fa-language"></i>
+              <div class="feature-content">
+                <h3>معادل‌های دقیق</h3>
+                <p>انتخاب دقیق معادل‌های فارسی برای واژگان تخصصی</p>
+              </div>
+            </div>
+            <div class="feature">
+              <i class="fas fa-graduation-cap"></i>
+              <div class="feature-content">
+                <h3>مناسب آموزش</h3>
+                <p>مناسب برای استفاده در محیط‌های آموزشی و خودآموزی</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="version-history">
+            <h3>تاریخچه نسخه‌های اصلی انگلیسی</h3>
+            <table class="version-table">
+              <tr>
+                <th>نسخه</th>
+                <th>تاریخ انتشار</th>
+                <th>توضیحات</th>
+              </tr>
+              <tr>
+                <td>24.11</td>
+                <td>November 1, 2024</td>
+                <td>ششمین نسخه اینترنتی</td>
+              </tr>
+              <tr>
+                <td>19.01A</td>
+                <td>January 28, 2019</td>
+                <td>نسخه پنجم با فهرست اصلاح‌شده</td>
+              </tr>
+              <tr>
+                <td>19.01</td>
+                <td>January 17, 2019</td>
+                <td>نسخه پنجم</td>
+              </tr>
+              <tr>
+                <td>17.10</td>
+                <td>October 19, 2017</td>
+                <td>نسخه چهارم</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="version-history">
+            <h3>تاریخچه نسخه فارسی</h3>
+            <table class="version-table">
+              <tr>
+                <th>نسخه</th>
+                <th>تاریخ انتشار</th>
+                <th>توضیحات</th>
+              </tr>
+              <tr>
+                <td>24.11</td>
+                <td>15 Mordad 1404</td>
+                <td>اولین نسخه پایدار</td>
+              </tr>
+            </table>
+          </div>
+          
+          <div class="goals">
+            <h3>اهداف ترجمه</h3>
+            <p>
+              هدف اصلی این ترجمه، ارائه‌ی نسخه‌ای بومی‌شده و قابل‌استفاده برای کاربران فارسی‌زبان علاقه‌مند به خط فرمان لینوکس است. این نسخه به‌گونه‌ای طراحی شده تا در برنامه‌های آموزشی، دوره‌های تخصصی و نیز مطالعات فردی قابل استفاده باشد. در این ترجمه تلاش شده تا دقت فنی حفظ شده و هم‌زمان خوانایی متن برای مخاطب غیرفنی نیز قابل‌قبول باشد.
+            </p>
+          </div>
+          
+          <div class="footer">
+            <p>این نسخه بخشی از یک پروژه مستقل آموزشی غیرتجاری است که در چارچوب منابع آزاد برای استفاده‌ی عمومی منتشر شده است.</p>
+            <p>نسخه‌های اصلی کتاب توسط ناشر تخصصی No Starch Press منتشر شده‌اند.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="book-spine">خط فرمان لینوکس</div>
+      
+      <button class="flip-btn" id="flipBtn">
+        <i class="fas fa-sync-alt"></i>
+      </button>
     </div>
   </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const book = document.getElementById('book');
+      const flipBtn = document.getElementById('flipBtn');
+      
+      flipBtn.addEventListener('click', function() {
+        book.classList.toggle('flipped');
+      });
+      
+      // Add some interactive elements
+      const robotEyes = document.querySelectorAll('.robot-eye');
+      robotEyes.forEach(eye => {
+        eye.addEventListener('mouseover', function() {
+          this.style.transform = 'scale(1.2)';
+        });
+        eye.addEventListener('mouseout', function() {
+          this.style.transform = 'scale(1)';
+        });
+      });
+      
+      // Add keyboard navigation
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+          book.classList.add('flipped');
+        } else if (e.key === 'ArrowLeft') {
+          book.classList.remove('flipped');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
