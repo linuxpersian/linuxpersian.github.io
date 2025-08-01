@@ -1440,16 +1440,16 @@
         <div class="toolbar-section">
             <!-- حالت‌های نمایش -->
             <div class="view-mode-controls">
-                <button class="view-mode-btn active" onclick="setViewMode('normal')" title="حالت عادی">
+                <button class="view-mode-btn active" data-mode="normal" onclick="setViewMode('normal', this)" title="حالت عادی">
                     <i class="fas fa-file-alt"></i>
                 </button>
-                <button class="view-mode-btn" onclick="setViewMode('reading')" title="حالت خواندن">
+                <button class="view-mode-btn" data-mode="reading" onclick="setViewMode('reading', this)" title="حالت خواندن">
                     <i class="fas fa-book-open"></i>
                 </button>
-                <button class="view-mode-btn" onclick="setViewMode('night')" title="حالت شب">
+                <button class="view-mode-btn" data-mode="night" onclick="setViewMode('night', this)" title="حالت شب">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button class="view-mode-btn" onclick="setViewMode('focus')" title="حالت تمرکز">
+                <button class="view-mode-btn" data-mode="focus" onclick="setViewMode('focus', this)" title="حالت تمرکز">
                     <i class="fas fa-eye"></i>
                 </button>
             </div>
@@ -2180,8 +2180,20 @@
                 document.body.classList.add('dark-mode');
             }
             
+            // به‌روزرسانی دکمه‌های فعال بدون استفاده از event
+            updateViewModeButtons(currentViewMode);
             setViewMode(currentViewMode);
             setFontSize(fontSize);
+        }
+        
+        // به‌روزرسانی دکمه‌های حالت نمایش
+        function updateViewModeButtons(mode) {
+            document.querySelectorAll('.view-mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.getAttribute('data-mode') === mode) {
+                    btn.classList.add('active');
+                }
+            });
         }
         
         // بارگذاری لیست تمام فایل‌ها
@@ -2717,7 +2729,7 @@
         }
         
         // تغییر حالت نمایش
-        function setViewMode(mode) {
+        function setViewMode(mode, buttonElement = null) {
             currentViewMode = mode;
             localStorage.setItem('viewMode', mode);
             
@@ -2738,10 +2750,14 @@
             }
             
             // به‌روزرسانی دکمه‌های فعال
-            document.querySelectorAll('.view-mode-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.closest('.view-mode-btn').classList.add('active');
+            if (buttonElement) {
+                document.querySelectorAll('.view-mode-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                buttonElement.classList.add('active');
+            } else {
+                updateViewModeButtons(mode);
+            }
         }
         
         // تغییر حالت تاریک
