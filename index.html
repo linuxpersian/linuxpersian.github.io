@@ -152,6 +152,8 @@
       backdrop-filter: blur(5px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       animation: terminalBlink 2s infinite;
+      direction: ltr;
+      text-align: left;
     }
     @keyframes terminalBlink {
       0%, 100% { opacity: 0.8; }
@@ -453,6 +455,8 @@
       font-size: 12px;
       color: #e2e8f0;
       line-height: 1.6;
+      direction: ltr;
+      text-align: left;
     }
     
     .terminal-command {
@@ -514,6 +518,7 @@
       color: var(--gray);
       font-size: 0.95rem;
       line-height: 1.8;
+      text-align: justify;
     }
     
     /* Description */
@@ -687,108 +692,6 @@
       text-decoration: underline;
     }
     
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-      backdrop-filter: blur(5px);
-    }
-    
-    .modal-content {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 30px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 90vh;
-      overflow-y: auto;
-      position: relative;
-      animation: modalFadeIn 0.3s ease;
-      border: 1px solid rgba(139, 92, 246, 0.2);
-    }
-    
-    @keyframes modalFadeIn {
-      from {
-        opacity: 0;
-        transform: scale(0.9);
-      }
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    
-    .modal-close {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      color: var(--gray);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-    
-    .modal-close:hover {
-      color: var(--dark);
-    }
-    
-    .modal h3 {
-      color: var(--primary);
-      font-size: 1.4rem;
-      margin-bottom: 15px;
-      text-align: right;
-    }
-    
-    .modal h4 {
-      color: var(--secondary);
-      font-size: 1.1rem;
-      margin: 20px 0 10px 0;
-      text-align: right;
-    }
-    
-    .modal p {
-      color: var(--gray);
-      line-height: 1.8;
-      text-align: justify;
-      margin-bottom: 15px;
-    }
-    
-    .modal ul {
-      color: var(--gray);
-      line-height: 1.8;
-      text-align: right;
-      margin-right: 20px;
-      margin-bottom: 15px;
-    }
-    
-    .modal li {
-      margin-bottom: 8px;
-    }
-    
-    .modal .info-box {
-      background: var(--light-gray);
-      border-radius: 8px;
-      padding: 15px;
-      margin: 15px 0;
-      border-right: 3px solid var(--primary);
-    }
-    
-    .modal .info-box p {
-      margin-bottom: 0;
-      font-size: 0.9rem;
-    }
-    
     /* Ripple effect */
     .ripple {
       position: absolute;
@@ -942,11 +845,6 @@
         padding: 12px 24px;
         font-size: 0.9rem;
       }
-      
-      .modal-content {
-        max-width: 90%;
-        padding: 20px;
-      }
     }
     
     @media (max-width: 480px) {
@@ -1080,19 +978,6 @@
         width: 100%;
         max-width: 280px;
       }
-      
-      .modal-content {
-        max-width: 95%;
-        padding: 15px;
-      }
-      
-      .modal h3 {
-        font-size: 1.2rem;
-      }
-      
-      .modal h4 {
-        font-size: 1rem;
-      }
     }
   </style>
 </head>
@@ -1128,9 +1013,9 @@
       <a href="linux-command-line-fa.pdf" class="btn" download="خط-فرمان-لینوکس.pdf">
         <i class="fas fa-download"></i> دریافت فایل PDF
       </a>
-      <button class="btn btn-secondary" onclick="showModal()">
+      <a href="#description" class="btn btn-secondary">
         <i class="fas fa-info-circle"></i> اطلاعات بیشتر
-      </button>
+      </a>
       <a href="https://linuxcommand.org/" target="_blank" class="btn btn-accent">
         <i class="fas fa-globe"></i> وبسایت پروژه
       </a>
@@ -1227,7 +1112,7 @@
         <p>این ترجمه رسمی و معتبر از اثر «The Linux Command Line» به تألیف ویلیام شاتس، تحت حمایت و مشمول مقررات دقیق مجوز بین‌المللی Creative Commons Attribution–NonCommercial–NoDerivatives 3.0 (CC BY-NC-ND 3.0) منتشر گردیده است. ترجمه مذکور پس از اخذ اجازه کتبی و مستقیم از دارنده حقوق معنوی اثر و در چارچوب کامل و بدون هیچ گونه اغماض نسبت به مفاد و شرایط این مجوز بین‌المللی تدوین شده است.</p>
       </div>
       
-      <div class="description">
+      <div class="description" id="description">
         <p>به دنیای شگفت‌انگیز خط فرمان لینوکس خوش آمدید! این کتاب نه تنها یک راهنمای آموزشی، بلکه یک همراه حرفه‌ای برای سفر شما به قلب تپنده لینوکس است. <strong>The Linux Command Line</strong> نوشته‌ی <strong>ویلیام شاتس</strong>، اثری است که با دقتی مثال‌زدنی و زبانی ساده اما عمیق، شما را از مفاهیم پایه تا پیشرفته‌ترین تکنیک‌های خط فرمان هدایت می‌کند.</p>
         
         <p>این کتاب با رویکردی منحصر به فرد، یادگیری خط فرمان را از یک چالش به یک ماجراجویی هیجان‌انگیز تبدیل می‌کند. ویلیام شاتس با سال‌ها تجربه در آموزش لینوکس، توانسته است مفاهیم پیچیده را به شکلی قابل فهم و جذاب ارائه دهد. هر فصل با مثال‌های عملی و تمرین‌های کاربردی همراه است که به شما کمک می‌کند دانش خود را در دنیای واقعی به کار بگیرید.</p>
@@ -1256,80 +1141,7 @@
     </div>
   </div>
   
-  <!-- Modal -->
-  <div id="infoModal" class="modal">
-    <div class="modal-content">
-      <button class="modal-close" onclick="closeModal()">&times;</button>
-      <h3>درباره این ترجمه و پروژه</h3>
-      
-      <p>این ترجمه رسمی و معتبر از اثر «The Linux Command Line» به تألیف ویلیام شاتس، تحت حمایت و مشمول مقررات دقیق مجوز بین‌المللی Creative Commons Attribution–NonCommercial–NoDerivatives 3.0 (CC BY-NC-ND 3.0) منتشر گردیده است.</p>
-      
-      <h4>اهداف پروژه</h4>
-      <p>این نسخه، بخشی از یک پروژه آموزشی مستقل و غیرانتفاعی در بستر linuxcommand.org محسوب می‌شود که با اهداف زیر طراحی و اجرا شده است:</p>
-      <ul>
-        <li>توانمندسازی فنی کاربران فارسی‌زبان در حوزه سیستم‌های عامل لینوکس</li>
-        <li>تعمیق درک مفهومی از محیط خط فرمان و ابزارهای قدرتمند آن</li>
-        <li>تسهیل فرایند مهاجرت تکنیکی از سامانه‌های انحصاری به زیرساخت‌های متن‌باز و آزاد</li>
-        <li>ایجاد جامعه‌ای پویا از کاربران و توسعه‌دهندگان فارسی‌زبان لینوکس</li>
-      </ul>
-      
-      <h4>فرآیند ترجمه</h4>
-      <p>ترجمه این اثر با رعایت اصول زیر انجام شده است:</p>
-      <ul>
-        <li>دقت بالا در انتقال مفاهیم فنی و تخصصی</li>
-        <li>رعایت اصول زبانشناسی و نگارش فنی فارسی</li>
-        <li>استفاده از واژگان و اصطلاحات رایج در جامعه فنی ایران</li>
-        <li>حفظ ساختار و سبک آموزشی اثر اصلی</li>
-        <li>بررسی و ویرایش توسط متخصصان حوزه لینوکس</li>
-      </ul>
-      
-      <div class="info-box">
-        <p><strong>نکته مهم:</strong> این ترجمه با همکاری مستقیم نویسنده اثر اصلی و تحت نظارت دقیق تیم linuxcommand.org انجام شده است تا از بالاترین کیفیت و اعتبار علمی برخوردار باشد.</p>
-      </div>
-      
-      <h4>منابع تکمیلی</h4>
-      <p>علاوه بر این کتاب، پروژه linuxcommand.org منابع آموزشی دیگری نیز ارائه می‌دهد:</p>
-      <ul>
-        <li>مجموعه‌ای از تمرین‌های عملی و پروژه‌های کاربردی</li>
-        <li>راهنمای مرجع دستورات خط فرمان لینوکس</li>
-        <li>ویدیوهای آموزشی و وبینارهای تخصصی</li>
-        <li>انجمن پرسش و پاسخ برای کاربران فارسی‌زبان</li>
-      </ul>
-      
-      <h4>حمایت از پروژه</h4>
-      <p>شما می‌توانید از طریق روش‌های زیر از این پروژه آموزشی حمایت کنید:</p>
-      <ul>
-        <li>معرفی این کتاب به دوستان و همکاران علاقه‌مند</li>
-        <li>اشتراک‌گذاری تجربیات و بازخوردهای خود با ما</li>
-        <li>مشارکت در ترجمه منابع آموزشی دیگر</li>
-        <li>گزارش اشکالات و پیشنهادات برای بهبود محتوا</li>
-      </ul>
-      
-      <div class="info-box">
-        <p>ترجمه با دقت بالا و رعایت اصول فنی و زبانی انجام شده و به عنوان منبعی معتبر برای جامعه فارسی‌زبان علاقه‌مند به لینوکس ارائه می‌شود.</p>
-      </div>
-    </div>
-  </div>
-  
   <script>
-    function showModal() {
-      document.getElementById('infoModal').style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-    }
-    
-    function closeModal() {
-      document.getElementById('infoModal').style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-    
-    // Close modal when clicking outside
-    window.onclick = function(event) {
-      const modal = document.getElementById('infoModal');
-      if (event.target == modal) {
-        closeModal();
-      }
-    }
-    
     // Add ripple effect to buttons
     document.querySelectorAll('.btn').forEach(button => {
       button.addEventListener('click', function(e) {
