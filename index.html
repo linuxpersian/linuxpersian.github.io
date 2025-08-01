@@ -199,6 +199,7 @@
       padding: 20px;
       position: relative;
       background: var(--light);
+      overflow: hidden;
     }
 
     .cover-image::before {
@@ -212,62 +213,19 @@
       z-index: 1;
     }
 
-    .linux-robot-svg {
-      width: 250px;
-      height: 250px;
+    .cover-image img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
       z-index: 2;
       position: relative;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease;
     }
 
-    /* SVG Animations */
-    .robot-eye {
-      animation: blink 4s infinite;
-    }
-
-    @keyframes blink {
-      0%, 45%, 50%, 100% { transform: scaleY(1); }
-      48% { transform: scaleY(0.1); }
-    }
-
-    .robot-command {
-      animation: float-up 8s linear infinite;
-      opacity: 0;
-    }
-
-    .robot-command:nth-child(1) {
-      animation-delay: 0s;
-    }
-
-    .robot-command:nth-child(2) {
-      animation-delay: 1s;
-    }
-
-    .robot-command:nth-child(3) {
-      animation-delay: 2s;
-    }
-
-    @keyframes float-up {
-      0% { transform: translateY(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100px); opacity: 0; }
-    }
-
-    .robot-terminal-line {
-      animation: terminal-blink 2s infinite;
-    }
-
-    .robot-terminal-line:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-
-    .robot-terminal-line:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-
-    @keyframes terminal-blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    .cover-image img:hover {
+      transform: scale(1.02);
     }
 
     .download-section {
@@ -443,6 +401,128 @@
       box-shadow: 0 7px 20px rgba(6, 182, 212, 0.4);
     }
 
+    /* Markdown Styles */
+    .typing-text h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 1.5rem 0 1rem;
+      color: var(--dark);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 0.5rem;
+    }
+
+    .typing-text h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 1.5rem 0 0.8rem;
+      color: var(--dark);
+      border-right: 3px solid var(--secondary);
+      padding-right: 0.8rem;
+    }
+
+    .typing-text h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 1.2rem 0 0.6rem;
+      color: var(--dark);
+    }
+
+    .typing-text p {
+      margin: 1rem 0;
+      text-align: justify;
+    }
+
+    .typing-text ul {
+      margin: 1rem 0;
+      padding-right: 1.5rem;
+      list-style-type: disc;
+    }
+
+    .typing-text ol {
+      margin: 1rem 0;
+      padding-right: 1.5rem;
+      list-style-type: decimal;
+    }
+
+    .typing-text li {
+      margin: 0.5rem 0;
+    }
+
+    .typing-text a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .typing-text a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .typing-text strong {
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .typing-text em {
+      font-style: italic;
+      color: var(--gray);
+    }
+
+    .typing-text code {
+      font-family: 'Ubuntu Mono', monospace;
+      background-color: rgba(6, 182, 212, 0.1);
+      color: var(--primary-dark);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+
+    .typing-text pre {
+      background-color: #f3f4f6;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+      border: 1px solid #e5e7eb;
+    }
+
+    .typing-text pre code {
+      background-color: transparent;
+      color: var(--dark);
+      padding: 0;
+    }
+
+    .typing-text blockquote {
+      border-right: 3px solid var(--secondary);
+      padding-right: 1rem;
+      margin: 1rem 0;
+      color: var(--gray);
+      font-style: italic;
+    }
+
+    .typing-text table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+
+    .typing-text th, .typing-text td {
+      border: 1px solid #e5e7eb;
+      padding: 0.75rem;
+      text-align: right;
+    }
+
+    .typing-text th {
+      background-color: rgba(6, 182, 212, 0.1);
+      font-weight: 700;
+    }
+
+    .typing-text tr:nth-child(even) {
+      background-color: #f9fafb;
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .book {
@@ -466,11 +546,6 @@
         font-size: 0.75rem;
         top: 5px;
         right: -5px;
-      }
-      
-      .linux-robot-svg {
-        width: 200px;
-        height: 200px;
       }
       
       .modal-content {
@@ -504,53 +579,7 @@
       <div class="author">ترجمه محمد مهدی نژاد</div>
       
       <div class="cover-image">
-        <svg class="linux-robot-svg" version="1.0" xmlns="http://www.w3.org/2000/svg" width="300.000000pt" height="234.000000pt" viewBox="0 0 300.000000 234.000000" preserveAspectRatio="xMidYMid meet">
-          <g transform="translate(0.000000,234.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
-            <!-- Robot Head -->
-            <path class="robot-head" d="M176 2328 c22 -38 68 -97 72 -93 7 6 -60 105 -71 105 -5 0 -5 -6 -1 -12z"/>
-            <path class="robot-head" d="M400 2336 c0 -12 245 -422 267 -448 13 -14 12 -18 -7 -28 -11 -6 -30 -8 -41 -5 -11 4 -33 2 -48 -5 -25 -10 -32 -8 -57 16 -32 29 -83 54 -113 54 -18 0 -19 6 -14 98 4 85 2 101 -16 129 -16 25 -29 33 -64 38 -53 8 -81 1 -124 -31 -77 -58 -105 -134 -50 -134 32 0 63 -24 89 -71 12 -22 36 -49 54 -60 l32 -19 -37 -40 c-20 -22 -46 -40 -57 -40 -37 0 -108 -30 -127 -53 -13 -15 -20 -18 -24 -9 -7 18 -63 16 -63 -3 0 -8 9 -15 20 -15 30 0 88 -58 101 -100 7 -21 9 -54 5 -75 -8 -39 -48 -85 -75 -85 -13 1 -12 3 4 15 56 40 71 77 54 138 -10 38 -69 97 -97 97 -10 0 -3 -8 17 -17 70 -35 96 -139 46 -188 -13 -14 -36 -25 -50 -25 -20 0 -25 -5 -25 -25 0 -22 4 -25 38 -25 21 0 47 7 58 15 12 8 58 17 105 21 46 4 93 10 104 14 34 12 74 -9 100 -55 38 -64 81 -191 94 -273 24 -154 11 -486 -21 -534 -9 -13 -39 -27 -83 -39 -120 -33 -137 -33 -168 -9 -15 12 -27 27 -27 35 0 7 -6 15 -13 18 -19 7 -115 167 -154 256 l-33 76 0 -61 c0 -55 4 -68 50 -144 28 -46 75 -116 105 -157 50 -66 59 -73 90 -73 34 0 36 -2 90 -110 94 -187 104 -187 389 -22 115 67 210 122 212 122 1 0 7 -33 14 -72 16 -98 70 -380 76 -397 3 -9 8 -11 13 -5 5 5 -2 91 -15 194 -14 102 -25 217 -27 256 -2 66 1 77 45 165 57 114 105 165 203 213 41 20 77 36 81 36 4 0 4 -18 1 -39 -5 -40 -5 -40 79 -105 46 -36 91 -66 99 -66 27 0 209 62 266 91 l57 28 51 -54 c120 -127 142 -241 96 -500 -14 -82 -29 -165 -32 -183 -4 -24 -2 -32 9 -32 11 0 24 46 51 184 20 101 37 205 37 231 0 26 3 45 8 43 128 -66 223 -88 376 -88 l115 0 20 29 c34 48 102 75 172 68 57 -5 60 -4 102 33 24 21 56 56 71 79 28 40 28 42 25 166 -2 69 -1 125 3 125 14 0 68 52 68 66 0 22 -14 17 -63 -20 -24 -18 -57 -36 -73 -39 -16 -3 -57 -10 -92 -17 -34 -7 -72 -10 -85 -6 -44 11 -200 231 -277 391 -63 132 -97 237 -110 343 -15 120 -10 141 45 174 25 15 50 39 57 53 10 22 16 24 45 19 22 -4 56 1 100 16 141 45 162 50 201 50 48 0 61 -14 36 -41 -17 -19 -17 -23 -1 -82 58 -204 83 -328 131 -636 18 -115 36 -142 36 -53 0 177 -81 570 -157 762 -5 12 -3 13 8 3 25 -21 87 -154 113 -245 40 -138 57 -285 54 -451 -3 -141 -2 -145 15 -129 18 16 19 33 15 267 -4 236 -6 255 -31 338 -32 102 -62 167 -120 254 -32 49 -46 61 -62 58 -64 -14 -69 -12 -97 40 -15 28 -43 65 -64 84 -35 32 -39 33 -98 28 -76 -7 -206 -50 -224 -74 -8 -12 -12 -41 -11 -83 2 -39 -2 -75 -10 -89 -7 -13 -11 -36 -9 -53 3 -16 1 -31 -3 -34 -31 -19 -10 -234 36 -369 51 -152 158 -341 284 -498 42 -53 70 -79 89 -83 25 -5 27 -10 29 -55 1 -27 -1 -49 -5 -49 -28 0 -80 52 -128 127 -93 145 -141 183 -233 183 -68 0 -94 -12 -159 -74 -76 -71 -153 -96 -183 -60 -18 22 -84 14 -150 -19 l-51 -25 -67 31 c-36 16 -67 31 -69 32 -1 1 -7 40 -12 86 -5 46 -12 101 -15 122 -3 20 -1 37 4 37 5 0 61 18 124 41 112 39 115 41 121 75 4 19 13 34 20 34 15 0 69 80 81 118 5 17 -1 29 -25 52 -36 33 -37 58 -6 135 8 22 15 58 16 81 0 39 1 40 29 36 38 -5 67 11 87 50 19 36 13 91 -11 118 -15 17 -15 21 -1 49 54 103 -41 204 -144 153 -24 -11 -44 -16 -52 -11 -16 11 -58 12 -58 2 0 -5 -4 -14 -9 -21 -6 -10 -19 -7 -59 13 -107 54 -237 53 -359 0 -30 -14 -62 -25 -69 -25 -7 0 -19 -10 -25 -22 -7 -12 -21 -30 -33 -39 l-21 -18 33 -64 c18 -35 55 -91 82 -125 41 -50 48 -66 41 -81 -10 -18 -54 -51 -68 -51 -13 0 -40 60 -58 133 -10 37 -22 70 -27 73 -6 4 -19 -3 -30 -13 -20 -20 -20 -20 -74 33 -30 30 -60 54 -67 54 -6 0 -23 9 -37 20 -34 27 -53 26 -45 -1 6 -19 4 -21 -16 -16 -34 9 -114 -4 -97 -15 23 -17 -49 0 -98 22 -28 13 -60 20 -85 18 l-39 -3 25 -37 c20 -30 33 -38 58 -39 31 -2 31 -2 4 -6 -18 -3 -27 -9 -24 -17 4 -9 -2 -11 -16 -9 -17 4 -34 32 -77 129 -49 114 -81 169 -68 116 12 -44 -19 -8 -77 91 -33 56 -61 107 -63 114 -3 12 -22 19 -22 9z"/>
-            
-            <!-- Robot Eyes -->
-            <g class="robot-eyes">
-              <path class="robot-eye" d="M1657 2081 c28 -11 57 -22 64 -27 8 -4 9 -3 5 5 -10 15 -73 41 -100 41 -11 -1 2 -9 31 -19z"/>
-              <path class="robot-eye" d="M1563 1965 c-118 -60 -126 -165 -13 -165 53 0 121 31 155 72 74 87 -25 152 -142 93z m131 -11 c19 -19 19 -18 1 -54 -12 -23 -70 -70 -87 -70 -3 0 -3 11 0 25 6 35 -23 65 -62 64 l-31 0 33 -17 c61 -30 47 -103 -18 -87 -44 11 -55 29 -40 65 28 68 162 117 204 74z"/>
-            </g>
-            
-            <!-- Robot Mouth with Commands -->
-            <g class="robot-mouth">
-              <path class="robot-command" d="M1091 1911 c-11 -7 -11 -13 3 -32 l16 -23 0 32 c0 36 0 35 -19 23z"/>
-              <path class="robot-command" d="M1020 1901 c1 -14 16 -26 37 -28 31 -4 19 23 -13 30 -13 2 -24 1 -24 -2z"/>
-              <path class="robot-command" d="M1210 1766 c0 -7 7 -19 15 -26 8 -7 15 -18 15 -26 0 -22 -20 -27 -41 -8 -25 23 -37 10 -14 -16 21 -23 41 -26 48 -7 3 6 6 2 6 -10 1 -13 10 -32 20 -42 13 -13 18 -27 14 -43 -6 -21 -5 -22 10 -9 16 12 15 18 -14 67 -17 30 -27 54 -22 54 4 0 18 -17 30 -38 15 -25 22 -31 23 -19 0 10 -13 38 -30 62 -16 24 -30 51 -30 59 0 9 -7 16 -15 16 -8 0 -15 -6 -15 -14z"/>
-            </g>
-            
-            <!-- Robot Body -->
-            <path class="robot-body" d="M896 1663 c9 -21 18 -43 20 -49 3 -6 16 -16 30 -23 23 -10 24 -10 13 12 -28 52 -60 97 -69 97 -6 0 -3 -16 6 -37z"/>
-            <path class="robot-body" d="M670 1633 c0 -15 178 -238 184 -232 12 13 -29 80 -93 154 -67 77 -91 98 -91 78z"/>
-            <path class="robot-body" d="M850 1606 c0 -28 24 -46 41 -29 6 6 0 18 -16 33 l-25 23 0 -27z"/>
-            
-            <!-- Robot Arms -->
-            <path class="robot-arm" d="M601 1543 c73 -82 133 -142 137 -138 3 3 -3 15 -14 28 -11 12 -26 31 -34 42 -16 22 15 -2 83 -64 72 -68 36 -15 -50 71 -71 71 -93 88 -117 88 l-29 0 24 -27z"/>
-            <path class="robot-arm" d="M810 1558 c1 -14 50 -78 50 -65 0 4 -7 23 -14 42 -15 34 -36 48 -36 23z"/>
-            
-            <!-- Robot Terminal -->
-            <g class="robot-terminal">
-              <path class="robot-terminal-line" d="M450 1512 c0 -5 11 -19 25 -32 19 -18 25 -20 25 -8 0 8 -8 22 -18 31 -20 19 -32 22 -32 9z"/>
-              <path class="robot-terminal-line" d="M585 1436 c44 -42 83 -76 88 -76 20 0 0 23 -65 76 -107 85 -112 85 -23 0z"/>
-              <path class="robot-terminal-line" d="M510 1447 c0 -10 202 -178 207 -173 8 7 -49 61 -127 120 -60 46 -80 59 -80 53z"/>
-            </g>
-            
-            <!-- Additional robot details -->
-            <path d="M662 1418 c8 -12 25 -28 39 -37 18 -11 16 -6 -10 22 -39 42 -50 48 -29 15z"/>
-            <path d="M580 1295 c35 -35 67 -60 70 -54 4 5 14 7 23 3 9 -3 17 -4 17 -1 0 7 -157 117 -167 117 -4 0 21 -29 57 -65z"/>
-            <path d="M1010 1237 c0 -7 9 -18 20 -25 22 -14 25 -9 10 19 -12 21 -30 26 -30 6z"/>
-            <path d="M950 1191 c0 -4 9 -20 21 -35 18 -22 18 -27 5 -32 -9 -3 -32 4 -53 17 l-38 23 20 -23 c11 -13 37 -32 58 -42 37 -19 37 -19 37 0 0 15 5 19 17 14 10 -4 0 14 -22 40 -41 49 -45 53 -45 38z"/>
-            <path d="M860 1125 c0 -23 31 -60 64 -77 l41 -20 -50 51 c-48 50 -55 56 -55 46z"/>
-            <path d="M830 1038 c0 -10 63 -39 69 -32 3 2 -3 12 -12 21 -18 18 -57 25 -57 11z"/>
-            <path d="M795 1011 c-7 -12 19 -37 58 -57 l32 -16 -40 41 c-44 46 -42 44 -50 32z"/>
-            <path d="M780 925 c0 -15 38 -35 63 -35 12 1 -13 23 -45 41 -14 7 -18 6 -18 -6z"/>
-            <path d="M696 829 c7 -12 95 -52 101 -45 5 4 -85 56 -99 56 -5 0 -6 -5 -2 -11z"/>
-          </g>
-        </svg>
+        <img src="cover.jpg" alt="جلد کتاب خط فرمان لینوکس">
       </div>
       
       <div class="download-section">
@@ -609,6 +638,57 @@
           resetTyping();
         }
       });
+      
+      // Markdown to HTML converter
+      function markdownToHtml(markdown) {
+        // Convert headers
+        let html = markdown
+          .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+          .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+          .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+          
+          // Convert bold
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/__(.*?)__/g, '<strong>$1</strong>')
+          
+          // Convert italic
+          .replace(/\*(.*?)\*/g, '<em>$1</em>')
+          .replace(/_(.*?)_/g, '<em>$1</em>')
+          
+          // Convert inline code
+          .replace(/`(.*?)`/g, '<code>$1</code>')
+          
+          // Convert links
+          .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+          
+          // Convert unordered lists
+          .replace(/^- (.*$)/gim, '<li>$1</li>')
+          .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>')
+          
+          // Convert ordered lists
+          .replace(/^\d+\. (.*$)/gim, '<li>$1</li>')
+          .replace(/(<li>.*<\/li>)/s, '<ol>$1</ol>')
+          
+          // Convert blockquotes
+          .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+          
+          // Convert code blocks
+          .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+          .replace(/    ([\s\S]*?)\n/g, '<pre><code>$1</code></pre>\n')
+          
+          // Convert paragraphs (split by double line breaks)
+          .replace(/\n\n/g, '</p><p>')
+          .replace(/\n/g, '<br>');
+        
+        // Wrap in paragraph tags
+        html = '<p>' + html + '</p>';
+        
+        // Fix nested lists
+        html = html.replace(/<\/ul>\s*<ul>/g, '')
+                 .replace(/<\/ol>\s*<ol>/g, '');
+        
+        return html;
+      }
       
       // Typing effect
       const typingText = document.getElementById('typingText');
@@ -702,13 +782,16 @@
       let typingInterval;
       
       function startTyping() {
-        typingText.textContent = '';
+        typingText.innerHTML = '';
         charIndex = 0;
         cursor.style.display = 'inline-block';
         
+        // Convert markdown to HTML
+        const htmlContent = markdownToHtml(bookInfo);
+        
         typingInterval = setInterval(() => {
-          if (charIndex < bookInfo.length) {
-            typingText.textContent += bookInfo.charAt(charIndex);
+          if (charIndex < htmlContent.length) {
+            typingText.innerHTML += htmlContent.charAt(charIndex);
             charIndex++;
             
             // Auto scroll to bottom as text grows
@@ -718,25 +801,14 @@
             clearInterval(typingInterval);
             cursor.style.display = 'none';
           }
-        }, 15);
+        }, 10);
       }
       
       function resetTyping() {
         clearInterval(typingInterval);
-        typingText.textContent = '';
+        typingText.innerHTML = '';
         cursor.style.display = 'none';
       }
-      
-      // Add some interactive elements
-      const robotEyes = document.querySelectorAll('.robot-eye');
-      robotEyes.forEach(eye => {
-        eye.addEventListener('mouseover', function() {
-          this.style.transform = 'scale(1.2)';
-        });
-        eye.addEventListener('mouseout', function() {
-          this.style.transform = 'scale(1)';
-        });
-      });
     });
   </script>
 </body>
