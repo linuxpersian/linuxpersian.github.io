@@ -1204,6 +1204,41 @@
             line-height: 1.6;
         }
         
+        /* لاگ بارگذاری */
+        .loading-log {
+            background: var(--surface-variant);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            max-height: 200px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+        
+        .log-entry {
+            margin-bottom: 0.5rem;
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.3rem;
+        }
+        
+        .log-info {
+            background: rgba(33, 150, 243, 0.1);
+            color: #2196F3;
+        }
+        
+        .log-error {
+            background: rgba(244, 67, 54, 0.1);
+            color: #F44336;
+        }
+        
+        .log-success {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+        
         /* ریسپانسیو */
         @media (max-width: 1024px) {
             .content-wrapper {
@@ -1427,11 +1462,6 @@
                 <i class="fas fa-plus"></i>
             </button>
             
-            <!-- TTS -->
-            <button class="btn btn-icon" onclick="toggleTTS()" title="متن به گفتار">
-                <i class="fas fa-volume-up"></i>
-            </button>
-            
             <!-- تنظیمات -->
             <button class="btn btn-icon" onclick="openModal('settingsModal')" title="تنظیمات">
                 <i class="fas fa-cog"></i>
@@ -1444,6 +1474,11 @@
         <div class="content-wrapper" id="content">
             <!-- محتوای اصلی -->
             <main class="main-content">
+                <!-- لاگ بارگذاری -->
+                <div class="loading-log" id="loadingLog" style="display: none;">
+                    <div class="log-entry log-info">در حال آماده‌سازی برای بارگذاری فایل...</div>
+                </div>
+                
                 <div id="markdownContent" class="markdown-content">
                     <div class="loading flex flex-col items-center justify-center py-16">
                         <div class="spinner mb-4"></div>
@@ -1616,12 +1651,12 @@
         let currentContent = null;
         let isDarkMode = false;
         let fontSize = 16;
-        let ttsEnabled = false;
         let currentViewMode = 'normal';
         let isBookmarked = false;
         let searchHighlights = [];
         let currentSearchIndex = 0;
         let allFileNames = [];
+        let loadingLog = [];
         
         // سیستم تگ‌ها
         const tagSystem = {
@@ -2090,6 +2125,33 @@
                     <p class="text-gray-600">در حال بارگذاری مقاله...</p>
                 </div>
             `;
+            
+            // نمایش لاگ بارگذاری
+            const loadingLogElement = document.getElementById('loadingLog');
+            loadingLogElement.style.display = 'block';
+            loadingLogElement.innerHTML = '<div class="log-entry log-info">در حال آماده‌سازی برای بارگذاری فایل...</div>';
+            loadingLog = [];
+        }
+        
+        // افزودن ورودی به لاگ
+        function addLogEntry(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString('fa-IR');
+            const logEntry = {
+                timestamp,
+                message,
+                type
+            };
+            
+            loadingLog.push(logEntry);
+            
+            const loadingLogElement = document.getElementById('loadingLog');
+            const entryElement = document.createElement('div');
+            entryElement.className = `log-entry log-${type}`;
+            entryElement.textContent = `[${timestamp}] ${message}`;
+            loadingLogElement.appendChild(entryElement);
+            
+            // اسکرول به پایین لاگ
+            loadingLogElement.scrollTop = loadingLogElement.scrollHeight;
         }
         
         // تابع اصلی برای مقداردهی اولیه
@@ -2125,6 +2187,8 @@
         // بارگذاری لیست تمام فایل‌ها
         async function loadAllFileNames() {
             try {
+                addLogEntry('در حال بارگذاری لیست فایل‌ها از گیت‌هاب...');
+                
                 const GITHUB_API_BASE = 'https://api.github.com/repos/linuxpersian/linuxpersian.github.io/contents/wiki/source';
                 const response = await fetch(GITHUB_API_BASE);
                 
@@ -2138,9 +2202,11 @@
                     .map(file => file.name)
                     .sort(); // مرتب‌سازی الفبایی برای ناوبری بعدی/قبلی
                 
+                addLogEntry(`تعداد ${allFileNames.length} فایل مارک‌دان یافت شد.`, 'success');
                 console.log('All file names loaded:', allFileNames);
             } catch (error) {
                 console.error('خطا در بارگذاری لیست فایل‌ها:', error);
+                addLogEntry(`خطا در بارگذاری لیست فایل‌ها: ${error.message}`, 'error');
                 showToast('خطا در بارگذاری لیست فایل‌ها برای ناوبری.', 'error');
             }
         }
@@ -2162,12 +2228,13 @@
                 }
                 
                 currentFile = fileName;
+                addLogEntry(`در حال بارگذاری فایل: ${fileName}`);
                 
                 // استفاده از آدرس صحیح گیت‌هاب
                 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
                 const fileUrl = `${GITHUB_RAW_BASE}/${fileName}`;
                 
-                console.log('Loading file from:', fileUrl);
+                addLogEntry(`در حال ارسال درخواست به: ${fileUrl}`);
                 
                 const response = await fetch(fileUrl);
                 
@@ -2181,6 +2248,8 @@
                 
                 const content = await response.text();
                 currentContent = content;
+                
+                addLogEntry('فایل با موفقیت بارگذاری شد.', 'success');
                 
                 // استخراج عنوان
                 const titleMatch = content.match(/^#\s+(.+)$/m);
@@ -2205,11 +2274,40 @@
                 // بازیابی موقعیت خواندن
                 restoreReadingPosition();
                 
+                // پنهان کردن لاگ بارگذاری پس از موفقیت
+                setTimeout(() => {
+                    document.getElementById('loadingLog').style.display = 'none';
+                }, 3000);
+                
                 showToast('مقاله با موفقیت بارگذاری شد.', 'success');
             } catch (error) {
                 console.error('Error loading file:', error);
-                showError(`خطا در بارگذاری مقاله: ${error.message}`);
+                addLogEntry(`خطا در بارگذاری فایل: ${error.message}`, 'error');
+                showErrorWithRetry(`خطا در بارگذاری مقاله: ${error.message}`);
             }
+        }
+        
+        // نمایش خطا با دکمه تلاش مجدد
+        function showErrorWithRetry(message) {
+            document.getElementById('markdownContent').innerHTML = `
+                <div class="error-message p-8 bg-red-50 dark:bg-red-900/20 rounded-lg text-center">
+                    <i class="fas fa-exclamation-triangle text-red-500 text-4xl mb-4"></i>
+                    <h2 class="text-xl font-bold text-red-700 dark:text-red-300 mb-2">خطا در بارگذاری مقاله</h2>
+                    <p class="text-red-600 dark:text-red-400 mb-6">${message}</p>
+                    <button class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition mr-2" onclick="window.history.back()">
+                        بازگشت
+                    </button>
+                    <button class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition" onclick="retryLoading()">
+                        تلاش مجدد
+                    </button>
+                </div>
+            `;
+        }
+        
+        // تلاش مجدد برای بارگذاری
+        function retryLoading() {
+            showLoading();
+            loadFile();
         }
         
         // نمایش محتوا
@@ -2675,42 +2773,6 @@
             if (fontSize > 12) {
                 setFontSize(fontSize - 2);
             }
-        }
-        
-        // متن به گفتار (TTS)
-        function toggleTTS() {
-            if (!ttsEnabled) {
-                startTTS();
-            } else {
-                stopTTS();
-            }
-        }
-        
-        function startTTS() {
-            if ('speechSynthesis' in window) {
-                const content = document.getElementById('markdownContent').innerText;
-                const utterance = new SpeechSynthesisUtterance(content);
-                utterance.lang = 'fa-IR';
-                utterance.rate = 0.9;
-                
-                speechSynthesis.speak(utterance);
-                ttsEnabled = true;
-                
-                showToast('شروع خواندن متن...', 'info');
-                
-                utterance.onend = () => {
-                    ttsEnabled = false;
-                    showToast('پایان خواندن متن.', 'info');
-                };
-            } else {
-                showToast('مرورگر شما از متن به گفتار پشتیبانی نمی‌کند.', 'error');
-            }
-        }
-        
-        function stopTTS() {
-            speechSynthesis.cancel();
-            ttsEnabled = false;
-            showToast('توقف خواندن متن.', 'info');
         }
         
         // اشتراک‌گذاری مقاله
