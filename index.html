@@ -84,75 +84,22 @@
     }
 
     .book-container {
-      perspective: 2000px;
       width: 100%;
-      max-width: 800px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      max-width: 600px;
       position: relative;
+      perspective: 1000px;
     }
 
     .book {
       width: 100%;
-      max-width: 600px;
       height: 750px;
       position: relative;
-      transform-style: preserve-3d;
-      transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-      cursor: pointer;
-    }
-
-    .book:hover {
-      transform: rotateY(-10deg);
-    }
-
-    .book-face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
       border-radius: 0 15px 15px 0;
-      box-shadow: 0 10px 30px var(--book-shadow);
+      box-shadow: 0 15px 35px var(--book-shadow);
       overflow: hidden;
       background: var(--white);
-    }
-
-    .book-front {
-      background: linear-gradient(135deg, var(--light) 0%, #fff8e1 100%);
-      border: 1px solid rgba(0, 0, 0, 0.1);
-      transform: translateZ(25px);
-      display: flex;
-      flex-direction: column;
-    }
-
-    .book-spine {
-      position: absolute;
-      left: -50px;
-      top: 0;
-      width: 50px;
-      height: 100%;
-      background: linear-gradient(90deg, var(--primary-dark) 0%, var(--primary) 100%);
-      transform: rotateY(90deg) translateZ(25px);
-      transform-origin: right;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--white);
-      font-weight: bold;
-      font-size: 1.2rem;
-      writing-mode: vertical-rl;
-      text-orientation: mixed;
-      padding: 20px 0;
-    }
-
-    .book-back {
-      background: var(--white);
-      transform: rotateY(180deg) translateZ(25px);
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
+      transform-style: preserve-3d;
+      transition: transform 0.5s ease;
     }
 
     .book-top {
@@ -251,7 +198,7 @@
       align-items: center;
       padding: 20px;
       position: relative;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23FFFBCE"/><path d="M30,70 L30,30 L50,30 L70,50 L70,70 Z" fill="%2306b6d4" stroke="%2306b6d4" stroke-width="2"/><path d="M50,30 L50,50 L70,50" fill="none" stroke="%2306b6d4" stroke-width="2"/><text x="50" y="85" font-family="monospace" font-size="10" text-anchor="middle" fill="%23000">ls -la</text></svg>') center/contain no-repeat;
+      background: var(--light);
     }
 
     .cover-image::before {
@@ -265,47 +212,15 @@
       z-index: 1;
     }
 
-    .linux-robot {
-      position: relative;
-      width: 200px;
-      height: 200px;
+    .linux-robot-svg {
+      width: 250px;
+      height: 250px;
       z-index: 2;
-    }
-
-    .robot-head {
-      width: 100px;
-      height: 80px;
-      background: var(--primary);
-      border-radius: 50px 50px 0 0;
-      position: absolute;
-      top: 20px;
-      left: 50px;
-      overflow: hidden;
-    }
-
-    .robot-eyes {
-      display: flex;
-      justify-content: space-around;
-      padding: 20px 15px 0;
-    }
-
-    .robot-eye {
-      width: 20px;
-      height: 20px;
-      background: var(--white);
-      border-radius: 50%;
       position: relative;
     }
 
-    .robot-eye::after {
-      content: '';
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--dark);
-      border-radius: 50%;
-      top: 5px;
-      left: 5px;
+    /* SVG Animations */
+    .robot-eye {
       animation: blink 4s infinite;
     }
 
@@ -314,42 +229,20 @@
       48% { transform: scaleY(0.1); }
     }
 
-    .robot-mouth {
-      width: 60px;
-      height: 20px;
-      background: var(--dark);
-      border-radius: 0 0 30px 30px;
-      position: absolute;
-      bottom: 10px;
-      left: 20px;
-      overflow: hidden;
-    }
-
-    .command {
-      position: absolute;
-      color: var(--white);
-      font-family: 'Ubuntu Mono', monospace;
-      font-size: 10px;
-      white-space: nowrap;
+    .robot-command {
       animation: float-up 8s linear infinite;
       opacity: 0;
     }
 
-    .command:nth-child(1) {
-      top: 15px;
-      left: 10px;
+    .robot-command:nth-child(1) {
       animation-delay: 0s;
     }
 
-    .command:nth-child(2) {
-      top: 25px;
-      left: 40px;
+    .robot-command:nth-child(2) {
       animation-delay: 1s;
     }
 
-    .command:nth-child(3) {
-      top: 35px;
-      left: 20px;
+    .robot-command:nth-child(3) {
       animation-delay: 2s;
     }
 
@@ -360,62 +253,15 @@
       100% { transform: translateY(-100px); opacity: 0; }
     }
 
-    .robot-body {
-      width: 120px;
-      height: 100px;
-      background: var(--primary-dark);
-      border-radius: 20px;
-      position: absolute;
-      top: 100px;
-      left: 40px;
-    }
-
-    .robot-arm {
-      width: 30px;
-      height: 80px;
-      background: var(--primary-dark);
-      border-radius: 15px;
-      position: absolute;
-      top: 110px;
-    }
-
-    .robot-arm.left {
-      left: 20px;
-      transform: rotate(-20deg);
-      transform-origin: top center;
-    }
-
-    .robot-arm.right {
-      right: 20px;
-      transform: rotate(20deg);
-      transform-origin: top center;
-    }
-
-    .robot-terminal {
-      width: 60px;
-      height: 40px;
-      background: var(--dark);
-      border-radius: 5px;
-      position: absolute;
-      top: 120px;
-      right: 30px;
-      overflow: hidden;
-    }
-
-    .terminal-line {
-      height: 3px;
-      background: var(--secondary);
-      margin: 5px 5px 0;
+    .robot-terminal-line {
       animation: terminal-blink 2s infinite;
     }
 
-    .terminal-line:nth-child(2) {
-      width: 70%;
+    .robot-terminal-line:nth-child(2) {
       animation-delay: 0.2s;
     }
 
-    .terminal-line:nth-child(3) {
-      width: 50%;
+    .robot-terminal-line:nth-child(3) {
       animation-delay: 0.4s;
     }
 
@@ -476,175 +322,128 @@
       box-shadow: 0 7px 20px rgba(245, 158, 11, 0.4);
     }
 
-    .book-info {
-      padding: 20px 40px;
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      overflow-y: auto;
+      animation: fadeIn 0.3s ease;
     }
 
-    .book-info h2 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-      text-align: center;
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal-content {
+      background-color: var(--white);
+      margin: 5% auto;
+      padding: 0;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 800px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       position: relative;
-      padding-bottom: 15px;
+      animation: slideIn 0.4s ease;
+      overflow: hidden;
     }
 
-    .book-info h2::after {
-      content: '';
+    @keyframes slideIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .modal-header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: var(--white);
+      padding: 20px 30px;
+      position: relative;
+    }
+
+    .modal-header h2 {
+      font-size: 1.8rem;
+      margin: 0;
+    }
+
+    .close {
       position: absolute;
-      bottom: 0;
-      right: 50%;
-      transform: translateX(50%);
-      width: 80px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-      border-radius: 3px;
-    }
-
-    .book-description {
-      margin-bottom: 2rem;
-      line-height: 1.8;
-      color: #4b5563;
-      text-align: justify;
-    }
-
-    .features {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: 2rem;
-    }
-
-    .feature {
-      width: 48%;
-      background: rgba(6, 182, 212, 0.05);
-      border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 15px;
-      display: flex;
-      align-items: flex-start;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
       transition: var(--transition);
     }
 
-    .feature:hover {
-      background: rgba(6, 182, 212, 0.1);
-      transform: translateY(-3px);
+    .close:hover {
+      transform: scale(1.2);
     }
 
-    .feature i {
-      color: var(--primary);
-      font-size: 1.5rem;
-      margin-left: 15px;
+    .modal-body {
+      padding: 30px;
+      max-height: 70vh;
+      overflow-y: auto;
     }
 
-    .feature-content h3 {
+    .typing-container {
+      position: relative;
+      min-height: 100px;
+    }
+
+    .typing-text {
+      font-family: 'Vazirmatn', sans-serif;
       font-size: 1.1rem;
-      margin-bottom: 5px;
-      color: var(--dark);
-    }
-
-    .feature-content p {
-      font-size: 0.9rem;
-      color: var(--gray);
-    }
-
-    .version-history {
-      margin-bottom: 2rem;
-    }
-
-    .version-history h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-      text-align: center;
-    }
-
-    .version-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-bottom: 1.5rem;
-    }
-
-    .version-table th, .version-table td {
-      padding: 12px 15px;
-      text-align: right;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    }
-
-    .version-table th {
-      background: rgba(6, 182, 212, 0.1);
-      color: var(--dark);
-      font-weight: 700;
-    }
-
-    .version-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .version-table tr:hover {
-      background: rgba(6, 182, 212, 0.05);
-    }
-
-    .goals {
-      background: rgba(245, 158, 11, 0.05);
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 2rem;
-    }
-
-    .goals h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      color: var(--dark);
-      text-align: center;
-    }
-
-    .goals p {
       line-height: 1.8;
-      color: #4b5563;
-      text-align: justify;
+      color: var(--dark);
+      white-space: pre-wrap;
     }
 
-    .footer {
+    .typing-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 1.2em;
+      background-color: var(--primary);
+      animation: blink-cursor 1s infinite;
+      vertical-align: text-bottom;
+      margin-left: 2px;
+    }
+
+    @keyframes blink-cursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .modal-footer {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 252, 232, 0.9) 100%);
+      padding: 20px 30px;
       text-align: center;
-      padding: 20px;
-      color: var(--gray);
-      font-size: 0.9rem;
       border-top: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .flip-btn {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      width: 40px;
-      height: 40px;
-      background: var(--primary);
+    .modal-footer a {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: var(--white);
-      border: none;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(6, 182, 212, 0.3);
+      text-decoration: none;
+      padding: 0.8rem 2rem;
+      border-radius: 50px;
+      font-weight: bold;
       transition: var(--transition);
-      z-index: 100;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
     }
 
-    .flip-btn:hover {
-      background: var(--primary-dark);
-      transform: scale(1.1);
+    .modal-footer a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 7px 20px rgba(6, 182, 212, 0.4);
     }
 
-    .book.flipped {
-      transform: rotateY(180deg);
-    }
-
-    .book.flipped:hover {
-      transform: rotateY(190deg);
-    }
-
+    /* Responsive */
     @media (max-width: 768px) {
       .book {
         height: 650px;
@@ -669,177 +468,264 @@
         right: -5px;
       }
       
-      .feature {
-        width: 100%;
+      .linux-robot-svg {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .modal-content {
+        width: 95%;
+        margin: 10% auto;
+      }
+      
+      .modal-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .modal-body {
+        padding: 20px;
       }
     }
   </style>
 </head>
 <body>
   <div class="book-container">
-    <div class="book" id="book">
-      <div class="book-face book-front">
-        <div class="book-top"></div>
-        <div class="version-tag"></div>
-        <div class="version-text">6th<br>edition</div>
-        
-        <div class="title-section">
-          <h1>خط فرمان لینوکس</h1>
-          <p>درآمدی جامع بر ساختار و مفاهیم</p>
-          <p style="font-size: 0.95rem; margin-top: -0.4rem;">ویلیام شاتس</p>
-        </div>
-        
-        <div class="author">ترجمه محمد مهدی نژاد</div>
-        
-        <div class="cover-image">
-          <div class="linux-robot">
-            <div class="robot-head">
-              <div class="robot-eyes">
-                <div class="robot-eye"></div>
-                <div class="robot-eye"></div>
-              </div>
-              <div class="robot-mouth">
-                <span class="command">$ ls</span>
-                <span class="command">$ grep</span>
-                <span class="command">$ sudo</span>
-              </div>
-            </div>
-            <div class="robot-body"></div>
-            <div class="robot-arm left"></div>
-            <div class="robot-arm right"></div>
-            <div class="robot-terminal">
-              <div class="terminal-line"></div>
-              <div class="terminal-line"></div>
-              <div class="terminal-line"></div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="download-section">
-          <a href="linux-command-line-fa.pdf" class="download-btn">
-            <i class="fas fa-download"></i> دریافت فایل PDF
-          </a>
-          <a href="about.html" target="_blank" class="download-btn info-btn">
-            <i class="fas fa-info-circle"></i> اطلاعات بیشتر
-          </a>
-        </div>
+    <div class="book">
+      <div class="book-top"></div>
+      <div class="version-tag"></div>
+      <div class="version-text">6th<br>edition</div>
+      
+      <div class="title-section">
+        <h1>خط فرمان لینوکس</h1>
+        <p>درآمدی جامع بر ساختار و مفاهیم</p>
+        <p style="font-size: 0.95rem; margin-top: -0.4rem;">ویلیام شاتس</p>
       </div>
       
-      <div class="book-face book-back">
-        <div class="book-info">
-          <h2>درباره کتاب</h2>
-          <p class="book-description">
-            کتاب *The Linux Command Line* اثری است با رویکرد آموزشی مبتنی بر تمرین و توضیح مفاهیم پایه‌ای تا پیشرفته در محیط پوسته‌ی Bash. این کتاب ابتدا به اصول اولیه‌ی کار با ترمینال می‌پردازد و سپس ابزارها، ساختار فایل‌ها، مدیریت فرایندها، متغیرها، و در نهایت مبانی اسکریپت‌نویسی را به زبان ساده و فنی ارائه می‌کند.
-          </p>
-          
-          <div class="features">
-            <div class="feature">
-              <i class="fas fa-book"></i>
-              <div class="feature-content">
-                <h3>ترجمه کامل</h3>
-                <p>ترجمه کامل بر اساس نسخه‌ی ششم کتاب</p>
-              </div>
-            </div>
-            <div class="feature">
-              <i class="fas fa-code"></i>
-              <div class="feature-content">
-                <h3>حفظ ساختار فنی</h3>
-                <p>حفظ ساختار محتوایی و فنی متن اصلی</p>
-              </div>
-            </div>
-            <div class="feature">
-              <i class="fas fa-language"></i>
-              <div class="feature-content">
-                <h3>معادل‌های دقیق</h3>
-                <p>انتخاب دقیق معادل‌های فارسی برای واژگان تخصصی</p>
-              </div>
-            </div>
-            <div class="feature">
-              <i class="fas fa-graduation-cap"></i>
-              <div class="feature-content">
-                <h3>مناسب آموزش</h3>
-                <p>مناسب برای استفاده در محیط‌های آموزشی و خودآموزی</p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="version-history">
-            <h3>تاریخچه نسخه‌های اصلی انگلیسی</h3>
-            <table class="version-table">
-              <tr>
-                <th>نسخه</th>
-                <th>تاریخ انتشار</th>
-                <th>توضیحات</th>
-              </tr>
-              <tr>
-                <td>24.11</td>
-                <td>November 1, 2024</td>
-                <td>ششمین نسخه اینترنتی</td>
-              </tr>
-              <tr>
-                <td>19.01A</td>
-                <td>January 28, 2019</td>
-                <td>نسخه پنجم با فهرست اصلاح‌شده</td>
-              </tr>
-              <tr>
-                <td>19.01</td>
-                <td>January 17, 2019</td>
-                <td>نسخه پنجم</td>
-              </tr>
-              <tr>
-                <td>17.10</td>
-                <td>October 19, 2017</td>
-                <td>نسخه چهارم</td>
-              </tr>
-            </table>
-          </div>
-          
-          <div class="version-history">
-            <h3>تاریخچه نسخه فارسی</h3>
-            <table class="version-table">
-              <tr>
-                <th>نسخه</th>
-                <th>تاریخ انتشار</th>
-                <th>توضیحات</th>
-              </tr>
-              <tr>
-                <td>24.11</td>
-                <td>15 Mordad 1404</td>
-                <td>اولین نسخه پایدار</td>
-              </tr>
-            </table>
-          </div>
-          
-          <div class="goals">
-            <h3>اهداف ترجمه</h3>
-            <p>
-              هدف اصلی این ترجمه، ارائه‌ی نسخه‌ای بومی‌شده و قابل‌استفاده برای کاربران فارسی‌زبان علاقه‌مند به خط فرمان لینوکس است. این نسخه به‌گونه‌ای طراحی شده تا در برنامه‌های آموزشی، دوره‌های تخصصی و نیز مطالعات فردی قابل استفاده باشد. در این ترجمه تلاش شده تا دقت فنی حفظ شده و هم‌زمان خوانایی متن برای مخاطب غیرفنی نیز قابل‌قبول باشد.
-            </p>
-          </div>
-          
-          <div class="footer">
-            <p>این نسخه بخشی از یک پروژه مستقل آموزشی غیرتجاری است که در چارچوب منابع آزاد برای استفاده‌ی عمومی منتشر شده است.</p>
-            <p>نسخه‌های اصلی کتاب توسط ناشر تخصصی No Starch Press منتشر شده‌اند.</p>
-          </div>
-        </div>
+      <div class="author">ترجمه محمد مهدی نژاد</div>
+      
+      <div class="cover-image">
+        <svg class="linux-robot-svg" version="1.0" xmlns="http://www.w3.org/2000/svg" width="300.000000pt" height="234.000000pt" viewBox="0 0 300.000000 234.000000" preserveAspectRatio="xMidYMid meet">
+          <g transform="translate(0.000000,234.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+            <!-- Robot Head -->
+            <path class="robot-head" d="M176 2328 c22 -38 68 -97 72 -93 7 6 -60 105 -71 105 -5 0 -5 -6 -1 -12z"/>
+            <path class="robot-head" d="M400 2336 c0 -12 245 -422 267 -448 13 -14 12 -18 -7 -28 -11 -6 -30 -8 -41 -5 -11 4 -33 2 -48 -5 -25 -10 -32 -8 -57 16 -32 29 -83 54 -113 54 -18 0 -19 6 -14 98 4 85 2 101 -16 129 -16 25 -29 33 -64 38 -53 8 -81 1 -124 -31 -77 -58 -105 -134 -50 -134 32 0 63 -24 89 -71 12 -22 36 -49 54 -60 l32 -19 -37 -40 c-20 -22 -46 -40 -57 -40 -37 0 -108 -30 -127 -53 -13 -15 -20 -18 -24 -9 -7 18 -63 16 -63 -3 0 -8 9 -15 20 -15 30 0 88 -58 101 -100 7 -21 9 -54 5 -75 -8 -39 -48 -85 -75 -85 -13 1 -12 3 4 15 56 40 71 77 54 138 -10 38 -69 97 -97 97 -10 0 -3 -8 17 -17 70 -35 96 -139 46 -188 -13 -14 -36 -25 -50 -25 -20 0 -25 -5 -25 -25 0 -22 4 -25 38 -25 21 0 47 7 58 15 12 8 58 17 105 21 46 4 93 10 104 14 34 12 74 -9 100 -55 38 -64 81 -191 94 -273 24 -154 11 -486 -21 -534 -9 -13 -39 -27 -83 -39 -120 -33 -137 -33 -168 -9 -15 12 -27 27 -27 35 0 7 -6 15 -13 18 -19 7 -115 167 -154 256 l-33 76 0 -61 c0 -55 4 -68 50 -144 28 -46 75 -116 105 -157 50 -66 59 -73 90 -73 34 0 36 -2 90 -110 94 -187 104 -187 389 -22 115 67 210 122 212 122 1 0 7 -33 14 -72 16 -98 70 -380 76 -397 3 -9 8 -11 13 -5 5 5 -2 91 -15 194 -14 102 -25 217 -27 256 -2 66 1 77 45 165 57 114 105 165 203 213 41 20 77 36 81 36 4 0 4 -18 1 -39 -5 -40 -5 -40 79 -105 46 -36 91 -66 99 -66 27 0 209 62 266 91 l57 28 51 -54 c120 -127 142 -241 96 -500 -14 -82 -29 -165 -32 -183 -4 -24 -2 -32 9 -32 11 0 24 46 51 184 20 101 37 205 37 231 0 26 3 45 8 43 128 -66 223 -88 376 -88 l115 0 20 29 c34 48 102 75 172 68 57 -5 60 -4 102 33 24 21 56 56 71 79 28 40 28 42 25 166 -2 69 -1 125 3 125 14 0 68 52 68 66 0 22 -14 17 -63 -20 -24 -18 -57 -36 -73 -39 -16 -3 -57 -10 -92 -17 -34 -7 -72 -10 -85 -6 -44 11 -200 231 -277 391 -63 132 -97 237 -110 343 -15 120 -10 141 45 174 25 15 50 39 57 53 10 22 16 24 45 19 22 -4 56 1 100 16 141 45 162 50 201 50 48 0 61 -14 36 -41 -17 -19 -17 -23 -1 -82 58 -204 83 -328 131 -636 18 -115 36 -142 36 -53 0 177 -81 570 -157 762 -5 12 -3 13 8 3 25 -21 87 -154 113 -245 40 -138 57 -285 54 -451 -3 -141 -2 -145 15 -129 18 16 19 33 15 267 -4 236 -6 255 -31 338 -32 102 -62 167 -120 254 -32 49 -46 61 -62 58 -64 -14 -69 -12 -97 40 -15 28 -43 65 -64 84 -35 32 -39 33 -98 28 -76 -7 -206 -50 -224 -74 -8 -12 -12 -41 -11 -83 2 -39 -2 -75 -10 -89 -7 -13 -11 -36 -9 -53 3 -16 1 -31 -3 -34 -31 -19 -10 -234 36 -369 51 -152 158 -341 284 -498 42 -53 70 -79 89 -83 25 -5 27 -10 29 -55 1 -27 -1 -49 -5 -49 -28 0 -80 52 -128 127 -93 145 -141 183 -233 183 -68 0 -94 -12 -159 -74 -76 -71 -153 -96 -183 -60 -18 22 -84 14 -150 -19 l-51 -25 -67 31 c-36 16 -67 31 -69 32 -1 1 -7 40 -12 86 -5 46 -12 101 -15 122 -3 20 -1 37 4 37 5 0 61 18 124 41 112 39 115 41 121 75 4 19 13 34 20 34 15 0 69 80 81 118 5 17 -1 29 -25 52 -36 33 -37 58 -6 135 8 22 15 58 16 81 0 39 1 40 29 36 38 -5 67 11 87 50 19 36 13 91 -11 118 -15 17 -15 21 -1 49 54 103 -41 204 -144 153 -24 -11 -44 -16 -52 -11 -16 11 -58 12 -58 2 0 -5 -4 -14 -9 -21 -6 -10 -19 -7 -59 13 -107 54 -237 53 -359 0 -30 -14 -62 -25 -69 -25 -7 0 -19 -10 -25 -22 -7 -12 -21 -30 -33 -39 l-21 -18 33 -64 c18 -35 55 -91 82 -125 41 -50 48 -66 41 -81 -10 -18 -54 -51 -68 -51 -13 0 -40 60 -58 133 -10 37 -22 70 -27 73 -6 4 -19 -3 -30 -13 -20 -20 -20 -20 -74 33 -30 30 -60 54 -67 54 -6 0 -23 9 -37 20 -34 27 -53 26 -45 -1 6 -19 4 -21 -16 -16 -34 9 -114 -4 -97 -15 23 -17 -49 0 -98 22 -28 13 -60 20 -85 18 l-39 -3 25 -37 c20 -30 33 -38 58 -39 31 -2 31 -2 4 -6 -18 -3 -27 -9 -24 -17 4 -9 -2 -11 -16 -9 -17 4 -34 32 -77 129 -49 114 -81 169 -68 116 12 -44 -19 -8 -77 91 -33 56 -61 107 -63 114 -3 12 -22 19 -22 9z"/>
+            
+            <!-- Robot Eyes -->
+            <g class="robot-eyes">
+              <path class="robot-eye" d="M1657 2081 c28 -11 57 -22 64 -27 8 -4 9 -3 5 5 -10 15 -73 41 -100 41 -11 -1 2 -9 31 -19z"/>
+              <path class="robot-eye" d="M1563 1965 c-118 -60 -126 -165 -13 -165 53 0 121 31 155 72 74 87 -25 152 -142 93z m131 -11 c19 -19 19 -18 1 -54 -12 -23 -70 -70 -87 -70 -3 0 -3 11 0 25 6 35 -23 65 -62 64 l-31 0 33 -17 c61 -30 47 -103 -18 -87 -44 11 -55 29 -40 65 28 68 162 117 204 74z"/>
+            </g>
+            
+            <!-- Robot Mouth with Commands -->
+            <g class="robot-mouth">
+              <path class="robot-command" d="M1091 1911 c-11 -7 -11 -13 3 -32 l16 -23 0 32 c0 36 0 35 -19 23z"/>
+              <path class="robot-command" d="M1020 1901 c1 -14 16 -26 37 -28 31 -4 19 23 -13 30 -13 2 -24 1 -24 -2z"/>
+              <path class="robot-command" d="M1210 1766 c0 -7 7 -19 15 -26 8 -7 15 -18 15 -26 0 -22 -20 -27 -41 -8 -25 23 -37 10 -14 -16 21 -23 41 -26 48 -7 3 6 6 2 6 -10 1 -13 10 -32 20 -42 13 -13 18 -27 14 -43 -6 -21 -5 -22 10 -9 16 12 15 18 -14 67 -17 30 -27 54 -22 54 4 0 18 -17 30 -38 15 -25 22 -31 23 -19 0 10 -13 38 -30 62 -16 24 -30 51 -30 59 0 9 -7 16 -15 16 -8 0 -15 -6 -15 -14z"/>
+            </g>
+            
+            <!-- Robot Body -->
+            <path class="robot-body" d="M896 1663 c9 -21 18 -43 20 -49 3 -6 16 -16 30 -23 23 -10 24 -10 13 12 -28 52 -60 97 -69 97 -6 0 -3 -16 6 -37z"/>
+            <path class="robot-body" d="M670 1633 c0 -15 178 -238 184 -232 12 13 -29 80 -93 154 -67 77 -91 98 -91 78z"/>
+            <path class="robot-body" d="M850 1606 c0 -28 24 -46 41 -29 6 6 0 18 -16 33 l-25 23 0 -27z"/>
+            
+            <!-- Robot Arms -->
+            <path class="robot-arm" d="M601 1543 c73 -82 133 -142 137 -138 3 3 -3 15 -14 28 -11 12 -26 31 -34 42 -16 22 15 -2 83 -64 72 -68 36 -15 -50 71 -71 71 -93 88 -117 88 l-29 0 24 -27z"/>
+            <path class="robot-arm" d="M810 1558 c1 -14 50 -78 50 -65 0 4 -7 23 -14 42 -15 34 -36 48 -36 23z"/>
+            
+            <!-- Robot Terminal -->
+            <g class="robot-terminal">
+              <path class="robot-terminal-line" d="M450 1512 c0 -5 11 -19 25 -32 19 -18 25 -20 25 -8 0 8 -8 22 -18 31 -20 19 -32 22 -32 9z"/>
+              <path class="robot-terminal-line" d="M585 1436 c44 -42 83 -76 88 -76 20 0 0 23 -65 76 -107 85 -112 85 -23 0z"/>
+              <path class="robot-terminal-line" d="M510 1447 c0 -10 202 -178 207 -173 8 7 -49 61 -127 120 -60 46 -80 59 -80 53z"/>
+            </g>
+            
+            <!-- Additional robot details -->
+            <path d="M662 1418 c8 -12 25 -28 39 -37 18 -11 16 -6 -10 22 -39 42 -50 48 -29 15z"/>
+            <path d="M580 1295 c35 -35 67 -60 70 -54 4 5 14 7 23 3 9 -3 17 -4 17 -1 0 7 -157 117 -167 117 -4 0 21 -29 57 -65z"/>
+            <path d="M1010 1237 c0 -7 9 -18 20 -25 22 -14 25 -9 10 19 -12 21 -30 26 -30 6z"/>
+            <path d="M950 1191 c0 -4 9 -20 21 -35 18 -22 18 -27 5 -32 -9 -3 -32 4 -53 17 l-38 23 20 -23 c11 -13 37 -32 58 -42 37 -19 37 -19 37 0 0 15 5 19 17 14 10 -4 0 14 -22 40 -41 49 -45 53 -45 38z"/>
+            <path d="M860 1125 c0 -23 31 -60 64 -77 l41 -20 -50 51 c-48 50 -55 56 -55 46z"/>
+            <path d="M830 1038 c0 -10 63 -39 69 -32 3 2 -3 12 -12 21 -18 18 -57 25 -57 11z"/>
+            <path d="M795 1011 c-7 -12 19 -37 58 -57 l32 -16 -40 41 c-44 46 -42 44 -50 32z"/>
+            <path d="M780 925 c0 -15 38 -35 63 -35 12 1 -13 23 -45 41 -14 7 -18 6 -18 -6z"/>
+            <path d="M696 829 c7 -12 95 -52 101 -45 5 4 -85 56 -99 56 -5 0 -6 -5 -2 -11z"/>
+          </g>
+        </svg>
       </div>
       
-      <div class="book-spine">خط فرمان لینوکس</div>
-      
-      <button class="flip-btn" id="flipBtn">
-        <i class="fas fa-sync-alt"></i>
-      </button>
+      <div class="download-section">
+        <a href="linux-command-line-fa.pdf" class="download-btn">
+          <i class="fas fa-download"></i> دریافت فایل PDF
+        </a>
+        <a href="#" id="infoBtn" class="download-btn info-btn">
+          <i class="fas fa-info-circle"></i> اطلاعات بیشتر
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="bookModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>خط فرمان لینوکس - معرفی کتاب</h2>
+        <span class="close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="typing-container">
+          <div class="typing-text" id="typingText"></div>
+          <span class="typing-cursor" id="cursor"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="linux-command-line-fa.pdf">
+          <i class="fas fa-download"></i> دانلود فایل PDF
+        </a>
+      </div>
     </div>
   </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const book = document.getElementById('book');
-      const flipBtn = document.getElementById('flipBtn');
+      // Modal functionality
+      const modal = document.getElementById('bookModal');
+      const infoBtn = document.getElementById('infoBtn');
+      const closeBtn = document.querySelector('.close');
       
-      flipBtn.addEventListener('click', function() {
-        book.classList.toggle('flipped');
+      infoBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+        startTyping();
       });
+      
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        resetTyping();
+      });
+      
+      window.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          resetTyping();
+        }
+      });
+      
+      // Typing effect
+      const typingText = document.getElementById('typingText');
+      const cursor = document.getElementById('cursor');
+      
+      const bookInfo = `# 🚀 خط فرمان لینوکس: دروازه‌ای به دنیای قدرتمند سیستم‌عامل لینوکس
+
+به دنیای شگفت‌انگیز خط فرمان لینوکس خوش آمدید! این کتاب نه تنها یک راهنمای آموزشی، بلکه یک همراه حرفه‌ای برای سفر شما به قلب تپنده لینوکس است. **The Linux Command Line** نوشته‌ی **ویلیام شاتس**، اثری است که با دقتی مثال‌زدنی و زبانی ساده اما عمیق، شما را از مفاهیم پایه تا پیشرفته‌ترین تکنیک‌های خط فرمان هدایت می‌کند.
+
+## 🎯 چرا این کتاب متفاوت است؟
+
+این کتاب با رویکردی منحصر به فرد، یادگیری خط فرمان را از یک چالش به یک ماجراجویی هیجان‌انگیز تبدیل می‌کند. ویلیام شاتس با سال‌ها تجربه در آموزش لینوکس، توانسته است مفاهیم پیچیده را به شکلی قابل فهم و جذاب ارائه دهد. هر فصل با مثال‌های عملی و تمرین‌های کاربردی همراه است که به شما کمک می‌کند دانش خود را در دنیای واقعی به کار بگیرید.
+
+## 📚 محتوای کتاب: از صفر تا قهرمان
+
+### بخش اول: مبانی اولیه
+- آشنایی با ترمینال و مفاهیم پایه
+- دستورات اساسی برای مدیریت فایل‌ها و دایرکتوری‌ها
+- کار با سیستم فایل لینوکس
+- جستجوی فایل‌ها و محتوا با ابزارهای قدرتمند
+
+### بخش دوم: ابزارها و تکنیک‌های پیشرفته
+- piping و redirection: هنر ترکیب دستورات
+- مدیریت فرآیندها و کارها
+- ویرایشگرهای خط فرمان: Vim و Nano
+- شبکه‌سازی و ابزارهای ارتباطی
+
+### بخش سوم: اسکریپت‌نویسی شل
+- متغیرها و ساختارهای کنترلی
+- توابع و ماژول‌های برنامه‌نویسی
+- مدیریت خطاها و استثناها
+- پروژه‌های عملی برای تسلط بر Bash
+
+## 🌟 ویژگی‌های برجسته ترجمه فارسی
+
+ترجمه‌ی این کتاب توسط **محمد مهدی‌نژاد** با دقتی بی‌نظیر انجام شده است:
+
+- **دقت فنی**: حفظ اصطلاحات تخصصی با معادل‌های فارسی دقیق
+- **خوانایی بالا**: متن به گونه‌ای تنظیم شده که برای مخاطب با هر سطحی قابل درک باشد
+- **ساختار منظم**: حفظ ساختار اصلی کتاب با بهینه‌سازی برای خواننده فارسی‌زبان
+- **به‌روزرسانی**: تطبیق محتوا با آخرین تغییرات در دنیای لینوکس
+
+## 🎓 برای چه کسانی مناسب است؟
+
+این کتاب برای طیف وسیعی از مخاطبان طراحی شده:
+- **تازه‌کاران**: کسانی که می‌خواهند اولین قدم‌های خود را در دنیای لینوکس بردارند
+- **کاربران متوسط**: افرادی که می‌خواهند دانش خود را عمیق‌تر کنند
+- **مدیران سیستم**: متخصصانی که به ابزارهای پیشرفته خط فرمان نیاز دارند
+- **توسعه‌دهندگان**: برنامه‌نویسانی که می‌خواهند با محیط لینوکس آشنا شوند
+
+## 🔍 تاریخچه و نسخه‌ها
+
+این کتاب در طول سال‌ها تکامل یافته و به نسخه‌های مختلفی رسیده است:
+
+| نسخه    | تاریخ انتشار       | تغییرات مهم                     |
+|---------|--------------------|----------------------------------|
+| 24.11   | November 1, 2024   | ششمین نسخه با به‌روزرسانی‌های مهم |
+| 19.01A  | January 28, 2019   | اصلاحات و بهبود‌های نسخه پنجم    |
+| 19.01   | January 17, 2019   | نسخه پنجم با محتوای گسترده      |
+| 17.10   | October 19, 2017   | افزودن بخش‌های جدید              |
+| 16.07   | July 28, 2016      | بازنویسی کامل فصل‌ها             |
+
+ترجمه فارسی بر اساس **نسخه 24.11** انجام شده که جدیدترین و کامل‌ترین نسخه این کتاب است.
+
+## 🎯 اهداف و چشم‌انداز
+
+هدف اصلی این ترجمه، شکستن موانع زبانی و فرهنگی برای دسترسی فارسی‌زبانان به منابع آموزشی باکیفیت لینوکس است. ما معتقدیم که دانش باید آزاد و در دسترس همه باشد. این ترجمه گامی در جهت تحقق این ایده است:
+
+- **آموزش همگانی**: ارائه‌ی محتوا به شکلی که برای همه قابل فهم باشد
+- **پشتیبانی جامعه**: ایجاد فضایی برای تعامل و یادگیری جمعی
+- **رشد مستمر**: به‌روزرسانی مداوم با تغییرات دنیای لینوکس
+- **حفظ کیفیت**: تضمین بالاترین استانداردهای ترجمه و ویرایش
+
+## 🌐 منابع و پشتیبانی
+
+این ترجمه بخشی از یک اکوسیستم بزرگ‌تر است:
+- **وب‌سایت رسمی**: [linuxpersian.github.io](https://linuxpersian.github.io)
+- **نسخه انگلیسی**: توسط No Starch Press منتشر شده
+- **انجمن‌ها**: فضاهایی برای بحث و تبادل نظر
+- **به‌روزرسانی‌ها**: آخرین تغییرات و اصلاحات
+
+---
+
+## 📥 شروع ماجراجویی شما
+
+آماده‌اید تا قدرت واقعی خط فرمان لینوکس را کشف کنید؟ این کتاب تنها یک راهنما نیست، بلکه نقشه‌ی گنج شما در دنیای لینوکس است. با هر صفحه‌ای که می‌خوانید، به قهرمان خط فرمان نزدیک‌تر می‌شوید.
+
+**همین حالا دانلود کنید و اولین قدم را بردارید!**`;
+
+      let charIndex = 0;
+      let typingInterval;
+      
+      function startTyping() {
+        typingText.textContent = '';
+        charIndex = 0;
+        cursor.style.display = 'inline-block';
+        
+        typingInterval = setInterval(() => {
+          if (charIndex < bookInfo.length) {
+            typingText.textContent += bookInfo.charAt(charIndex);
+            charIndex++;
+            
+            // Auto scroll to bottom as text grows
+            const modalBody = document.querySelector('.modal-body');
+            modalBody.scrollTop = modalBody.scrollHeight;
+          } else {
+            clearInterval(typingInterval);
+            cursor.style.display = 'none';
+          }
+        }, 15);
+      }
+      
+      function resetTyping() {
+        clearInterval(typingInterval);
+        typingText.textContent = '';
+        cursor.style.display = 'none';
+      }
       
       // Add some interactive elements
       const robotEyes = document.querySelectorAll('.robot-eye');
@@ -850,15 +736,6 @@
         eye.addEventListener('mouseout', function() {
           this.style.transform = 'scale(1)';
         });
-      });
-      
-      // Add keyboard navigation
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'ArrowRight') {
-          book.classList.add('flipped');
-        } else if (e.key === 'ArrowLeft') {
-          book.classList.remove('flipped');
-        }
       });
     });
   </script>
