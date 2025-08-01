@@ -108,6 +108,52 @@
             --on-warning: #FFFFFF;
         }
         
+        /* تم‌های رنگی */
+        body.theme-blue {
+            --primary: var(--theme-blue);
+            --primary-container: rgba(30, 136, 229, 0.1);
+        }
+        
+        body.theme-green {
+            --primary: var(--theme-green);
+            --primary-container: rgba(67, 160, 71, 0.1);
+        }
+        
+        body.theme-red {
+            --primary: var(--theme-red);
+            --primary-container: rgba(229, 57, 53, 0.1);
+        }
+        
+        body.theme-orange {
+            --primary: var(--theme-orange);
+            --primary-container: rgba(251, 140, 0, 0.1);
+        }
+        
+        body.theme-purple {
+            --primary: var(--theme-purple);
+            --primary-container: rgba(142, 36, 170, 0.1);
+        }
+        
+        body.theme-teal {
+            --primary: var(--theme-teal);
+            --primary-container: rgba(0, 137, 123, 0.1);
+        }
+        
+        body.theme-amber {
+            --primary: var(--theme-amber);
+            --primary-container: rgba(255, 179, 0, 0.1);
+        }
+        
+        body.theme-pink {
+            --primary: var(--theme-pink);
+            --primary-container: rgba(216, 27, 96, 0.1);
+        }
+        
+        body.theme-indigo {
+            --primary: var(--theme-indigo);
+            --primary-container: rgba(57, 73, 171, 0.1);
+        }
+        
         * {
             box-sizing: border-box;
             margin: 0;
@@ -792,6 +838,39 @@
             animation: glow 2s ease-in-out infinite;
         }
         
+        /* منوی انتخاب متن */
+        .text-selection-menu {
+            position: fixed;
+            background: var(--surface);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem;
+            display: none;
+            z-index: 1000;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .text-selection-menu button {
+            background: none;
+            border: none;
+            border-radius: 0.3rem;
+            padding: 0.5rem;
+            color: var(--on-surface);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            text-align: right;
+        }
+        
+        .text-selection-menu button:hover {
+            background: var(--surface-variant);
+            color: var(--primary);
+        }
+        
         /* مودال‌ها */
         .modal {
             display: none;
@@ -885,6 +964,10 @@
             background: var(--success);
         }
         
+        .toast.info::before {
+            background: var(--primary);
+        }
+        
         .toast.error {
             background: var(--error);
             color: var(--on-error);
@@ -893,6 +976,11 @@
         .toast.success {
             background: var(--success);
             color: var(--on-success);
+        }
+        
+        .toast.info {
+            background: var(--primary);
+            color: var(--on-primary);
         }
         
         @keyframes toast-fade-in {
@@ -1016,32 +1104,6 @@
             line-height: 2;
         }
         
-        /* حالت شب */
-        body.night-mode {
-            --primary: #BB86FC;
-            --on-primary: #000000;
-            --primary-container: #EADDFF;
-            --on-primary-container: #21005D;
-            --background: #121212;
-            --on-background: #E6E1E6;
-            --surface: #1E1E1E;
-            --on-surface: #E6E1E6;
-            --surface-variant: #49454F;
-            --on-surface-variant: #CAC4D0;
-        }
-        
-        /* حالت تمرکز */
-        body.focus-mode .header,
-        body.focus-mode .toolbar,
-        body.focus-mode .sidebar {
-            display: none;
-        }
-        
-        body.focus-mode .container {
-            max-width: 900px;
-            margin: 1rem auto;
-        }
-        
         /* هایلایت جستجو */
         .search-highlight {
             background: rgba(255, 255, 0, 0.4);
@@ -1099,144 +1161,57 @@
             animation: slideUp 0.5s ease;
         }
         
-        /* نظرات */
-        .comments-section {
-            margin-top: 3rem;
-            animation: fadeIn 0.8s ease;
+        /* تنظیمات پیشرفته */
+        .settings-section {
+            margin-bottom: 1.5rem;
         }
         
-        .comment-form {
-            background: var(--surface-variant);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .comment-form::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary), var(--tertiary));
-            opacity: 0.1;
-            border-radius: 0 0 0 100%;
-        }
-        
-        .comment-input {
-            width: 100%;
-            background: var(--surface);
-            color: var(--on-surface);
-            border: 2px solid var(--outline-variant);
-            border-radius: 1rem;
-            padding: 1rem;
-            font-size: 1rem;
-            resize: vertical;
-            min-height: 100px;
-            margin-bottom: 1rem;
-            transition: all 0.3s ease;
-        }
-        
-        .comment-input:focus {
-            border-color: var(--primary);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1);
-        }
-        
-        .comment {
-            background: var(--surface);
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .comment::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--tertiary));
-            opacity: 0.1;
-            border-radius: 0 0 0 50%;
-        }
-        
-        .comment:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
-        }
-        
-        .comment-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .comment-author {
+        .settings-section h4 {
+            font-size: 1.1rem;
             font-weight: 600;
+            margin-bottom: 0.8rem;
             color: var(--on-surface);
+        }
+        
+        .settings-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .settings-option:hover {
+            background: var(--surface-variant);
+        }
+        
+        .settings-option label {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
         }
         
-        .comment-author::before {
-            content: '👤';
-            font-size: 1.2rem;
+        .settings-option input[type="checkbox"] {
+            width: 1.2rem;
+            height: 1.2rem;
+            cursor: pointer;
         }
         
-        .comment-date {
-            font-size: 0.85rem;
-            color: var(--on-surface-variant);
+        .settings-option input[type="range"] {
+            width: 150px;
+            cursor: pointer;
         }
         
-        .comment-text {
-            color: var(--on-surface);
-            line-height: 1.6;
-        }
-        
-        /* لاگ بارگذاری */
-        .loading-log {
+        .settings-option select {
             background: var(--surface-variant);
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            font-family: monospace;
-            font-size: 0.9rem;
-            max-height: 200px;
-            overflow-y: auto;
-            direction: ltr;
-            text-align: left;
-        }
-        
-        .log-entry {
-            margin-bottom: 0.5rem;
-            padding: 0.3rem 0.5rem;
+            color: var(--on-surface);
+            border: 1px solid var(--outline-variant);
             border-radius: 0.3rem;
-        }
-        
-        .log-info {
-            background: rgba(33, 150, 243, 0.1);
-            color: #2196F3;
-        }
-        
-        .log-error {
-            background: rgba(244, 67, 54, 0.1);
-            color: #F44336;
-        }
-        
-        .log-success {
-            background: rgba(76, 175, 80, 0.1);
-            color: #4CAF50;
+            padding: 0.4rem 0.8rem;
+            cursor: pointer;
         }
         
         /* ریسپانسیو */
@@ -1298,6 +1273,12 @@
                 right: 15px;
                 width: 48px;
                 height: 48px;
+            }
+            
+            .text-selection-menu {
+                flex-direction: row;
+                bottom: auto;
+                top: -50px;
             }
         }
         
@@ -1400,6 +1381,26 @@
     <!-- کانتینر اعلان‌ها -->
     <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
     
+    <!-- منوی انتخاب متن -->
+    <div class="text-selection-menu" id="textSelectionMenu">
+        <button onclick="copySelectedText()">
+            <i class="fas fa-copy"></i>
+            کپی متن
+        </button>
+        <button onclick="searchSelectedText()">
+            <i class="fas fa-search"></i>
+            جستجو
+        </button>
+        <button onclick="highlightSelectedText()">
+            <i class="fas fa-highlighter"></i>
+            هایلایت
+        </button>
+        <button onclick="speakSelectedText()">
+            <i class="fas fa-volume-up"></i>
+            خواندن
+        </button>
+    </div>
+    
     <!-- هدر -->
     <header class="header">
         <div class="header-content">
@@ -1446,12 +1447,6 @@
                 <button class="view-mode-btn" data-mode="reading" onclick="setViewMode('reading', this)" title="حالت خواندن">
                     <i class="fas fa-book-open"></i>
                 </button>
-                <button class="view-mode-btn" data-mode="night" onclick="setViewMode('night', this)" title="حالت شب">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <button class="view-mode-btn" data-mode="focus" onclick="setViewMode('focus', this)" title="حالت تمرکز">
-                    <i class="fas fa-eye"></i>
-                </button>
             </div>
             
             <!-- کنترل فونت -->
@@ -1474,35 +1469,10 @@
         <div class="content-wrapper" id="content">
             <!-- محتوای اصلی -->
             <main class="main-content">
-                <!-- لاگ بارگذاری -->
-                <div class="loading-log" id="loadingLog" style="display: none;">
-                    <div class="log-entry log-info">در حال آماده‌سازی برای بارگذاری فایل...</div>
-                </div>
-                
                 <div id="markdownContent" class="markdown-content">
                     <div class="loading flex flex-col items-center justify-center py-16">
                         <div class="spinner mb-4"></div>
                         <p class="text-gray-600">در حال بارگذاری مقاله...</p>
-                    </div>
-                </div>
-                
-                <!-- بخش نظرات -->
-                <div class="comments-section">
-                    <h2>نظرات و بازخورد</h2>
-                    
-                    <!-- فرم نظر -->
-                    <div class="comment-form">
-                        <h3>ارسال نظر</h3>
-                        <textarea class="comment-input" id="commentInput" placeholder="نظر خود را اینجا بنویسید..." aria-label="متن نظر"></textarea>
-                        <button class="btn btn-primary" onclick="submitComment()">
-                            <i class="fas fa-paper-plane"></i>
-                            ارسال نظر
-                        </button>
-                    </div>
-                    
-                    <!-- لیست نظرات -->
-                    <div id="commentsList">
-                        <!-- نظرات از طریق جاوا اسکریپت بارگذاری می‌شوند -->
                     </div>
                 </div>
             </main>
@@ -1575,13 +1545,9 @@
         </div>
     </div>
     
-    <!-- دکمه‌های شناور -->
+    <!-- دکمه شناور -->
     <button class="fab" onclick="scrollToTop()" title="بازگشت به بالا">
         <i class="fas fa-arrow-up"></i>
-    </button>
-    
-    <button class="fab" style="bottom: 90px;" onclick="toggleBookmark()" title="نشان‌گذاری">
-        <i class="fas fa-bookmark" id="bookmarkIcon"></i>
     </button>
     
     <!-- لایت‌باکس تصاویر -->
@@ -1596,8 +1562,8 @@
             <h3 id="settingsModalTitle" class="text-2xl font-bold mb-4">تنظیمات</h3>
             
             <!-- تم رنگی -->
-            <div class="mb-4">
-                <h4 class="text-lg font-semibold mb-2">تم رنگی</h4>
+            <div class="settings-section">
+                <h4>تم رنگی</h4>
                 <div class="theme-selector">
                     <div class="theme-option theme-default active" onclick="setTheme('default')"></div>
                     <div class="theme-option theme-blue" onclick="setTheme('blue')"></div>
@@ -1612,33 +1578,122 @@
                 </div>
             </div>
             
-            <!-- تنظیمات فونت -->
-            <div class="mb-4">
-                <h4 class="text-lg font-semibold mb-2">تنظیمات فونت</h4>
-                <div class="flex items-center gap-4">
+            <!-- تنظیمات نمایش -->
+            <div class="settings-section">
+                <h4>تنظیمات نمایش</h4>
+                <div class="settings-option">
                     <label>
-                        <input type="checkbox" id="justifyText" checked> تراز متن
+                        <input type="checkbox" id="justifyText" checked>
+                        تراز متن
                     </label>
+                </div>
+                <div class="settings-option">
                     <label>
-                        <input type="checkbox" id="lineNumbers" checked> شماره خطوط کد
+                        <input type="checkbox" id="lineNumbers" checked>
+                        شماره خطوط کد
                     </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        <input type="checkbox" id="loadImages" checked>
+                        بارگذاری تصاویر
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        اندازه فونت: <span id="fontSizeValue">16</span>px
+                    </label>
+                    <input type="range" id="fontSizeSlider" min="12" max="24" value="16" step="1" onchange="setFontSizeFromSlider(this.value)">
+                </div>
+                <div class="settings-option">
+                    <label>
+                        فونت:
+                    </label>
+                    <select id="fontFamily" onchange="setFontFamily(this.value)">
+                        <option value="Vazirmatn">وزیر متن</option>
+                        <option value="Samim">سامیم</option>
+                        <option value="Shabnam">شبنم</option>
+                        <option value="Parastoo">پرستو</option>
+                    </select>
                 </div>
             </div>
             
             <!-- تنظیمات پیشرفته -->
-            <div class="mb-4">
-                <h4 class="text-lg font-semibold mb-2">تنظیمات پیشرفته</h4>
-                <div class="flex items-center gap-4">
+            <div class="settings-section">
+                <h4>تنظیمات پیشرفته</h4>
+                <div class="settings-option">
                     <label>
-                        <input type="checkbox" id="autoSave" checked> ذخیره خودکار موقعیت
+                        <input type="checkbox" id="autoSave" checked>
+                        ذخیره خودکار موقعیت خواندن
                     </label>
+                </div>
+                <div class="settings-option">
                     <label>
-                        <input type="checkbox" id="loadImages" checked> بارگذاری تصاویر
+                        <input type="checkbox" id="smoothScroll" checked>
+                        اسکرول نرم
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        <input type="checkbox" id="highlightCode" checked>
+                        هایلایت کد
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        <input type="checkbox" id="showReadingProgress" checked>
+                        نمایش نوار پیشرفت خواندن
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        <input type="checkbox" id="enableAnimations" checked>
+                        فعال‌سازی انیمیشن‌ها
                     </label>
                 </div>
             </div>
             
-            <button class="btn btn-primary w-full" onclick="saveSettings()">
+            <!-- تنظیمات دسترسی‌پذیری -->
+            <div class="settings-section">
+                <h4>دسترسی‌پذیری</h4>
+                <div class="settings-option">
+                    <label>
+                        <input type="checkbox" id="highContrast">
+                        کنتراست بالا
+                    </label>
+                </div>
+                <div class="settings-option">
+                    <label>
+                        اندازه متن: <span id="textSizeValue">100</span>%
+                    </label>
+                    <input type="range" id="textSizeSlider" min="80" max="150" value="100" step="10" onchange="setTextSize(this.value)">
+                </div>
+                <div class="settings-option">
+                    <label>
+                        فاصله خطوط: <span id="lineHeightValue">1.8</span>
+                    </label>
+                    <input type="range" id="lineHeightSlider" min="1.2" max="2.5" value="1.8" step="0.1" onchange="setLineHeight(this.value)">
+                </div>
+            </div>
+            
+            <!-- مدیریت داده‌ها -->
+            <div class="settings-section">
+                <h4>مدیریت داده‌ها</h4>
+                <button class="btn btn-primary w-full mb-2" onclick="exportSettings()">
+                    <i class="fas fa-download"></i>
+                    خروجی تنظیمات
+                </button>
+                <button class="btn w-full mb-2" onclick="importSettings()">
+                    <i class="fas fa-upload"></i>
+                    ورود تنظیمات
+                </button>
+                <button class="btn w-full" onclick="resetSettings()" style="background: var(--error-container); color: var(--on-error-container);">
+                    <i class="fas fa-redo"></i>
+                    بازنشانی تنظیمات
+                </button>
+            </div>
+            
+            <button class="btn btn-primary w-full mt-4" onclick="saveSettings()">
                 <i class="fas fa-save"></i>
                 ذخیره تنظیمات
             </button>
@@ -1652,11 +1707,10 @@
         let isDarkMode = false;
         let fontSize = 16;
         let currentViewMode = 'normal';
-        let isBookmarked = false;
         let searchHighlights = [];
         let currentSearchIndex = 0;
         let allFileNames = [];
-        let loadingLog = [];
+        let selectedText = '';
         
         // سیستم تگ‌ها
         const tagSystem = {
@@ -2125,33 +2179,11 @@
                     <p class="text-gray-600">در حال بارگذاری مقاله...</p>
                 </div>
             `;
-            
-            // نمایش لاگ بارگذاری
-            const loadingLogElement = document.getElementById('loadingLog');
-            loadingLogElement.style.display = 'block';
-            loadingLogElement.innerHTML = '<div class="log-entry log-info">در حال آماده‌سازی برای بارگذاری فایل...</div>';
-            loadingLog = [];
         }
         
         // افزودن ورودی به لاگ
         function addLogEntry(message, type = 'info') {
-            const timestamp = new Date().toLocaleTimeString('fa-IR');
-            const logEntry = {
-                timestamp,
-                message,
-                type
-            };
-            
-            loadingLog.push(logEntry);
-            
-            const loadingLogElement = document.getElementById('loadingLog');
-            const entryElement = document.createElement('div');
-            entryElement.className = `log-entry log-${type}`;
-            entryElement.textContent = `[${timestamp}] ${message}`;
-            loadingLogElement.appendChild(entryElement);
-            
-            // اسکرول به پایین لاگ
-            loadingLogElement.scrollTop = loadingLogElement.scrollHeight;
+            showToast(message, type);
         }
         
         // تابع اصلی برای مقداردهی اولیه
@@ -2164,9 +2196,9 @@
             setupEventListeners();
             generateTableOfContents();
             updateViewCount();
-            loadComments();
             loadRelatedArticles();
             setupReadingProgress();
+            setupTextSelection();
         }
         
         // بارگذاری تنظیمات
@@ -2184,6 +2216,75 @@
             updateViewModeButtons(currentViewMode);
             setViewMode(currentViewMode);
             setFontSize(fontSize);
+            
+            // بارگذاری تنظیمات پیشرفته
+            const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+            
+            if (settings.theme) {
+                setTheme(settings.theme);
+            }
+            
+            if (settings.fontFamily) {
+                document.getElementById('fontFamily').value = settings.fontFamily;
+                setFontFamily(settings.fontFamily);
+            }
+            
+            if (settings.textSize) {
+                document.getElementById('textSizeSlider').value = settings.textSize;
+                document.getElementById('textSizeValue').textContent = settings.textSize;
+                setTextSize(settings.textSize);
+            }
+            
+            if (settings.lineHeight) {
+                document.getElementById('lineHeightSlider').value = settings.lineHeight;
+                document.getElementById('lineHeightValue').textContent = settings.lineHeight;
+                setLineHeight(settings.lineHeight);
+            }
+            
+            if (settings.justifyText !== undefined) {
+                document.getElementById('justifyText').checked = settings.justifyText;
+            }
+            
+            if (settings.lineNumbers !== undefined) {
+                document.getElementById('lineNumbers').checked = settings.lineNumbers;
+            }
+            
+            if (settings.loadImages !== undefined) {
+                document.getElementById('loadImages').checked = settings.loadImages;
+            }
+            
+            if (settings.autoSave !== undefined) {
+                document.getElementById('autoSave').checked = settings.autoSave;
+            }
+            
+            if (settings.smoothScroll !== undefined) {
+                document.getElementById('smoothScroll').checked = settings.smoothScroll;
+            }
+            
+            if (settings.highlightCode !== undefined) {
+                document.getElementById('highlightCode').checked = settings.highlightCode;
+            }
+            
+            if (settings.showReadingProgress !== undefined) {
+                document.getElementById('showReadingProgress').checked = settings.showReadingProgress;
+                if (!settings.showReadingProgress) {
+                    document.querySelector('.reading-progress').style.display = 'none';
+                }
+            }
+            
+            if (settings.enableAnimations !== undefined) {
+                document.getElementById('enableAnimations').checked = settings.enableAnimations;
+                if (!settings.enableAnimations) {
+                    document.body.style.setProperty('--animation-duration', '0s');
+                }
+            }
+            
+            if (settings.highContrast) {
+                document.getElementById('highContrast').checked = settings.highContrast;
+                if (settings.highContrast) {
+                    document.body.classList.add('high-contrast');
+                }
+            }
         }
         
         // به‌روزرسانی دکمه‌های حالت نمایش
@@ -2199,7 +2300,7 @@
         // بارگذاری لیست تمام فایل‌ها
         async function loadAllFileNames() {
             try {
-                addLogEntry('در حال بارگذاری لیست فایل‌ها از گیت‌هاب...');
+                addLogEntry('در حال بارگذاری لیست فایل‌ها از گیت‌هاب...', 'info');
                 
                 const GITHUB_API_BASE = 'https://api.github.com/repos/linuxpersian/linuxpersian.github.io/contents/wiki/source';
                 const response = await fetch(GITHUB_API_BASE);
@@ -2219,7 +2320,6 @@
             } catch (error) {
                 console.error('خطا در بارگذاری لیست فایل‌ها:', error);
                 addLogEntry(`خطا در بارگذاری لیست فایل‌ها: ${error.message}`, 'error');
-                showToast('خطا در بارگذاری لیست فایل‌ها برای ناوبری.', 'error');
             }
         }
         
@@ -2240,13 +2340,13 @@
                 }
                 
                 currentFile = fileName;
-                addLogEntry(`در حال بارگذاری فایل: ${fileName}`);
+                addLogEntry(`در حال بارگذاری فایل: ${fileName}`, 'info');
                 
                 // استفاده از آدرس صحیح گیت‌هاب
                 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
                 const fileUrl = `${GITHUB_RAW_BASE}/${fileName}`;
                 
-                addLogEntry(`در حال ارسال درخواست به: ${fileUrl}`);
+                addLogEntry(`در حال ارسال درخواست به: ${fileUrl}`, 'info');
                 
                 const response = await fetch(fileUrl);
                 
@@ -2280,16 +2380,8 @@
                 // به‌روزرسانی اطلاعات متا
                 updateMetadata(content);
                 
-                // بررسی وضعیت نشان‌گذاری
-                checkBookmarkStatus();
-                
                 // بازیابی موقعیت خواندن
                 restoreReadingPosition();
-                
-                // پنهان کردن لاگ بارگذاری پس از موفقیت
-                setTimeout(() => {
-                    document.getElementById('loadingLog').style.display = 'none';
-                }, 3000);
                 
                 showToast('مقاله با موفقیت بارگذاری شد.', 'success');
             } catch (error) {
@@ -2343,13 +2435,17 @@
                 document.getElementById('markdownContent').innerHTML = html;
                 
                 // هایلایت کردن کد
-                Prism.highlightAll();
+                if (document.getElementById('highlightCode')?.checked) {
+                    Prism.highlightAll();
+                }
                 
                 // افزودن دکمه کپی به کدها
                 addCopyButtons();
                 
                 // افزودن رویداد به تصاویر برای لایت‌باکس
-                setupImageLightbox();
+                if (document.getElementById('loadImages')?.checked) {
+                    setupImageLightbox();
+                }
             } catch (error) {
                 console.error('Error processing content:', error);
                 showError('خطا در پردازش محتوای مقاله.');
@@ -2498,43 +2594,6 @@
             document.getElementById('metaWordCount').textContent = `${wordCount.toLocaleString('fa-IR')} کلمه`;
             document.getElementById('metaViews').textContent = '1,234 بازدید';
             document.getElementById('metaRating').textContent = '4.7/5';
-        }
-        
-        // بررسی وضعیت نشان‌گذاری
-        function checkBookmarkStatus() {
-            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-            isBookmarked = bookmarks.includes(currentFile);
-            
-            const icon = document.getElementById('bookmarkIcon');
-            if (isBookmarked) {
-                icon.classList.add('fas');
-                icon.classList.remove('far');
-            } else {
-                icon.classList.add('far');
-                icon.classList.remove('fas');
-            }
-        }
-        
-        // تغییر وضعیت نشان‌گذاری
-        function toggleBookmark() {
-            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-            
-            if (isBookmarked) {
-                // حذف از نشان‌ها
-                const index = bookmarks.indexOf(currentFile);
-                if (index > -1) {
-                    bookmarks.splice(index, 1);
-                }
-                showToast('از نشان‌ها حذف شد.', 'info');
-            } else {
-                // افزودن به نشان‌ها
-                bookmarks.push(currentFile);
-                showToast('به نشان‌ها افزوده شد.', 'success');
-            }
-            
-            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
-            isBookmarked = !isBookmarked;
-            checkBookmarkStatus();
         }
         
         // بازیابی موقعیت خواندن
@@ -2693,12 +2752,6 @@
                     downloadMarkdown();
                 }
                 
-                // Ctrl/Cmd + B برای نشان‌گذاری
-                if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
-                    e.preventDefault();
-                    toggleBookmark();
-                }
-                
                 // F3 برای جستجوی بعدی
                 if (e.key === 'F3' && searchHighlights.length > 0) {
                     e.preventDefault();
@@ -2734,19 +2787,11 @@
             localStorage.setItem('viewMode', mode);
             
             // حذف تمام کلاس‌های حالت
-            document.body.classList.remove('reading-mode', 'night-mode', 'focus-mode');
+            document.body.classList.remove('reading-mode');
             
             // افزودن کلاس حالت جدید
-            switch (mode) {
-                case 'reading':
-                    document.body.classList.add('reading-mode');
-                    break;
-                case 'night':
-                    document.body.classList.add('night-mode');
-                    break;
-                case 'focus':
-                    document.body.classList.add('focus-mode');
-                    break;
+            if (mode === 'reading') {
+                document.body.classList.add('reading-mode');
             }
             
             // به‌روزرسانی دکمه‌های فعال
@@ -2777,6 +2822,12 @@
             fontSize = size;
             localStorage.setItem('fontSize', size);
             document.getElementById('markdownContent').style.fontSize = `${size}px`;
+            document.getElementById('fontSizeValue').textContent = size;
+            document.getElementById('fontSizeSlider').value = size;
+        }
+        
+        function setFontSizeFromSlider(size) {
+            setFontSize(size);
         }
         
         function increaseFontSize() {
@@ -2789,6 +2840,23 @@
             if (fontSize > 12) {
                 setFontSize(fontSize - 2);
             }
+        }
+        
+        // تنظیم فونت
+        function setFontFamily(font) {
+            document.body.style.fontFamily = `'${font}', sans-serif`;
+        }
+        
+        // تنظیم اندازه متن
+        function setTextSize(size) {
+            document.getElementById('markdownContent').style.fontSize = `${size}%`;
+            document.getElementById('textSizeValue').textContent = size;
+        }
+        
+        // تنظیم فاصله خطوط
+        function setLineHeight(height) {
+            document.getElementById('markdownContent').style.lineHeight = height;
+            document.getElementById('lineHeightValue').textContent = height;
         }
         
         // اشتراک‌گذاری مقاله
@@ -2831,10 +2899,14 @@
         
         // اسکرول به بالا
         function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            if (document.getElementById('smoothScroll')?.checked) {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            } else {
+                window.scrollTo(0, 0);
+            }
         }
         
         // باز کردن مودال
@@ -2849,6 +2921,15 @@
         
         // تنظیم تم رنگی
         function setTheme(theme) {
+            // حذف کلاس‌های تم قبلی
+            document.body.classList.remove('theme-blue', 'theme-green', 'theme-red', 'theme-orange', 
+                                   'theme-purple', 'theme-teal', 'theme-amber', 'theme-pink', 'theme-indigo');
+            
+            // افزودن کلاس تم جدید
+            if (theme !== 'default') {
+                document.body.classList.add(`theme-${theme}`);
+            }
+            
             // حذف کلاس فعال از تمام گزینه‌ها
             document.querySelectorAll('.theme-option').forEach(option => {
                 option.classList.remove('active');
@@ -2857,8 +2938,11 @@
             // افزودن کلاس فعال به گزینه انتخاب شده
             document.querySelector(`.theme-${theme}`).classList.add('active');
             
-            // در اینجا می‌توان منطق تغییر تم را پیاده‌سازی کرد
-            localStorage.setItem('theme', theme);
+            // ذخیره تنظیمات
+            const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+            settings.theme = theme;
+            localStorage.setItem('settings', JSON.stringify(settings));
+            
             showToast(`تم ${theme} اعمال شد.`, 'success');
         }
         
@@ -2868,16 +2952,81 @@
                 isDarkMode: isDarkMode,
                 fontSize: fontSize,
                 viewMode: currentViewMode,
-                theme: localStorage.getItem('theme') || 'default',
-                justifyText: document.getElementById('justifyText')?.checked || false,
-                lineNumbers: document.getElementById('lineNumbers')?.checked || false,
-                autoSave: document.getElementById('autoSave')?.checked || true,
-                loadImages: document.getElementById('loadImages')?.checked || true
+                theme: document.querySelector('.theme-option.active')?.className.replace('theme-option active ', '') || 'default',
+                fontFamily: document.getElementById('fontFamily').value,
+                textSize: document.getElementById('textSizeSlider').value,
+                lineHeight: document.getElementById('lineHeightSlider').value,
+                justifyText: document.getElementById('justifyText').checked,
+                lineNumbers: document.getElementById('lineNumbers').checked,
+                loadImages: document.getElementById('loadImages').checked,
+                autoSave: document.getElementById('autoSave').checked,
+                smoothScroll: document.getElementById('smoothScroll').checked,
+                highlightCode: document.getElementById('highlightCode').checked,
+                showReadingProgress: document.getElementById('showReadingProgress').checked,
+                enableAnimations: document.getElementById('enableAnimations').checked,
+                highContrast: document.getElementById('highContrast').checked
             };
             
             localStorage.setItem('settings', JSON.stringify(settings));
             closeModal('settingsModal');
             showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
+        }
+        
+        // خروجی تنظیمات
+        function exportSettings() {
+            const settings = JSON.parse(localStorage.getItem('settings') || '{}');
+            const blob = new Blob([JSON.stringify(settings, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'viewer-settings.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast('تنظیمات با موفقیت خروجی گرفته شد.', 'success');
+        }
+        
+        // ورود تنظیمات
+        function importSettings() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const settings = JSON.parse(event.target.result);
+                        localStorage.setItem('settings', JSON.stringify(settings));
+                        showToast('تنظیمات با موفقیت وارد شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 2000);
+                    } catch (error) {
+                        showToast('خطا در خواندن فایل تنظیمات.', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+        
+        // بازنشانی تنظیمات
+        function resetSettings() {
+            if (confirm('آیا از بازنشانی تنظیمات مطمئن هستید؟')) {
+                localStorage.removeItem('settings');
+                localStorage.removeItem('isDarkMode');
+                localStorage.removeItem('fontSize');
+                localStorage.removeItem('viewMode');
+                showToast('تنظیمات با موفقیت بازنشانی شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            }
         }
         
         // نمایش اعلان
@@ -2893,7 +3042,9 @@
             setTimeout(() => {
                 toast.style.opacity = '0';
                 setTimeout(() => {
-                    toastContainer.removeChild(toast);
+                    if (toastContainer.contains(toast)) {
+                        toastContainer.removeChild(toast);
+                    }
                 }, 300);
             }, 3000);
         }
@@ -2923,75 +3074,6 @@
                 const newViews = currentViews + 1;
                 viewsElement.textContent = `${newViews.toLocaleString('fa-IR')} بازدید`;
             }
-        }
-        
-        // بارگذاری نظرات
-        function loadComments() {
-            const commentsList = document.getElementById('commentsList');
-            
-            // در یک پیاده‌سازی واقعی، نظرات از سرور دریافت می‌شوند
-            // اینجا چند نظر نمونه نمایش داده می‌شود
-            const sampleComments = [
-                {
-                    author: 'علی رضایی',
-                    date: '۱۴۰۲/۰۵/۱۰',
-                    text: 'مقاله بسیار مفیدی بود. ممنون از توضیحات کامل شما.'
-                },
-                {
-                    author: 'سارا محمدی',
-                    date: '۱۴۰۲/۰۵/۰۸',
-                    text: 'من از این راهنما برای راه‌اندازی سرور خود استفاده کردم و خیلی مفید بود.'
-                },
-                {
-                    author: 'رضا قاسمی',
-                    date: '۱۴۰۲/۰۵/۰۵',
-                    text: 'آیا می‌توانید نسخه پیشرفته‌تری از این مقاله منتشر کنید؟'
-                }
-            ];
-            
-            commentsList.innerHTML = '';
-            
-            sampleComments.forEach(comment => {
-                const commentElement = document.createElement('div');
-                commentElement.className = 'comment';
-                commentElement.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-author">${comment.author}</div>
-                        <div class="comment-date">${comment.date}</div>
-                    </div>
-                    <div class="comment-text">${comment.text}</div>
-                `;
-                commentsList.appendChild(commentElement);
-            });
-        }
-        
-        // ارسال نظر
-        function submitComment() {
-            const commentInput = document.getElementById('commentInput');
-            const commentText = commentInput.value.trim();
-            
-            if (!commentText) {
-                showToast('لطفاً متن نظر خود را وارد کنید.', 'error');
-                return;
-            }
-            
-            // در یک پیاده‌سازی واقعی، نظر به سرور ارسال می‌شود
-            // اینجا فقط یک نمایش شبیه‌سازی شده است
-            const commentsList = document.getElementById('commentsList');
-            const newComment = document.createElement('div');
-            newComment.className = 'comment';
-            newComment.innerHTML = `
-                <div class="comment-header">
-                    <div class="comment-author">کاربر مهمان</div>
-                    <div class="comment-date">${new Date().toLocaleDateString('fa-IR')}</div>
-                </div>
-                <div class="comment-text">${commentText}</div>
-            `;
-            
-            commentsList.insertBefore(newComment, commentsList.firstChild);
-            commentInput.value = '';
-            
-            showToast('نظر شما با موفقیت ارسال شد.', 'success');
         }
         
         // بارگذاری مقالات مرتبط
@@ -3036,11 +3118,116 @@
         
         // به‌روزرسانی نوار پیشرفت خواندن
         function updateReadingProgress() {
+            if (!document.getElementById('showReadingProgress')?.checked) {
+                return;
+            }
+            
             const scrollTop = window.pageYOffset;
             const docHeight = document.body.scrollHeight - window.innerHeight;
             const scrollPercent = (scrollTop / docHeight) * 100;
             
             document.getElementById('readingProgressBar').style.width = `${scrollPercent}%`;
+        }
+        
+        // تنظیم انتخاب متن
+        function setupTextSelection() {
+            document.addEventListener('mouseup', () => {
+                const selectedText = window.getSelection().toString().trim();
+                if (selectedText) {
+                    this.selectedText = selectedText;
+                    showTextSelectionMenu();
+                } else {
+                    hideTextSelectionMenu();
+                }
+            });
+            
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.text-selection-menu')) {
+                    hideTextSelectionMenu();
+                }
+            });
+        }
+        
+        // نمایش منوی انتخاب متن
+        function showTextSelectionMenu() {
+            const menu = document.getElementById('textSelectionMenu');
+            const selection = window.getSelection();
+            
+            if (selection.rangeCount > 0 && !selection.isCollapsed) {
+                const range = selection.getRangeAt(0);
+                const rect = range.getBoundingClientRect();
+                
+                menu.style.display = 'flex';
+                menu.style.top = `${rect.top - 60}px`;
+                menu.style.left = `${rect.left + (rect.width / 2) - (menu.offsetWidth / 2)}px`;
+            }
+        }
+        
+        // پنهان کردن منوی انتخاب متن
+        function hideTextSelectionMenu() {
+            document.getElementById('textSelectionMenu').style.display = 'none';
+        }
+        
+        // کپی متن انتخاب شده
+        function copySelectedText() {
+            const selectedText = window.getSelection().toString();
+            navigator.clipboard.writeText(selectedText).then(() => {
+                showToast('متن با موفقیت کپی شد.', 'success');
+                hideTextSelectionMenu();
+            }).catch(err => {
+                showToast('خطا در کپی کردن متن.', 'error');
+            });
+        }
+        
+        // جستجوی متن انتخاب شده
+        function searchSelectedText() {
+            const selectedText = window.getSelection().toString();
+            document.getElementById('searchInput').value = selectedText;
+            searchInArticle();
+            hideTextSelectionMenu();
+        }
+        
+        // هایلایت کردن متن انتخاب شده
+        function highlightSelectedText() {
+            const selection = window.getSelection();
+            if (selection.rangeCount > 0) {
+                const range = selection.getRangeAt(0);
+                const span = document.createElement('span');
+                span.style.backgroundColor = 'rgba(255, 255, 0, 0.4)';
+                span.style.padding = '0 2px';
+                span.style.borderRadius = '2px';
+                
+                try {
+                    range.surroundContents(span);
+                    showToast('متن با موفقیت هایلایت شد.', 'success');
+                } catch (e) {
+                    showToast('خطا در هایلایت کردن متن.', 'error');
+                }
+                
+                hideTextSelectionMenu();
+            }
+        }
+        
+        // خواندن متن انتخاب شده
+        function speakSelectedText() {
+            const selectedText = window.getSelection().toString();
+            
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(selectedText);
+                utterance.lang = 'fa-IR';
+                utterance.rate = 0.9;
+                
+                speechSynthesis.speak(utterance);
+                showToast('در حال خواندن متن...', 'info');
+                
+                utterance.onend = () => {
+                    showToast('پایان خواندن متن.', 'info');
+                };
+            } else {
+                showToast('مرورگر شما از متن به گفتار پشتیبانی نمی‌کند.', 'error');
+            }
+            
+            hideTextSelectionMenu();
         }
         
         // اجرای تابع مقداردهی اولیه پس از بارگذاری صفحه
