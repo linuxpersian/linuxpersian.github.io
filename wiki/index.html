@@ -1,0 +1,3025 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویکی لینوکس فارسی - نسخه پیشرفته</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            /* رنگ‌های اصلی */
+            --primary: #6750A4;
+            --on-primary: #FFFFFF;
+            --primary-container: #EADDFF;
+            --on-primary-container: #21005D;
+
+            /* رنگ‌های ثانویه */
+            --secondary: #625B71;
+            --on-secondary: #FFFFFF;
+            --secondary-container: #E8DEF8;
+            --on-secondary-container: #1D192B;
+
+            /* رنگ‌های ترشیاری */
+            --tertiary: #7D5260;
+            --on-tertiary: #FFFFFF;
+            --tertiary-container: #FFD8E4;
+            --on-tertiary-container: #31111D;
+
+            /* رنگ‌های خطا */
+            --error: #B3261E;
+            --on-error: #FFFFFF;
+            --error-container: #F9DEDC;
+            --on-error-container: #410E0B;
+
+            /* رنگ‌های پس‌زمینه */
+            --background: #FFFBFE;
+            --on-background: #1C1B1F;
+            --surface: #FFFBFE;
+            --on-surface: #1C1B1F;
+            --surface-variant: #E7E0EC;
+            --on-surface-variant: #49454F;
+            --outline: #79747E;
+            --outline-variant: #CAC4D0;
+            --shadow: #000000;
+            --inverse-surface: #313033;
+            --inverse-on-surface: #F4EFF4;
+            --inverse-primary: #D0BCFF;
+            --surface-tint: #6750A4;
+
+            /* رنگ‌های موفقیت و هشدار */
+            --success: #388E3C;
+            --on-success: #FFFFFF;
+            --warning: #F57C00;
+            --on-warning: #FFFFFF;
+
+            /* تم‌های رنگی جدید */
+            --theme-blue: #1E88E5;
+            --theme-green: #43A047;
+            --theme-red: #E53935;
+            --theme-orange: #FB8C00;
+            --theme-purple: #8E24AA;
+        }
+
+        body.dark-mode {
+            --primary: #D0BCFF;
+            --on-primary: #381E72;
+            --primary-container: #4F378B;
+            --on-primary-container: #EADDFF;
+            --secondary: #CCC2DC;
+            --on-secondary: #332D41;
+            --secondary-container: #4A4458;
+            --on-secondary-container: #E8DEF8;
+            --tertiary: #EFB8C8;
+            --on-tertiary: #492532;
+            --tertiary-container: #633B48;
+            --on-tertiary-container: #FFD8E4;
+            --error: #F2B8B5;
+            --on-error: #601410;
+            --error-container: #8C1D18;
+            --on-error-container: #F9DEDC;
+            --background: #1C1B1F;
+            --on-background: #E6E1E6;
+            --surface: #1C1B1F;
+            --on-surface: #E6E1E6;
+            --surface-variant: #49454F;
+            --on-surface-variant: #CAC4D0;
+            --outline: #938F99;
+            --inverse-surface: #E6E1E6;
+            --inverse-on-surface: #313033;
+            --inverse-primary: #6750A4;
+            --surface-tint: #D0BCFF;
+            --success: #4CAF50;
+            --on-success: #FFFFFF;
+            --warning: #FF9800;
+            --on-warning: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, var(--primary-container) 0%, var(--tertiary-container) 100%);
+            color: var(--on-background);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+
+        /* انیمیشن‌های کلی */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        /* استایل‌های اصلی */
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 2rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+            width: 90%;
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dark-mode .container {
+            background: rgba(28, 27, 31, 0.95);
+        }
+
+        /* هدر */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: slideDown 0.8s ease forwards;
+        }
+
+        .header h1 {
+            color: var(--on-background);
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            color: var(--on-background);
+            font-size: 1.25rem;
+            font-weight: 400;
+            opacity: 0.8;
+        }
+
+        /* نوار کناری */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background: var(--surface);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        .sidebar.active {
+            right: 0;
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .sidebar-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--on-surface);
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--on-surface);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+
+        .close-sidebar:hover {
+            background: var(--surface-variant);
+        }
+
+        .tag-section {
+            margin-bottom: 2rem;
+        }
+
+        .tag-section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--on-surface-variant);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tag {
+            background: var(--secondary-container);
+            color: var(--on-secondary-container);
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .tag:hover {
+            background: var(--primary);
+            color: var(--on-primary);
+            transform: translateY(-2px);
+        }
+
+        .tag.active {
+            background: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .tag-count {
+            font-size: 0.75rem;
+            opacity: 0.8;
+        }
+
+        /* بخش جستجو */
+        .search-section {
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--surface);
+            color: var(--on-surface);
+            border: 2px solid var(--outline-variant);
+            border-radius: 2rem;
+            padding: 1rem 1.5rem 1rem 4rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(103, 80, 164, 0.1), 0 4px 12px rgba(0, 0, 0, 0.15);
+            outline: none;
+        }
+
+        .search-btn, .clear-search-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-btn {
+            left: 0.75rem;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--primary);
+            color: var(--on-primary);
+            box-shadow: 0 2px 8px rgba(103, 80, 164, 0.3);
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(103, 80, 164, 0.4);
+        }
+
+        .clear-search-btn {
+            left: 3.5rem;
+            width: 2rem;
+            height: 2rem;
+            background: var(--surface-variant);
+            color: var(--on-surface-variant);
+            font-size: 1rem;
+        }
+
+        .clear-search-btn:hover {
+            background: var(--error);
+            color: var(--on-error);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* فیلترها و کنترل‌ها */
+        .controls-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .view-controls, .sort-controls {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .control-btn {
+            background: var(--secondary-container);
+            color: var(--on-secondary-container);
+            border: none;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-btn:hover {
+            background: var(--primary);
+            color: var(--on-primary);
+            transform: translateY(-2px);
+        }
+
+        .control-btn.active {
+            background: var(--primary);
+            color: var(--on-primary);
+        }
+
+        /* شبکه فایل‌ها */
+        .files-section {
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--on-background);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-grid {
+            display: grid;
+            gap: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .file-grid.grid-view {
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+
+        .file-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .file-grid.card-3d-view {
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            perspective: 1000px;
+        }
+
+        .file-card {
+            background: var(--surface);
+            border: 1px solid var(--outline-variant);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .file-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--tertiary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .file-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .file-card.card-3d {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .file-card.card-3d:hover {
+            transform: rotateY(10deg) rotateX(-10deg);
+        }
+
+        .file-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--on-surface);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .file-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--on-surface-variant);
+        }
+
+        .file-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--surface-variant);
+            border-radius: 0.75rem;
+            font-weight: 500;
+        }
+
+        .file-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .file-tag {
+            background: var(--primary-container);
+            color: var(--on-primary-container);
+            padding: 0.2rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .file-preview {
+            color: var(--on-surface);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-size: 0.95rem;
+        }
+
+        .file-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--outline-variant);
+        }
+
+        .file-action-btn {
+            background: none;
+            border: none;
+            color: var(--on-surface-variant);
+            cursor: pointer;
+            padding: 0.4rem;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+            font-size: 1rem;
+        }
+
+        .file-action-btn:hover {
+            background: var(--surface-variant);
+            color: var(--primary);
+        }
+
+        .file-action-btn.bookmarked {
+            color: var(--warning);
+        }
+
+        /* حالت نمایش لیستی */
+        .file-card.list-view {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+        }
+
+        .file-card.list-view .file-icon {
+            flex-shrink: 0;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 1rem;
+            background: var(--primary-container);
+            color: var(--on-primary-container);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .file-card.list-view .file-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .file-card.list-view .file-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-card.list-view .file-meta {
+            margin-bottom: 0.75rem;
+        }
+
+        .file-card.list-view .file-preview {
+            -webkit-line-clamp: 2;
+        }
+
+        /* حالت نمایش سه‌بعدی */
+        .file-card.card-3d-view {
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .file-card.card-3d-view:hover {
+            transform: rotateY(10deg) rotateX(-10deg);
+        }
+
+        /* اسکلتون لودینگ */
+        .skeleton-card {
+            background: var(--surface-variant);
+            border-radius: 1.5rem;
+            padding: 1.75rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skeleton-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -1000px;
+            width: 1000px;
+            height: 100%;
+            background: linear-gradient(90deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.2) 50%,
+                transparent 100%);
+            animation: shimmer 1.5s infinite ease-in-out;
+        }
+
+        .skeleton-title, .skeleton-meta, .skeleton-preview {
+            background: var(--outline-variant);
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .skeleton-title {
+            height: 1.5rem;
+            width: 80%;
+        }
+
+        .skeleton-meta {
+            height: 1rem;
+            width: 60%;
+        }
+
+        .skeleton-preview {
+            height: 3rem;
+            width: 100%;
+        }
+
+        /* صفحه‌بندی */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .page-btn {
+            background: var(--secondary-container);
+            color: var(--on-secondary-container);
+            border: none;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .page-btn:hover {
+            background: var(--primary);
+            color: var(--on-primary);
+        }
+
+        .page-btn:disabled {
+            background: var(--surface-variant);
+            color: var(--outline);
+            cursor: not-allowed;
+        }
+
+        #pageJumpInput {
+            width: 4rem;
+            text-align: center;
+            padding: 0.5rem;
+            border: 2px solid var(--outline);
+            border-radius: 0.75rem;
+            background: var(--surface);
+            color: var(--on-surface);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        #pageJumpInput:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(103, 80, 164, 0.1);
+            outline: none;
+        }
+
+        /* مودال‌ها */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .modal-content {
+            background: var(--surface);
+            padding: 2rem;
+            border-radius: 2rem;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease forwards;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--outline-variant);
+        }
+
+        .close-button {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            color: var(--outline);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--on-surface);
+        }
+
+        /* دکمه‌های شناور */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--on-primary);
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .fab:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* اعلان‌ها */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: var(--inverse-surface);
+            color: var(--inverse-on-surface);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: toast-fade-in 0.3s forwards, toast-fade-out 0.3s 2.7s forwards;
+            min-width: 250px;
+            text-align: center;
+            font-size: 0.9rem;
+            pointer-events: auto;
+        }
+
+        .toast.error {
+            background: var(--error);
+            color: var(--on-error);
+        }
+
+        .toast.success {
+            background: var(--success);
+            color: var(--on-success);
+        }
+
+        @keyframes toast-fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes toast-fade-out {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+
+        /* تم‌های رنگی */
+        .theme-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .theme-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .theme-option:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-option.active {
+            border-color: var(--on-surface);
+        }
+
+        .theme-default { background: var(--primary); }
+        .theme-blue { background: var(--theme-blue); }
+        .theme-green { background: var(--theme-green); }
+        .theme-red { background: var(--theme-red); }
+        .theme-orange { background: var(--theme-orange); }
+        .theme-purple { background: var(--theme-purple); }
+
+        /* نوار پیشرفت */
+        .progress-bar {
+            height: 4px;
+            background: var(--outline-variant);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 2px;
+            width: 0;
+            transition: width 0.3s ease;
+        }
+
+        /* تنظیمات */
+        .settings-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .settings-group-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--on-surface);
+            margin-bottom: 1rem;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--outline-variant);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .setting-label {
+            font-weight: 500;
+            color: var(--on-surface);
+        }
+
+        .setting-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* toggle switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--outline-variant);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* ریسپانسیو */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            .controls-row {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .view-controls, .sort-controls {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .file-grid.grid-view {
+                grid-template-columns: 1fr;
+            }
+
+            .file-grid.card-3d-view {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .file-grid.grid-view {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .file-grid.card-3d-view {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+    <!-- نوار کناری -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2 class="sidebar-title">دسته‌بندی‌ها</h2>
+            <button class="close-sidebar" onclick="toggleSidebar()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="tag-section">
+            <div class="tag-section-title">
+                <span>دسته‌بندی‌های اصلی</span>
+                <button class="control-btn" onclick="expandAllTags()">
+                    <i class="fas fa-expand-alt"></i>
+                </button>
+            </div>
+            <div class="tag-cloud" id="mainCategories">
+                <!-- تگ‌های اصلی از طریق جاوا اسکریپت پر می‌شوند -->
+            </div>
+        </div>
+
+        <div class="tag-section">
+            <div class="tag-section-title">
+                <span>تگ‌های پرطرفدار</span>
+                <button class="control-btn" onclick="showAllTags()">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </div>
+            <div class="tag-cloud" id="popularTags">
+                <!-- تگ‌های پرطرفدار از طریق جاوا اسکریپت پر می‌شوند -->
+            </div>
+        </div>
+
+        <div class="tag-section">
+            <div class="tag-section-title">
+                <span>تگ‌های سفارشی</span>
+                <button class="control-btn" onclick="addCustomTag()">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <div class="tag-cloud" id="customTags">
+                <!-- تگ‌های سفارشی از طریق جاوا اسکریپت پر می‌شوند -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>ویکی لینوکس فارسی</h1>
+            <p>منبع جامع آموزش لینوکس به زبان فارسی</p>
+        </header>
+
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="جستجو در مقالات..." aria-label="جستجو در مقالات">
+                <button class="search-btn" onclick="performSearch()" aria-label="جستجو">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="clear-search-btn" id="clearSearchBtn" style="display:none;" onclick="clearSearch()" aria-label="پاک کردن جستجو">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="controls-row">
+                <div class="view-controls">
+                    <button class="control-btn active" data-view="grid" onclick="setViewMode('grid')">
+                        <i class="fas fa-th"></i> شبکه
+                    </button>
+                    <button class="control-btn" data-view="list" onclick="setViewMode('list')">
+                        <i class="fas fa-list"></i> لیست
+                    </button>
+                    <button class="control-btn" data-view="card-3d" onclick="setViewMode('card-3d')">
+                        <i class="fas fa-cube"></i> سه‌بعدی
+                    </button>
+                </div>
+
+                <div class="sort-controls">
+                    <button class="control-btn" onclick="openModal('sortModal')">
+                        <i class="fas fa-sort"></i> مرتب‌سازی
+                    </button>
+                    <button class="control-btn" onclick="openModal('filterModal')">
+                        <i class="fas fa-filter"></i> فیلتر
+                    </button>
+                    <button class="control-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-tags"></i> تگ‌ها
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="files-section">
+            <h2 class="section-title">
+                مقالات آموزشی
+                <span id="fileCount">(در حال بارگذاری...)</span>
+            </h2>
+
+            <div class="progress-bar">
+                <div class="progress" id="progressBar"></div>
+            </div>
+
+            <div id="fileGrid" class="file-grid grid-view" role="list">
+                <div class="loading text-center py-10">در حال بارگذاری مقالات...</div>
+            </div>
+        </section>
+
+        <div class="pagination" id="pagination" style="display: none;" role="navigation" aria-label="صفحه‌بندی مقالات">
+            <button class="page-btn" onclick="changePage('prev')" id="prevBtn" aria-label="صفحه قبلی">
+                <i class="fas fa-chevron-right"></i> قبلی
+            </button>
+            <span id="pageInfo" class="text-lg font-semibold" aria-live="polite">صفحه 1 از 1</span>
+            <input type="number" id="pageJumpInput" class="w-16 text-center py-1 border border-gray-300 rounded-lg" min="1" onkeypress="handlePageJump(event)" aria-label="پرش به صفحه">
+            <button class="page-btn" onclick="changePage('next')" id="nextBtn" aria-label="صفحه بعدی">
+                بعدی <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- دکمه‌های شناور -->
+    <button class="fab" onclick="openModal('settingsModal')" aria-label="تنظیمات">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <button class="fab" style="bottom: 90px;" onclick="scrollToTop()" aria-label="بازگشت به بالا">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- مودال تنظیمات -->
+    <div id="settingsModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('settingsModal')" aria-label="بستن">&times;</span>
+            <h3 id="settingsModalTitle" class="text-2xl font-bold mb-4">تنظیمات</h3>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">ظاهر</h4>
+
+                <div class="setting-item">
+                    <span class="setting-label">حالت تاریک</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">تم رنگی</span>
+                    <div class="setting-control">
+                        <div class="theme-selector">
+                            <div class="theme-option theme-default active" onclick="setTheme('default')"></div>
+                            <div class="theme-option theme-blue" onclick="setTheme('blue')"></div>
+                            <div class="theme-option theme-green" onclick="setTheme('green')"></div>
+                            <div class="theme-option theme-red" onclick="setTheme('red')"></div>
+                            <div class="theme-option theme-orange" onclick="setTheme('orange')"></div>
+                            <div class="theme-option theme-purple" onclick="setTheme('purple')"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">اندازه فونت</span>
+                    <div class="setting-control">
+                        <select id="fontSizeSelect" onchange="changeFontSize()" class="p-1 border rounded">
+                            <option value="small">کوچک</option>
+                            <option value="medium" selected>متوسط</option>
+                            <option value="large">بزرگ</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">نمایش</h4>
+
+                <div class="setting-item">
+                    <span class="setting-label">تعداد مقالات در صفحه</span>
+                    <div class="setting-control">
+                        <input type="number" id="itemsPerPage" min="6" max="24" value="12" class="w-16 p-1 border rounded">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">نمایش پیش‌نمایش</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showPreviewToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">نمایش تاریخ</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="showDateToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">پیشرفته</h4>
+
+                <div class="setting-item">
+                    <span class="setting-label">ذخیره خودکار تنظیمات</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoSaveToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">بارگذاری خودکار</span>
+                    <div class="setting-control">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="autoLoadToggle" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="control-btn mt-4 w-full" onclick="saveSettings()">
+                <i class="fas fa-save"></i> ذخیره تنظیمات
+            </button>
+        </div>
+    </div>
+
+    <!-- مودال مرتب‌سازی -->
+    <div id="sortModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="sortModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('sortModal')" aria-label="بستن">&times;</span>
+            <h3 id="sortModalTitle" class="text-2xl font-bold mb-4">مرتب‌سازی مقالات</h3>
+
+            <div class="radio-group" role="radiogroup" aria-labelledby="sortModalTitle">
+                <div class="setting-item">
+                    <span class="setting-label">تاریخ (جدیدترین)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortDateDesc" name="sortOption" value="date-desc" checked>
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">تاریخ (قدیمی‌ترین)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortDateAsc" name="sortOption" value="date-asc">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">عنوان (الفبا)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortTitleAsc" name="sortOption" value="title-asc">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">عنوان (الفبا معکوس)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortTitleDesc" name="sortOption" value="title-desc">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">اندازه (بزرگترین)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortSizeDesc" name="sortOption" value="size-desc">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">اندازه (کوچکترین)</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortSizeAsc" name="sortOption" value="size-asc">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">محبوبیت</span>
+                    <div class="setting-control">
+                        <input type="radio" id="sortPopularity" name="sortOption" value="popularity">
+                    </div>
+                </div>
+            </div>
+
+            <button class="control-btn mt-4 w-full" onclick="applySort()">
+                <i class="fas fa-check"></i> اعمال مرتب‌سازی
+            </button>
+        </div>
+    </div>
+
+    <!-- مودال فیلتر -->
+    <div id="filterModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="filterModalTitle">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('filterModal')" aria-label="بستن">&times;</span>
+            <h3 id="filterModalTitle" class="text-2xl font-bold mb-4">فیلتر مقالات</h3>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">فیلتر بر اساس تگ</h4>
+                <div class="tag-cloud" id="filterTags">
+                    <!-- تگ‌ها برای فیلتر از طریق جاوا اسکریپت پر می‌شوند -->
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">فیلتر بر اساس تاریخ</h4>
+
+                <div class="setting-item">
+                    <span class="setting-label">از تاریخ</span>
+                    <div class="setting-control">
+                        <input type="date" id="dateFrom" class="p-1 border rounded">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">تا تاریخ</span>
+                    <div class="setting-control">
+                        <input type="date" id="dateTo" class="p-1 border rounded">
+                    </div>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h4 class="settings-group-title">فیلتر بر اساس اندازه</h4>
+
+                <div class="setting-item">
+                    <span class="setting-label">حداقل اندازه (KB)</span>
+                    <div class="setting-control">
+                        <input type="number" id="minSize" min="0" class="w-20 p-1 border rounded">
+                    </div>
+                </div>
+
+                <div class="setting-item">
+                    <span class="setting-label">حداکثر اندازه (KB)</span>
+                    <div class="setting-control">
+                        <input type="number" id="maxSize" min="0" class="w-20 p-1 border rounded">
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex gap-2 mt-4">
+                <button class="control-btn flex-1" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i> اعمال فیلترها
+                </button>
+                <button class="control-btn flex-1" onclick="resetFilters()">
+                    <i class="fas fa-redo"></i> بازنشانی
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // متغیرهای اصلی
+        let allFiles = [];
+        let filteredFiles = [];
+        let currentPage = 1;
+        let filesPerPage = 12;
+        let searchQuery = '';
+        let currentSort = 'date-desc';
+        let currentViewMode = 'grid';
+        let isDarkMode = false;
+        let activeFilters = {
+            tags: [],
+            dateFrom: null,
+            dateTo: null,
+            minSize: null,
+            maxSize: null
+        };
+        let bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+        let readingHistory = JSON.parse(localStorage.getItem('readingHistory')) || [];
+
+        // سیستم تگ‌ها
+        const tagSystem = {
+            // دسته‌بندی‌های اصلی
+            mainCategories: [
+                { id: 'distros', name: 'توزیع‌ها', icon: 'fa-ubuntu' },
+                { id: 'commands', name: 'دستورات', icon: 'fa-terminal' },
+                { id: 'servers', name: 'سرورها', icon: 'fa-server' },
+                { id: 'desktop', name: 'محیط دسکتاپ', icon: 'fa-desktop' },
+                { id: 'security', name: 'امنیت', icon: 'fa-shield-alt' },
+                { id: 'networking', name: 'شبکه', icon: 'fa-network-wired' },
+                { id: 'development', name: 'توسعه', icon: 'fa-code' },
+                { id: 'hardware', name: 'سخت‌افزار', icon: 'fa-microchip' },
+                { id: 'virtualization', name: 'مجازی‌سازی', icon: 'fa-vr-cardboard' },
+                { id: 'cloud', name: 'ابر', icon: 'fa-cloud' }
+            ],
+
+            // تگ‌های پرطرفدار
+            popularTags: [
+                { id: 'ubuntu', name: 'اوبونتو', count: 42 },
+                { id: 'arch', name: 'آرچ', count: 38 },
+                { id: 'fedora', name: 'فدورا', count: 35 },
+                { id: 'debian', name: 'دبیان', count: 32 },
+                { id: 'bash', name: 'بش', count: 28 },
+                { id: 'systemd', name: 'سیستمد', count: 25 },
+                { id: 'docker', name: 'داکر', count: 23 },
+                { id: 'kubernetes', name: 'کوبرنتیز', count: 20 },
+                { id: 'gnome', name: 'گنوم', count: 18 },
+                { id: 'kde', name: 'کدی‌ای', count: 16 }
+            ],
+
+            // تگ‌های کامل با کلمات کلیدی
+            allTags: {
+                // توزیع‌ها
+                'ubuntu': {
+                    name: 'اوبونتو',
+                    category: 'distros',
+                    keywords: ['ubuntu', 'اوبونتو', 'ابونتو', 'ubunto']
+                },
+                'arch': {
+                    name: 'آرچ لینوکس',
+                    category: 'distros',
+                    keywords: ['arch', 'آرچ', 'ارچ', 'arch linux']
+                },
+                'fedora': {
+                    name: 'فدورا',
+                    category: 'distros',
+                    keywords: ['fedora', 'فدورا', 'fedora linux']
+                },
+                'debian': {
+                    name: 'دبیان',
+                    category: 'distros',
+                    keywords: ['debian', 'دبیان', 'دبیان گنو/لینوکس']
+                },
+                'centos': {
+                    name: 'سن‌تی‌او‌اس',
+                    category: 'distros',
+                    keywords: ['centos', 'سنتوس', 'cent os']
+                },
+                'opensuse': {
+                    name: 'اوپن‌سوزه',
+                    category: 'distros',
+                    keywords: ['opensuse', 'اوپن سوزه', 'suse', 'سوزه']
+                },
+                'mint': {
+                    name: 'لینوکس مینت',
+                    category: 'distros',
+                    keywords: ['mint', 'مینت', 'linux mint']
+                },
+                'manjaro': {
+                    name: 'مانجارو',
+                    category: 'distros',
+                    keywords: ['manjaro', 'مانجارو', 'manjaro linux']
+                },
+                'elementary': {
+                    name: 'المنتری',
+                    category: 'distros',
+                    keywords: ['elementary', 'المنتری', 'elementary os']
+                },
+                'zorin': {
+                    name: 'زورین',
+                    category: 'distros',
+                    keywords: ['zorin', 'زورین', 'zorin os']
+                },
+
+                // دستورات
+                'bash': {
+                    name: 'بش',
+                    category: 'commands',
+                    keywords: ['bash', 'بش', 'shell', 'شل', 'terminal', 'ترمینال']
+                },
+                'grep': {
+                    name: 'گریپ',
+                    category: 'commands',
+                    keywords: ['grep', 'گریپ', 'جستجو در متن']
+                },
+                'sed': {
+                    name: 'سد',
+                    category: 'commands',
+                    keywords: ['sed', 'سد', 'ویرایش جریانی']
+                },
+                'awk': {
+                    name: 'آوک',
+                    category: 'commands',
+                    keywords: ['awk', 'آوک', 'پردازش متن']
+                },
+                'find': {
+                    name: 'فایند',
+                    category: 'commands',
+                    keywords: ['find', 'فایند', 'یافتن فایل']
+                },
+                'chmod': {
+                    name: 'چمود',
+                    category: 'commands',
+                    keywords: ['chmod', 'چمود', 'تغییر مجوز']
+                },
+                'chown': {
+                    name: 'چاون',
+                    category: 'commands',
+                    keywords: ['chown', 'چاون', 'تغییر مالک']
+                },
+                'ssh': {
+                    name: 'اس‌اس‌اچ',
+                    category: 'commands',
+                    keywords: ['ssh', 'اس اس اچ', 'اتصال امن']
+                },
+                'scp': {
+                    name: 'اس‌سی‌پی',
+                    category: 'commands',
+                    keywords: ['scp', 'اس سی پی', 'کپی امن']
+                },
+                'rsync': {
+                    name: 'آرسینک',
+                    category: 'commands',
+                    keywords: ['rsync', 'آر سینک', 'همگام‌سازی از راه دور']
+                },
+
+                // سرورها
+                'apache': {
+                    name: 'آپاچی',
+                    category: 'servers',
+                    keywords: ['apache', 'آپاچی', 'httpd', 'وب سرور']
+                },
+                'nginx': {
+                    name: 'انجین‌اکس',
+                    category: 'servers',
+                    keywords: ['nginx', 'انجین اکس', 'وب سرور']
+                },
+                'mysql': {
+                    name: 'مای‌اس‌کیوال',
+                    category: 'servers',
+                    keywords: ['mysql', 'مای اس کیوال', 'دیتابیس']
+                },
+                'postgresql': {
+                    name: 'پستگرس‌کیوال',
+                    category: 'servers',
+                    keywords: ['postgresql', 'پستگرس', 'دیتابیس']
+                },
+                'mongodb': {
+                    name: 'مانگو‌دی‌بی',
+                    category: 'servers',
+                    keywords: ['mongodb', 'مانگو دی بی', 'دیتابیس']
+                },
+                'redis': {
+                    name: 'ریدیس',
+                    category: 'servers',
+                    keywords: ['redis', 'ریدیس', 'حافظه نهان']
+                },
+                'ftp': {
+                    name: 'اف‌تی‌پی',
+                    category: 'servers',
+                    keywords: ['ftp', 'اف تی پی', 'انتقال فایل']
+                },
+                'samba': {
+                    name: 'سامبا',
+                    category: 'servers',
+                    keywords: ['samba', 'سامبا', 'اشتراک فایل']
+                },
+                'bind': {
+                    name: 'بایند',
+                    category: 'servers',
+                    keywords: ['bind', 'بایند', 'دی‌ان‌اس']
+                },
+                'postfix': {
+                    name: 'پستفیکس',
+                    category: 'servers',
+                    keywords: ['postfix', 'پستفیکس', 'سرور ایمیل']
+                },
+
+                // محیط دسکتاپ
+                'gnome': {
+                    name: 'گنوم',
+                    category: 'desktop',
+                    keywords: ['gnome', 'گنوم', 'محیط دسکتاپ']
+                },
+                'kde': {
+                    name: 'کدی‌ای',
+                    category: 'desktop',
+                    keywords: ['kde', 'کدی ای', 'پلاسما', 'محیط دسکتاپ']
+                },
+                'xfce': {
+                    name: 'اکس‌اف‌سی‌ای',
+                    category: 'desktop',
+                    keywords: ['xfce', 'اکس اف سی ای', 'محیط دسکتاپ']
+                },
+                'lxde': {
+                    name: 'ال‌اکس‌دی‌ای',
+                    category: 'desktop',
+                    keywords: ['lxde', 'ال اکس دی ای', 'محیط دسکتاپ']
+                },
+                'cinnamon': {
+                    name: 'سینامون',
+                    category: 'desktop',
+                    keywords: ['cinnamon', 'سینامون', 'محیط دسکتاپ']
+                },
+                'mate': {
+                    name: 'میت',
+                    category: 'desktop',
+                    keywords: ['mate', 'میت', 'محیط دسکتاپ']
+                },
+                'budgie': {
+                    name: 'باجی',
+                    category: 'desktop',
+                    keywords: ['budgie', 'باجی', 'محیط دسکتاپ']
+                },
+                'pantheon': {
+                    name: 'پانتئون',
+                    category: 'desktop',
+                    keywords: ['pantheon', 'پانتئون', 'محیط دسکتاپ']
+                },
+                'deepin': {
+                    name: 'دیپین',
+                    category: 'desktop',
+                    keywords: ['deepin', 'دیپین', 'محیط دسکتاپ']
+                },
+                'unity': {
+                    name: 'یونیتی',
+                    category: 'desktop',
+                    keywords: ['unity', 'یونیتی', 'محیط دسکتاپ']
+                },
+
+                // امنیت
+                'firewall': {
+                    name: 'فایروال',
+                    category: 'security',
+                    keywords: ['firewall', 'فایروال', 'iptables', 'ufw']
+                },
+                'selinux': {
+                    name: 'اس‌ای‌لینوکس',
+                    category: 'security',
+                    keywords: ['selinux', 'اس ای لینوکس', 'امنیت']
+                },
+                'apparmor': {
+                    name: 'اپ‌آرمور',
+                    category: 'security',
+                    keywords: ['apparmor', 'اپ آرمور', 'امنیت']
+                },
+                'fail2ban': {
+                    name: 'فیل‌تو‌بن',
+                    category: 'security',
+                    keywords: ['fail2ban', 'فیل تو بن', 'امنیت']
+                },
+                'clamav': {
+                    name: 'کلماو',
+                    category: 'security',
+                    keywords: ['clamav', 'کلماو', 'آنتی‌ویروس']
+                },
+                'gpg': {
+                    name: 'جی‌پی‌جی',
+                    category: 'security',
+                    keywords: ['gpg', 'جی پی جی', 'رمزنگاری']
+                },
+                'openssl': {
+                    name: 'اوپن‌اس‌اس‌ال',
+                    category: 'security',
+                    keywords: ['openssl', 'اوپن اس اس ال', 'رمزنگاری']
+                },
+                'vpn': {
+                    name: 'وی‌پی‌ان',
+                    category: 'security',
+                    keywords: ['vpn', 'وی پی ان', 'شبکه خصوصی مجازی']
+                },
+                'tor': {
+                    name: 'تور',
+                    category: 'security',
+                    keywords: ['tor', 'تور', 'ناشناس بودن']
+                },
+                'audit': {
+                    name: 'ادیت',
+                    category: 'security',
+                    keywords: ['audit', 'ادیت', 'بازرسی امنیتی']
+                },
+
+                // شبکه
+                'networking': {
+                    name: 'شبکه',
+                    category: 'networking',
+                    keywords: ['networking', 'شبکه', 'network', 'نتورک']
+                },
+                'netplan': {
+                    name: 'نت‌پلن',
+                    category: 'networking',
+                    keywords: ['netplan', 'نت پلن', 'پیکربندی شبکه']
+                },
+                'networkmanager': {
+                    name: 'مدیریت شبکه',
+                    category: 'networking',
+                    keywords: ['networkmanager', 'مدیریت شبکه', 'nmcli']
+                },
+                'dhcp': {
+                    name: 'دی‌اچ‌سی‌پی',
+                    category: 'networking',
+                    keywords: ['dhcp', 'دی اچ سی پی', 'اختصاص آی‌پی']
+                },
+                'dns': {
+                    name: 'دی‌ان‌اس',
+                    category: 'networking',
+                    keywords: ['dns', 'دی ان اس', 'سیستم نام دامنه']
+                },
+                'proxy': {
+                    name: 'پراکسی',
+                    category: 'networking',
+                    keywords: ['proxy', 'پراکسی', 'میانجی']
+                },
+                'vlan': {
+                    name: 'ولان',
+                    category: 'networking',
+                    keywords: ['vlan', 'ولان', 'شبکه محلی مجازی']
+                },
+                'bridge': {
+                    name: 'بریج',
+                    category: 'networking',
+                    keywords: ['bridge', 'بریج', 'پل شبکه']
+                },
+                'bonding': {
+                    name: 'باندینگ',
+                    category: 'networking',
+                    keywords: ['bonding', 'باندینگ', 'اتصال چند شبکه']
+                },
+                'wifi': {
+                    name: 'وای‌فای',
+                    category: 'networking',
+                    keywords: ['wifi', 'وای فای', 'بی‌سیم']
+                },
+
+                // توسعه
+                'git': {
+                    name: 'گیت',
+                    category: 'development',
+                    keywords: ['git', 'گیت', 'کنترل نسخه']
+                },
+                'github': {
+                    name: 'گیت‌هاب',
+                    category: 'development',
+                    keywords: ['github', 'گیت هاب', 'مخزن کد']
+                },
+                'docker': {
+                    name: 'داکر',
+                    category: 'development',
+                    keywords: ['docker', 'داکر', 'کانتینر']
+                },
+                'kubernetes': {
+                    name: 'کوبرنتیز',
+                    category: 'development',
+                    keywords: ['kubernetes', 'کوبرنتیز', 'کوبز', 'ارکستر کانتینر']
+                },
+                'vagrant': {
+                    name: 'واگرنت',
+                    category: 'development',
+                    keywords: ['vagrant', 'واگرنت', 'ماشین مجازی']
+                },
+                'ansible': {
+                    name: 'انسیبل',
+                    category: 'development',
+                    keywords: ['ansible', 'انسیبل', 'اتوماسیون']
+                },
+                'jenkins': {
+                    name: 'جنکینز',
+                    category: 'development',
+                    keywords: ['jenkins', 'جنکینز', 'یکپارچه‌سازی']
+                },
+                'npm': {
+                    name: 'ان‌پی‌ام',
+                    category: 'development',
+                    keywords: ['npm', 'ان پی ام', 'مدیریت پکیج']
+                },
+                'yarn': {
+                    name: 'یارن',
+                    category: 'development',
+                    keywords: ['yarn', 'یارن', 'مدیریت پکیج']
+                },
+                'composer': {
+                    name: 'کامپوزر',
+                    category: 'development',
+                    keywords: ['composer', 'کامپوزر', 'مدیریت پکیج']
+                },
+                'gradle': {
+                    name: 'گریدل',
+                    category: 'development',
+                    keywords: ['gradle', 'گریدل', 'ساخت خودکار']
+                },
+
+                // سخت‌افزار
+                'drivers': {
+                    name: 'درایورها',
+                    category: 'hardware',
+                    keywords: ['drivers', 'درایور', 'راه‌انداز']
+                },
+                'gpu': {
+                    name: 'جی‌پی‌یو',
+                    category: 'hardware',
+                    keywords: ['gpu', 'جی پی یو', 'کارت گرافیک']
+                },
+                'cpu': {
+                    name: 'سی‌پی‌یو',
+                    category: 'hardware',
+                    keywords: ['cpu', 'سی پی یو', 'پردازنده']
+                },
+                'ram': {
+                    name: 'رم',
+                    category: 'hardware',
+                    keywords: ['ram', 'رم', 'حافظه']
+                },
+                'storage': {
+                    name: 'ذخیره‌سازی',
+                    category: 'hardware',
+                    keywords: ['storage', 'ذخیره سازی', 'هارد دیسک', 'اس‌اس‌دی']
+                },
+                'usb': {
+                    name: 'یواس‌بی',
+                    category: 'hardware',
+                    keywords: ['usb', 'یو اس بی', 'اتصال یواس‌بی']
+                },
+                'bluetooth': {
+                    name: 'بلوتوث',
+                    category: 'hardware',
+                    keywords: ['bluetooth', 'بلوتوث', 'اتصال بلوتوث']
+                },
+                'printer': {
+                    name: 'پرینتر',
+                    category: 'hardware',
+                    keywords: ['printer', 'پرینتر', 'چاپگر']
+                },
+                'scanner': {
+                    name: 'اسکنر',
+                    category: 'hardware',
+                    keywords: ['scanner', 'اسکنر', 'اسکن']
+                },
+                'webcam': {
+                    name: 'وب‌کم',
+                    category: 'hardware',
+                    keywords: ['webcam', 'وب کم', 'دوربین وب']
+                },
+
+                // مجازی‌سازی
+                'virtualbox': {
+                    name: 'ورچوال‌باکس',
+                    category: 'virtualization',
+                    keywords: ['virtualbox', 'ورچوال باکس', 'ماشین مجازی']
+                },
+                'vmware': {
+                    name: 'وی‌ام‌ور',
+                    category: 'virtualization',
+                    keywords: ['vmware', 'وی ام ور', 'ماشین مجازی']
+                },
+                'kvm': {
+                    name: 'کی‌وی‌ام',
+                    category: 'virtualization',
+                    keywords: ['kvm', 'کی وی ام', 'ماشین مجازی']
+                },
+                'qemu': {
+                    name: 'کیوای‌ام‌یو',
+                    category: 'virtualization',
+                    keywords: ['qemu', 'کیو ایمو', 'شبیه‌ساز']
+                },
+                'xen': {
+                    name: 'زن',
+                    category: 'virtualization',
+                    keywords: ['xen', 'زن', 'هایپروایزر']
+                },
+                'hyper-v': {
+                    name: 'هایپر-وی',
+                    category: 'virtualization',
+                    keywords: ['hyper-v', 'هایپر وی', 'هایپروایزر']
+                },
+                'proxmox': {
+                    name: 'پروکس‌موکس',
+                    category: 'virtualization',
+                    keywords: ['proxmox', 'پروکس موکس', 'هایپروایزر']
+                },
+                'lxc': {
+                    name: 'ال‌اکس‌سی',
+                    category: 'virtualization',
+                    keywords: ['lxc', 'ال اکس سی', 'کانتینر لینوکس']
+                },
+                'openvz': {
+                    name: 'اوپن‌وی‌زی',
+                    category: 'virtualization',
+                    keywords: ['openvz', 'اوپن وی زی', 'کانتینر']
+                },
+                'vagrant': {
+                    name: 'واگرنت',
+                    category: 'virtualization',
+                    keywords: ['vagrant', 'واگرنت', 'محیط توسعه']
+                },
+
+                // ابر
+                'aws': {
+                    name: 'ای‌دبلیواس',
+                    category: 'cloud',
+                    keywords: ['aws', 'ای دبلیو اس', 'آماzon web services']
+                },
+                'azure': {
+                    name: 'آژور',
+                    category: 'cloud',
+                    keywords: ['azure', 'آژور', 'مایکروسافت آژور']
+                },
+                'gcp': {
+                    name: 'جی‌سی‌پی',
+                    category: 'cloud',
+                    keywords: ['gcp', 'جی سی پی', 'google cloud platform']
+                },
+                'openstack': {
+                    name: 'اوپن‌استک',
+                    category: 'cloud',
+                    keywords: ['openstack', 'اوپن استک', 'ابر خصوصی']
+                },
+                'cloud-init': {
+                    name: 'کلاد-اینیت',
+                    category: 'cloud',
+                    keywords: ['cloud-init', 'کلاد اینیت', 'پیکربندی ابری']
+                },
+                'terraform': {
+                    name: 'ترافورم',
+                    category: 'cloud',
+                    keywords: ['terraform', 'ترافورم', 'زیرساخت به صورت کد']
+                },
+                'packer': {
+                    name: 'پکر',
+                    category: 'cloud',
+                    keywords: ['packer', 'پکر', 'ساخت ماشین ابری']
+                },
+                'consul': {
+                    name: 'کانسول',
+                    category: 'cloud',
+                    keywords: ['consul', 'کانسول', 'کشف سرویس']
+                },
+                'vault': {
+                    name: 'ولت',
+                    category: 'cloud',
+                    keywords: ['vault', 'ولت', 'مدیریت اسرار']
+                },
+                'nomad': {
+                    name: 'نومد',
+                    category: 'cloud',
+                    keywords: ['nomad', 'نومد', 'ارکستر']
+                }
+            },
+
+            // استخراج تگ‌ها از محتوا
+            extractTags: function(content, filename) {
+                const tags = [];
+                const text = (content + ' ' + filename).toLowerCase();
+
+                // بررسی تمام تگ‌ها
+                for (const [tagId, tagData] of Object.entries(this.allTags)) {
+                    for (const keyword of tagData.keywords) {
+                        if (text.includes(keyword.toLowerCase())) {
+                            tags.push({
+                                id: tagId,
+                                name: tagData.name,
+                                category: tagData.category
+                            });
+                            break;
+                        }
+                    }
+                }
+
+                // حذف تگ‌های تکراری
+                return tags.filter((tag, index, self) =>
+                    index === self.findIndex(t => t.id === tag.id)
+                );
+            },
+
+            // دریافت نام تگ بر اساس شناسه
+            getTagName: function(tagId) {
+                return this.allTags[tagId]?.name || tagId;
+            },
+
+            // دریافت دسته‌بندی تگ بر اساس شناسه
+            getTagCategory: function(tagId) {
+                return this.allTags[tagId]?.category || 'general';
+            }
+        };
+
+        // تابع اصلی برای مقداردهی اولیه
+        async function init() {
+            console.log('Initializing app...');
+            initializePreferences();
+            loadUserPreferences();
+            renderSidebarTags();
+            displayLoadingSkeletons();
+            await loadFilesFromGitHub();
+            applySortAndFilter();
+            setupEventListeners();
+            updateFileCount();
+        }
+
+        // مقداردهی اولیه تنظیمات
+        function initializePreferences() {
+            const savedFilesPerPage = parseInt(localStorage.getItem('filesPerPage'), 10);
+            if (!isNaN(savedFilesPerPage) && savedFilesPerPage > 0) {
+                filesPerPage = savedFilesPerPage;
+                document.getElementById('itemsPerPage').value = filesPerPage;
+            }
+
+            const savedSort = localStorage.getItem('currentSort');
+            if (savedSort) {
+                currentSort = savedSort;
+                const sortRadio = document.querySelector(`input[name="sortOption"][value="${currentSort}"]`);
+                if (sortRadio) sortRadio.checked = true;
+            }
+
+            const savedViewMode = localStorage.getItem('currentViewMode');
+            if (savedViewMode) {
+                currentViewMode = savedViewMode;
+                document.querySelectorAll('.view-controls .control-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.dataset.view === currentViewMode) {
+                        btn.classList.add('active');
+                    }
+                });
+                setViewMode(currentViewMode);
+            }
+
+            isDarkMode = localStorage.getItem('isDarkMode') === 'true';
+            document.getElementById('darkModeToggle').checked = isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+
+            const savedTheme = localStorage.getItem('theme') || 'default';
+            setTheme(savedTheme);
+
+            bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || [];
+            readingHistory = JSON.parse(localStorage.getItem('readingHistory')) || [];
+        }
+
+        // بارگذاری تنظیمات کاربر
+        function loadUserPreferences() {
+            // بارگذاری تنظیمات نمایش
+            const showPreview = localStorage.getItem('showPreview') !== 'false';
+            document.getElementById('showPreviewToggle').checked = showPreview;
+
+            const showDate = localStorage.getItem('showDate') !== 'false';
+            document.getElementById('showDateToggle').checked = showDate;
+
+            const fontSize = localStorage.getItem('fontSize') || 'medium';
+            document.getElementById('fontSizeSelect').value = fontSize;
+            changeFontSize();
+
+            // بارگذاری فیلترهای فعال
+            const savedFilters = localStorage.getItem('activeFilters');
+            if (savedFilters) {
+                try {
+                    activeFilters = JSON.parse(savedFilters);
+                    applyActiveFilters();
+                } catch (e) {
+                    console.error('Error loading active filters:', e);
+                }
+            }
+        }
+
+        // رندر کردن تگ‌های نوار کناری
+        function renderSidebarTags() {
+            // رندر دسته‌بندی‌های اصلی
+            const mainCategoriesContainer = document.getElementById('mainCategories');
+            mainCategoriesContainer.innerHTML = '';
+
+            tagSystem.mainCategories.forEach(category => {
+                const tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerHTML = `
+                    <i class="fas ${category.icon}"></i>
+                    <span>${category.name}</span>
+                `;
+                tag.onclick = () => filterByCategory(category.id);
+                mainCategoriesContainer.appendChild(tag);
+            });
+
+            // رندر تگ‌های پرطرفدار
+            const popularTagsContainer = document.getElementById('popularTags');
+            popularTagsContainer.innerHTML = '';
+
+            tagSystem.popularTags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    <span>${tag.name}</span>
+                    <span class="tag-count">${tag.count}</span>
+                `;
+                tagElement.onclick = () => filterByTag(tag.id);
+                popularTagsContainer.appendChild(tagElement);
+            });
+
+            // رندر تگ‌های سفارشی
+            const customTagsContainer = document.getElementById('customTags');
+            customTagsContainer.innerHTML = '';
+
+            const customTags = JSON.parse(localStorage.getItem('customTags')) || [];
+            customTags.forEach(tag => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    <span>${tag.name}</span>
+                    <button class="file-action-btn" onclick="removeCustomTag('${tag.id}')">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                tagElement.onclick = (e) => {
+                    if (!e.target.closest('.file-action-btn')) {
+                        filterByTag(tag.id);
+                    }
+                };
+                customTagsContainer.appendChild(tagElement);
+            });
+
+            // رندر تگ‌ها برای فیلتر در مودال فیلتر
+            const filterTagsContainer = document.getElementById('filterTags');
+            filterTagsContainer.innerHTML = '';
+
+            Object.entries(tagSystem.allTags).forEach(([tagId, tagData]) => {
+                const tagElement = document.createElement('div');
+                tagElement.className = 'tag';
+                tagElement.innerHTML = `
+                    <input type="checkbox" id="filter-${tagId}" ${activeFilters.tags.includes(tagId) ? 'checked' : ''}>
+                    <label for="filter-${tagId}">${tagData.name}</label>
+                `;
+                filterTagsContainer.appendChild(tagElement);
+            });
+        }
+
+        // نمایش اسکلتون‌های لودینگ
+        function displayLoadingSkeletons() {
+            const fileGrid = document.getElementById('fileGrid');
+            fileGrid.innerHTML = '';
+
+            // اعمال کلاس حالت نمایش فعلی
+            fileGrid.classList.remove('grid-view', 'list-view', 'card-3d-view');
+            fileGrid.classList.add(currentViewMode + '-view');
+
+            for (let i = 0; i < filesPerPage; i++) {
+                const skeletonCard = document.createElement('div');
+                skeletonCard.className = 'skeleton-card';
+                skeletonCard.innerHTML = `
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-meta"></div>
+                    <div class="skeleton-preview"></div>
+                `;
+                fileGrid.appendChild(skeletonCard);
+            }
+        }
+
+        // بارگذاری فایل‌ها از گیت‌هاب
+        async function loadFilesFromGitHub() {
+            console.log('Fetching files from GitHub...');
+
+            // شبیه‌سازی پیشرفت بارگذاری
+            const progressBar = document.getElementById('progressBar');
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += 5;
+                progressBar.style.width = `${progress}%`;
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                }
+            }, 100);
+
+            try {
+                const GITHUB_API_BASE = 'https://api.github.com/repos/linuxpersian/linuxpersian.github.io/contents/wiki/source';
+                const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
+
+                const response = await fetch(GITHUB_API_BASE);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                const files = await response.json();
+                const mdFiles = files.filter(file => file.name.endsWith('.md'));
+
+                const filePromises = mdFiles.map(async (file) => {
+                    try {
+                        const content = await loadFileContent(file.name, GITHUB_RAW_BASE);
+                        const metadata = extractMetadata(content, file.name);
+
+                        return {
+                            name: file.name,
+                            ...metadata,
+                            lastModified: new Date(file.last_modified || Date.now()).toLocaleDateString('fa-IR'),
+                            size: file.size || 0,
+                            rawContent: content,
+                            views: Math.floor(Math.random() * 1000), // شبیه‌سازی تعداد بازدید
+                            rating: (Math.random() * 5).toFixed(1) // شبیه‌سازی امتیاز
+                        };
+                    } catch (error) {
+                        console.error(`Error loading ${file.name}:`, error);
+                        showToast(`Error loading file: ${file.name}`, 'error');
+
+                        return {
+                            name: file.name,
+                            title: file.name.replace('.md', '').replace(/-/g, ' '),
+                            preview: 'Error loading content',
+                            tags: [],
+                            lastModified: 'Unknown',
+                            size: file.size || 0,
+                            rawContent: '',
+                            views: 0,
+                            rating: 0
+                        };
+                    }
+                });
+
+                const results = await Promise.allSettled(filePromises);
+                allFiles = results
+                    .filter(result => result.status === 'fulfilled')
+                    .map(result => result.value);
+
+                console.log('Files loaded:', allFiles.length, 'files');
+                filteredFiles = [...allFiles];
+                showToast('Files loaded successfully!', 'success');
+            } catch (error) {
+                console.error('Error loading from GitHub:', error);
+                showError('Error loading files. Please check your internet connection and try again.');
+                showToast('Error loading main files.', 'error');
+            } finally {
+                clearInterval(progressInterval);
+                progressBar.style.width = '100%';
+            }
+        }
+
+        // بارگذاری محتوای فایل
+        async function loadFileContent(fileName, baseUrl) {
+            const response = await fetch(`${baseUrl}/${fileName}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${fileName}`);
+            }
+            return await response.text();
+        }
+
+        // استخراج متادیتا از محتوای فایل
+        function extractMetadata(content, fileName) {
+            let title = fileName.replace('.md', '').replace(/-/g, ' ');
+            let preview = '';
+
+            // استخراج عنوان
+            const titleMatch = content.match(/^#\s+(.+)$/m);
+            if (titleMatch) {
+                title = titleMatch[1].trim();
+            }
+
+            // استخراج پیش‌نمایش
+            const paragraphs = content.split('\n\n');
+            for (let para of paragraphs) {
+                para = para.trim();
+                if (para && !para.startsWith('#') && !para.startsWith('```') && !para.startsWith('-') && !para.startsWith('>') && !para.startsWith('|')) {
+                    preview = para.substring(0, 150) + (para.length > 150 ? '...' : '');
+                    break;
+                }
+            }
+
+            // استخراج تگ‌ها با استفاده از سیستم تگ‌ها
+            const tags = tagSystem.extractTags(content, fileName);
+
+            return { title, preview, tags };
+        }
+
+        // نمایش فایل‌ها
+        function displayFiles() {
+            const startIndex = (currentPage - 1) * filesPerPage;
+            const endIndex = startIndex + filesPerPage;
+            const filesToShow = filteredFiles.slice(startIndex, endIndex);
+
+            const fileGrid = document.getElementById('fileGrid');
+            fileGrid.innerHTML = '';
+
+            // اعمال کلاس حالت نمایش فعلی
+            fileGrid.classList.remove('grid-view', 'list-view', 'card-3d-view');
+            fileGrid.classList.add(currentViewMode + '-view');
+
+            console.log('Displaying files. Current page:', currentPage, 'Files to show:', filesToShow.length);
+
+            if (filesToShow.length === 0) {
+                console.log('No files to display.');
+                fileGrid.innerHTML = '<div class="no-results text-center py-10 text-gray-600 text-lg">هیچ فایلی پیدا نشد.</div>';
+            } else {
+                filesToShow.forEach((file, index) => {
+                    const fileCard = createFileCard(file, index);
+                    fileGrid.appendChild(fileCard);
+                });
+            }
+
+            updatePagination();
+        }
+
+        // ایجاد کارت فایل
+        function createFileCard(file, index) {
+            const card = document.createElement('div');
+            card.className = `file-card ${currentViewMode === 'list' ? 'list-view' : ''} ${currentViewMode === 'card-3d' ? 'card-3d-view' : ''}`;
+            card.style.animationDelay = `${index * 0.05}s`;
+            card.onclick = () => openFile(file.name);
+
+            const isBookmarked = bookmarks.some(b => b.name === file.name);
+            const showPreview = document.getElementById('showPreviewToggle').checked;
+            const showDate = document.getElementById('showDateToggle').checked;
+
+            card.innerHTML = `
+                ${currentViewMode === 'list' ? `
+                    <div class="file-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                ` : ''}
+                <div class="file-content">
+                    <div class="file-title">${file.title}</div>
+                    <div class="file-meta">
+                        ${showDate ? `<span><i class="fas fa-calendar"></i> ${file.lastModified}</span>` : ''}
+                        <span><i class="fas fa-eye"></i> ${file.views}</span>
+                        <span><i class="fas fa-star"></i> ${file.rating}</span>
+                        <span><i class="fas fa-file"></i> ${formatFileSize(file.size)}</span>
+                    </div>
+                    <div class="file-tags">
+                        ${file.tags.map(tag => `<span class="file-tag">${tag.name}</span>`).join('')}
+                    </div>
+                    ${showPreview ? `<div class="file-preview">${file.preview}</div>` : ''}
+                    <div class="file-actions">
+                        <button class="file-action-btn ${isBookmarked ? 'bookmarked' : ''}" onclick="toggleBookmark(event, '${file.name}')" aria-label="نشان‌گذاری">
+                            <i class="fas fa-bookmark"></i>
+                        </button>
+                        <button class="file-action-btn" onclick="shareFile(event, '${file.name}')" aria-label="اشتراک‌گذاری">
+                            <i class="fas fa-share-alt"></i>
+                        </button>
+                        <button class="file-action-btn" onclick="downloadFile(event, '${file.name}')" aria-label="دانلود">
+                            <i class="fas fa-download"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // فرمت‌سازی اندازه فایل
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+        }
+
+        // به‌روزرسانی صفحه‌بندی
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredFiles.length / filesPerPage);
+            const pagination = document.getElementById('pagination');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const pageInfo = document.getElementById('pageInfo');
+            const pageJumpInput = document.getElementById('pageJumpInput');
+
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+            } else {
+                pagination.style.display = 'flex';
+                prevBtn.disabled = currentPage === 1;
+                nextBtn.disabled = currentPage === totalPages;
+                pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`;
+                pageJumpInput.max = totalPages;
+                pageJumpInput.value = currentPage;
+            }
+        }
+
+        // تغییر صفحه
+        function changePage(direction) {
+            const totalPages = Math.ceil(filteredFiles.length / filesPerPage);
+
+            if (direction === 'prev' && currentPage > 1) {
+                currentPage--;
+            } else if (direction === 'next' && currentPage < totalPages) {
+                currentPage++;
+            } else if (typeof direction === 'number') {
+                if (direction >= 1 && direction <= totalPages) {
+                    currentPage = direction;
+                } else {
+                    showToast('Invalid page number.', 'error');
+                    return;
+                }
+            }
+
+            displayFiles();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // مدیریت پرش به صفحه
+        function handlePageJump(event) {
+            if (event.key === 'Enter') {
+                const pageNumber = parseInt(event.target.value, 10);
+                changePage(pageNumber);
+            }
+        }
+
+        // انجام جستجو
+        function performSearch() {
+            searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
+            currentPage = 1;
+
+            if (searchQuery.length > 0) {
+                document.getElementById('clearSearchBtn').style.display = 'inline-block';
+            } else {
+                document.getElementById('clearSearchBtn').style.display = 'none';
+            }
+
+            applySortAndFilter();
+        }
+
+        // پاک کردن جستجو
+        function clearSearch() {
+            document.getElementById('searchInput').value = '';
+            performSearch();
+        }
+
+        // اعمال مرتب‌سازی و فیلتر
+        function applySortAndFilter() {
+            console.log('Applying sort and filter. Search query:', searchQuery, 'Sort:', currentSort);
+
+            // ابتدا فیلترها را اعمال می‌کنیم
+            let tempFiles = [...allFiles];
+
+            // فیلتر جستجو
+            if (searchQuery !== '') {
+                tempFiles = tempFiles.filter(file =>
+                    file.title.toLowerCase().includes(searchQuery) ||
+                    file.preview.toLowerCase().includes(searchQuery) ||
+                    file.name.toLowerCase().includes(searchQuery) ||
+                    (file.rawContent && file.rawContent.toLowerCase().includes(searchQuery)) ||
+                    file.tags.some(tag => tag.name.toLowerCase().includes(searchQuery))
+                );
+            }
+
+            // فیلتر تگ‌ها
+            if (activeFilters.tags.length > 0) {
+                tempFiles = tempFiles.filter(file =>
+                    file.tags.some(tag => activeFilters.tags.includes(tag.id))
+                );
+            }
+
+            // فیلتر تاریخ
+            if (activeFilters.dateFrom) {
+                const fromDate = new Date(activeFilters.dateFrom);
+                tempFiles = tempFiles.filter(file => {
+                    const fileDate = new Date(file.lastModified);
+                    return fileDate >= fromDate;
+                });
+            }
+
+            if (activeFilters.dateTo) {
+                const toDate = new Date(activeFilters.dateTo);
+                tempFiles = tempFiles.filter(file => {
+                    const fileDate = new Date(file.lastModified);
+                    return fileDate <= toDate;
+                });
+            }
+
+            // فیلتر اندازه
+            if (activeFilters.minSize !== null) {
+                tempFiles = tempFiles.filter(file => file.size >= activeFilters.minSize * 1024);
+            }
+
+            if (activeFilters.maxSize !== null) {
+                tempFiles = tempFiles.filter(file => file.size <= activeFilters.maxSize * 1024);
+            }
+
+            // سپس مرتب‌سازی را اعمال می‌کنیم
+            tempFiles.sort((a, b) => {
+                switch (currentSort) {
+                    case 'date-desc':
+                        return new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime();
+                    case 'date-asc':
+                        return new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime();
+                    case 'title-asc':
+                        return a.title.localeCompare(b.title, 'fa', { sensitivity: 'base' });
+                    case 'title-desc':
+                        return b.title.localeCompare(a.title, 'fa', { sensitivity: 'base' });
+                    case 'size-desc':
+                        return b.size - a.size;
+                    case 'size-asc':
+                        return a.size - b.size;
+                    case 'popularity':
+                        return b.views - a.views;
+                    default:
+                        return 0;
+                }
+            });
+
+            filteredFiles = tempFiles;
+            console.log('Filtered files count:', filteredFiles.length);
+
+            displayFiles();
+            updateFileCount();
+            updatePagination();
+        }
+
+        // به‌روزرسانی تعداد فایل‌ها
+        function updateFileCount() {
+            const count = filteredFiles.length;
+            document.getElementById('fileCount').textContent = `(${count} فایل)`;
+        }
+
+        // باز کردن فایل
+        function openFile(fileName) {
+            // افزودن به تاریخچه مطالعه
+            addToReadingHistory(fileName);
+
+            // هدایت به صفحه نمایش فایل
+            window.location.href = `viewer.html?file=${encodeURIComponent(fileName)}`;
+        }
+
+        // افزودن به تاریخچه مطالعه
+        function addToReadingHistory(fileName) {
+            // حذف ورودی تکراری اگر وجود داشته باشد
+            readingHistory = readingHistory.filter(item => item.name !== fileName);
+
+            // افزودن به ابتدای لیست
+            readingHistory.unshift({
+                name: fileName,
+                timestamp: new Date().toISOString()
+            });
+
+            // محدود کردن تاریخچه به 50 مورد
+            if (readingHistory.length > 50) {
+                readingHistory = readingHistory.slice(0, 50);
+            }
+
+            // ذخیره در localStorage
+            localStorage.setItem('readingHistory', JSON.stringify(readingHistory));
+        }
+
+        // تغییر نشان‌گذاری
+        function toggleBookmark(event, fileName) {
+            event.stopPropagation();
+
+            const isBookmarked = bookmarks.some(b => b.name === fileName);
+
+            if (isBookmarked) {
+                bookmarks = bookmarks.filter(b => b.name !== fileName);
+                showToast('Bookmark removed.', 'info');
+            } else {
+                bookmarks.push({
+                    name: fileName,
+                    timestamp: new Date().toISOString()
+                });
+                showToast('Bookmark added.', 'success');
+            }
+
+            // ذخیره در localStorage
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+
+            // به‌روزرسانی رابط کاربری
+            event.target.closest('.file-action-btn').classList.toggle('bookmarked');
+        }
+
+        // اشتراک‌گذاری فایل
+        function shareFile(event, fileName) {
+            event.stopPropagation();
+
+            if (navigator.share) {
+                navigator.share({
+                    title: fileName.replace('.md', ''),
+                    text: 'Check out this Linux article!',
+                    url: `${window.location.origin}/viewer.html?file=${encodeURIComponent(fileName)}`
+                });
+            } else {
+                // کپی کردن لینک به کلیپ‌بورد
+                const url = `${window.location.origin}/viewer.html?file=${encodeURIComponent(fileName)}`;
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('Link copied to clipboard!', 'success');
+                }).catch(() => {
+                    showToast('Failed to copy link.', 'error');
+                });
+            }
+        }
+
+        // دانلود فایل
+        function downloadFile(event, fileName) {
+            event.stopPropagation();
+
+            const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/linuxpersian/linuxpersian.github.io/main/wiki/source';
+            const url = `${GITHUB_RAW_BASE}/${fileName}`;
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+
+            showToast('Download started.', 'success');
+        }
+
+        // نمایش خطا
+        function showError(message) {
+            document.getElementById('fileGrid').innerHTML =
+                `<div class="error text-center py-10 text-red-600 text-lg font-semibold">خطا: ${message}</div>`;
+        }
+
+        // تنظیم رویدادها
+        function setupEventListeners() {
+            // رویداد جستجو
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            document.getElementById('searchInput').addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    document.getElementById('clearSearchBtn').style.display = 'inline-block';
+                } else {
+                    document.getElementById('clearSearchBtn').style.display = 'none';
+                }
+            });
+
+            // رویدادهای حالت نمایش
+            document.querySelectorAll('.view-controls .control-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.view-controls .control-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    setViewMode(this.dataset.view);
+                });
+            });
+
+            // رویداد اسکرول
+            window.addEventListener('scroll', function() {
+                const scrollToTopBtn = document.querySelector('.fab:nth-child(2)');
+                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                    scrollToTopBtn.style.display = 'flex';
+                } else {
+                    scrollToTopBtn.style.display = 'none';
+                }
+            });
+
+            // رویداد دکمه بازگشت به بالا
+            document.querySelector('.fab:nth-child(2)').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                showToast('Scrolled to top.', 'info');
+            });
+
+            // رویدادهای مودال
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    closeAllModals();
+                }
+            });
+
+            // رویدادهای ذخیره خودکار
+            const autoSaveToggle = document.getElementById('autoSaveToggle');
+            if (autoSaveToggle) {
+                autoSaveToggle.addEventListener('change', function() {
+                    localStorage.setItem('autoSave', this.checked);
+                });
+            }
+
+            // رویدادهای بارگذاری خودکار
+            const autoLoadToggle = document.getElementById('autoLoadToggle');
+            if (autoLoadToggle) {
+                autoLoadToggle.addEventListener('change', function() {
+                    localStorage.setItem('autoLoad', this.checked);
+                });
+            }
+        }
+
+        // تنظیم حالت نمایش
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            localStorage.setItem('currentViewMode', currentViewMode);
+
+            const fileGrid = document.getElementById('fileGrid');
+            fileGrid.classList.remove('grid-view', 'list-view', 'card-3d-view');
+            fileGrid.classList.add(mode + '-view');
+
+            displayFiles();
+            showToast(`View mode changed to ${mode}.`, 'info');
+        }
+
+        // باز کردن مودال
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'flex';
+            modal.setAttribute('aria-hidden', 'false');
+
+            // تمرکز روی مودال
+            setTimeout(() => {
+                modal.focus();
+            }, 0);
+
+            // تنظیمات مخصوص هر مودال
+            if (modalId === 'settingsModal') {
+                document.getElementById('itemsPerPage').value = filesPerPage;
+                document.getElementById('darkModeToggle').checked = isDarkMode;
+            } else if (modalId === 'sortModal') {
+                const currentSortRadio = document.querySelector(`input[name="sortOption"][value="${currentSort}"]`);
+                if (currentSortRadio) {
+                    currentSortRadio.checked = true;
+                }
+            } else if (modalId === 'filterModal') {
+                // تنظیم مقادیر فیلترها
+                document.getElementById('dateFrom').value = activeFilters.dateFrom || '';
+                document.getElementById('dateTo').value = activeFilters.dateTo || '';
+                document.getElementById('minSize').value = activeFilters.minSize || '';
+                document.getElementById('maxSize').value = activeFilters.maxSize || '';
+
+                // به‌روزرسانی چک‌باکس‌های تگ‌ها
+                document.querySelectorAll('#filterTags input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = activeFilters.tags.includes(checkbox.id.replace('filter-', ''));
+                });
+            }
+        }
+
+        // بستن مودال
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        // بستن تمام مودال‌ها
+        function closeAllModals() {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                modal.style.display = 'none';
+                modal.setAttribute('aria-hidden', 'true');
+            });
+        }
+
+        // ذخیره تنظیمات
+        function saveSettings() {
+            const newFilesPerPage = parseInt(document.getElementById('itemsPerPage').value, 10);
+            const newIsDarkMode = document.getElementById('darkModeToggle').checked;
+
+            if (newFilesPerPage > 0 && newFilesPerPage !== filesPerPage) {
+                filesPerPage = newFilesPerPage;
+                localStorage.setItem('filesPerPage', filesPerPage);
+                currentPage = 1;
+                applySortAndFilter();
+                showToast(`Items per page changed to ${filesPerPage}.`, 'success');
+            }
+
+            if (newIsDarkMode !== isDarkMode) {
+                isDarkMode = newIsDarkMode;
+                document.body.classList.toggle('dark-mode', isDarkMode);
+                localStorage.setItem('isDarkMode', isDarkMode);
+                showToast(`Dark mode ${isDarkMode ? 'enabled' : 'disabled'}.`, 'info');
+            }
+
+            // ذخیره تنظیمات نمایش
+            localStorage.setItem('showPreview', document.getElementById('showPreviewToggle').checked);
+            localStorage.setItem('showDate', document.getElementById('showDateToggle').checked);
+
+            closeModal('settingsModal');
+        }
+
+        // اعمال مرتب‌سازی
+        function applySort() {
+            const selectedSortOption = document.querySelector('input[name="sortOption"]:checked');
+            if (selectedSortOption) {
+                const newSort = selectedSortOption.value;
+                if (newSort !== currentSort) {
+                    currentSort = newSort;
+                    localStorage.setItem('currentSort', currentSort);
+                    currentPage = 1;
+                    applySortAndFilter();
+                    showToast('Sorting applied.', 'success');
+                }
+            }
+            closeModal('sortModal');
+        }
+
+        // اعمال فیلترها
+        function applyFilters() {
+            // جمع‌آوری تگ‌های انتخاب شده
+            activeFilters.tags = [];
+            document.querySelectorAll('#filterTags input[type="checkbox"]:checked').forEach(checkbox => {
+                activeFilters.tags.push(checkbox.id.replace('filter-', ''));
+            });
+
+            // جمع‌آوری مقادیر تاریخ
+            activeFilters.dateFrom = document.getElementById('dateFrom').value || null;
+            activeFilters.dateTo = document.getElementById('dateTo').value || null;
+
+            // جمع‌آوری مقادیر اندازه
+            activeFilters.minSize = document.getElementById('minSize').value ? parseInt(document.getElementById('minSize').value) : null;
+            activeFilters.maxSize = document.getElementById('maxSize').value ? parseInt(document.getElementById('maxSize').value) : null;
+
+            // ذخیره فیلترهای فعال
+            localStorage.setItem('activeFilters', JSON.stringify(activeFilters));
+
+            // اعمال فیلترها
+            currentPage = 1;
+            applySortAndFilter();
+            showToast('Filters applied.', 'success');
+
+            closeModal('filterModal');
+        }
+
+        // بازنشانی فیلترها
+        function resetFilters() {
+            activeFilters = {
+                tags: [],
+                dateFrom: null,
+                dateTo: null,
+                minSize: null,
+                maxSize: null
+            };
+
+            // پاک کردن فرم
+            document.getElementById('dateFrom').value = '';
+            document.getElementById('dateTo').value = '';
+            document.getElementById('minSize').value = '';
+            document.getElementById('maxSize').value = '';
+
+            // لغو انتخاب تگ‌ها
+            document.querySelectorAll('#filterTags input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+
+            // ذخیره فیلترهای فعال
+            localStorage.setItem('activeFilters', JSON.stringify(activeFilters));
+
+            // اعمال فیلترها
+            currentPage = 1;
+            applySortAndFilter();
+            showToast('Filters reset.', 'info');
+        }
+
+        // اعمال فیلترهای فعال
+        function applyActiveFilters() {
+            // به‌روزرسانی چک‌باکس‌های تگ‌ها
+            document.querySelectorAll('#filterTags input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = activeFilters.tags.includes(checkbox.id.replace('filter-', ''));
+            });
+
+            // به‌روزرسانی مقادیر تاریخ
+            document.getElementById('dateFrom').value = activeFilters.dateFrom || '';
+            document.getElementById('dateTo').value = activeFilters.dateTo || '';
+
+            // به‌روزرسانی مقادیر اندازه
+            document.getElementById('minSize').value = activeFilters.minSize || '';
+            document.getElementById('maxSize').value = activeFilters.maxSize || '';
+        }
+
+        // تغییر حالت تاریک
+        function toggleDarkMode() {
+            isDarkMode = document.getElementById('darkModeToggle').checked;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            localStorage.setItem('isDarkMode', isDarkMode);
+        }
+
+        // تغییر تم رنگی
+        function setTheme(theme) {
+            // حذف کلاس‌های تم قبلی
+            document.body.classList.remove('theme-default', 'theme-blue', 'theme-green', 'theme-red', 'theme-orange', 'theme-purple');
+
+            // افزودن کلاس تم جدید
+            document.body.classList.add(`theme-${theme}`);
+
+            // به‌روزرسانی دکمه‌های تم
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            document.querySelector(`.theme-${theme}`).classList.add('active');
+
+            // ذخیره تم
+            localStorage.setItem('theme', theme);
+
+            // به‌روزرسانی متغیرهای CSS
+            updateThemeVariables(theme);
+        }
+
+        // به‌روزرسانی متغیرهای CSS بر اساس تم
+        function updateThemeVariables(theme) {
+            const root = document.documentElement;
+
+            switch (theme) {
+                case 'blue':
+                    root.style.setProperty('--primary', '#1E88E5');
+                    root.style.setProperty('--primary-container', '#D0E8FF');
+                    break;
+                case 'green':
+                    root.style.setProperty('--primary', '#43A047');
+                    root.style.setProperty('--primary-container', '#D8F5DC');
+                    break;
+                case 'red':
+                    root.style.setProperty('--primary', '#E53935');
+                    root.style.setProperty('--primary-container', '#FFDAD6');
+                    break;
+                case 'orange':
+                    root.style.setProperty('--primary', '#FB8C00');
+                    root.style.setProperty('--primary-container', '#FFE0CC');
+                    break;
+                case 'purple':
+                    root.style.setProperty('--primary', '#8E24AA');
+                    root.style.setProperty('--primary-container', '#F8D5F0');
+                    break;
+                default:
+                    // بازگشت به مقادیر پیش‌فرض
+                    root.style.setProperty('--primary', '#6750A4');
+                    root.style.setProperty('--primary-container', '#EADDFF');
+            }
+        }
+
+        // تغییر اندازه فونت
+        function changeFontSize() {
+            const fontSize = document.getElementById('fontSizeSelect').value;
+            document.body.classList.remove('font-small', 'font-medium', 'font-large');
+            document.body.classList.add(`font-${fontSize}`);
+            localStorage.setItem('fontSize', fontSize);
+        }
+
+        // نمایش اعلان
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'status');
+            toast.setAttribute('aria-live', 'polite');
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // بازگشت به بالا
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showToast('Scrolled to top.', 'info');
+        }
+
+        // تغییر وضعیت نوار کناری
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        // فیلتر بر اساس دسته‌بندی
+        function filterByCategory(categoryId) {
+            // دریافت تمام تگ‌های این دسته‌بندی
+            const categoryTags = Object.entries(tagSystem.allTags)
+                .filter(([_, tagData]) => tagData.category === categoryId)
+                .map(([tagId, _]) => tagId);
+
+            // تنظیم فیلترها
+            activeFilters.tags = categoryTags;
+
+            // اعمال فیلترها
+            currentPage = 1;
+            applySortAndFilter();
+
+            // بستن نوار کناری در موبایل
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+
+            showToast(`Filtered by category: ${tagSystem.mainCategories.find(c => c.id === categoryId)?.name}`, 'info');
+        }
+
+        // فیلتر بر اساس تگ
+        function filterByTag(tagId) {
+            // افزودن تگ به فیلترها
+            if (!activeFilters.tags.includes(tagId)) {
+                activeFilters.tags.push(tagId);
+            }
+
+            // اعمال فیلترها
+            currentPage = 1;
+            applySortAndFilter();
+
+            // بستن نوار کناری در موبایل
+            if (window.innerWidth <= 768) {
+                toggleSidebar();
+            }
+
+            showToast(`Filtered by tag: ${tagSystem.getTagName(tagId)}`, 'info');
+        }
+
+        // گسترش تمام تگ‌ها
+        function expandAllTags() {
+            // در اینجا می‌توانیم منطق گسترش تمام تگ‌ها را پیاده‌سازی کنیم
+            showToast('All tags expanded.', 'info');
+        }
+
+        // نمایش تمام تگ‌ها
+        function showAllTags() {
+            openModal('filterModal');
+        }
+
+        // افزودن تگ سفارشی
+        function addCustomTag() {
+            const tagName = prompt('Enter custom tag name:');
+            if (tagName && tagName.trim()) {
+                const customTags = JSON.parse(localStorage.getItem('customTags')) || [];
+                const newTag = {
+                    id: `custom-${Date.now()}`,
+                    name: tagName.trim(),
+                    category: 'custom'
+                };
+
+                customTags.push(newTag);
+                localStorage.setItem('customTags', JSON.stringify(customTags));
+
+                // به‌روزرسانی نمایش تگ‌ها
+                renderSidebarTags();
+
+                showToast(`Custom tag "${tagName}" added.`, 'success');
+            }
+        }
+
+        // حذف تگ سفارشی
+        function removeCustomTag(tagId) {
+            const customTags = JSON.parse(localStorage.getItem('customTags')) || [];
+            const updatedTags = customTags.filter(tag => tag.id !== tagId);
+
+            localStorage.setItem('customTags', JSON.stringify(updatedTags));
+
+            // به‌روزرسانی نمایش تگ‌ها
+            renderSidebarTags();
+
+            showToast('Custom tag removed.', 'info');
+        }
+
+        // راه‌اندازی برنامه
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
