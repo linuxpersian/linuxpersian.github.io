@@ -363,6 +363,15 @@
             --theme-amber: #FFB300;
             --theme-pink: #D81B60;
             --theme-indigo: #3949AB;
+            
+            /* بهبود نمایش کد */
+            --code-bg: #282c34;
+            --code-text: #abb2bf;
+            --code-comment: #5c6370;
+            --code-keyword: #c678dd;
+            --code-string: #98c379;
+            --code-number: #d19a66;
+            --code-function: #61afef;
         }
         
         body.dark-mode {
@@ -397,6 +406,15 @@
             --on-success: #FFFFFF;
             --warning: #FF9800;
             --on-warning: #FFFFFF;
+            
+            /* بهبود نمایش کد در حالت تاریک */
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --code-comment: #6a9955;
+            --code-keyword: #569cd6;
+            --code-string: #ce9178;
+            --code-number: #b5cea8;
+            --code-function: #dcdcaa;
         }
         
         /* تم‌های رنگی */
@@ -547,7 +565,7 @@
         .header {
             background: var(--surface);
             border-bottom: 1px solid var(--outline-variant);
-            padding: 1.5rem;
+            padding: 1rem 1.5rem;
             border-radius: 1.5rem 1.5rem 0 0;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             position: sticky;
@@ -560,12 +578,12 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
+            flex-wrap: nowrap;
+            gap: 0.5rem;
         }
         
         .header-title {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--on-surface);
             flex-grow: 1;
@@ -574,6 +592,9 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         
         /* نوار ابزار */
@@ -582,7 +603,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin: 1rem 0 1.5rem;
             flex-wrap: wrap;
             animation: slideDown 0.6s ease;
         }
@@ -772,16 +793,16 @@
         
         .markdown-content h2 {
             color: var(--on-surface);
-            font-size: 1.8rem;
-            font-weight: 600;
-            margin: 1.5rem 0 1rem;
-            padding-bottom: 0.5rem;
+            font-size: 2rem; /* افزایش اندازه */
+            font-weight: 700; /* بولد کردن */
+            margin: 1.8rem 0 1.2rem;
+            padding-bottom: 0.6rem;
             border-bottom: 2px solid var(--outline-variant);
         }
         
         .markdown-content h3 {
             color: var(--on-surface);
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             font-weight: 600;
             margin: 1.5rem 0 0.8rem;
         }
@@ -839,19 +860,79 @@
         }
         
         .markdown-content pre {
-            background: var(--surface-variant);
+            background: var(--code-bg);
             padding: 1.5rem;
             border-radius: 1rem;
             overflow-x: auto;
             margin: 1.5rem 0;
             position: relative;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--outline-variant);
         }
         
         .markdown-content pre code {
             background: none;
             padding: 0;
-            color: inherit;
+            color: var(--code-text);
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        /* بهبود نمایش کد */
+        .markdown-content pre .token.comment,
+        .markdown-content pre .token.prolog,
+        .markdown-content pre .token.doctype,
+        .markdown-content pre .token.cdata {
+            color: var(--code-comment);
+        }
+        
+        .markdown-content pre .token.punctuation {
+            color: var(--code-text);
+        }
+        
+        .markdown-content pre .token.property,
+        .markdown-content pre .token.tag,
+        .markdown-content pre .token.boolean,
+        .markdown-content pre .token.number,
+        .markdown-content pre .token.constant,
+        .markdown-content pre .token.symbol,
+        .markdown-content pre .token.deleted {
+            color: var(--code-number);
+        }
+        
+        .markdown-content pre .token.selector,
+        .markdown-content pre .token.attr-name,
+        .markdown-content pre .token.string,
+        .markdown-content pre .token.char,
+        .markdown-content pre .token.builtin,
+        .markdown-content pre .token.inserted {
+            color: var(--code-string);
+        }
+        
+        .markdown-content pre .token.operator,
+        .markdown-content pre .token.entity,
+        .markdown-content pre .token.url,
+        .markdown-content pre .language-css .token.string,
+        .markdown-content pre .style .token.string {
+            color: var(--code-text);
+        }
+        
+        .markdown-content pre .token.atrule,
+        .markdown-content pre .token.attr-value,
+        .markdown-content pre .token.keyword {
+            color: var(--code-keyword);
+        }
+        
+        .markdown-content pre .token.function,
+        .markdown-content pre .token.class-name {
+            color: var(--code-function);
+        }
+        
+        .markdown-content pre .token.regex,
+        .markdown-content pre .token.important,
+        .markdown-content pre .token.variable {
+            color: var(--code-number);
         }
         
         .markdown-content table {
@@ -1207,81 +1288,9 @@
             transform: rotate(90deg);
         }
         
-        /* اعلان‌ها */
+        /* اعلان‌ها - غیرفعال شده */
         .toast-container {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            pointer-events: none;
-        }
-        
-        .toast {
-            background: var(--inverse-surface);
-            color: var(--inverse-on-surface);
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: toast-fade-in 0.3s forwards, toast-fade-out 0.3s 2.7s forwards;
-            min-width: 250px;
-            text-align: center;
-            font-size: 0.9rem;
-            pointer-events: auto;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .toast::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--primary);
-        }
-        
-        .toast.error::before {
-            background: var(--error);
-        }
-        
-        .toast.success::before {
-            background: var(--success);
-        }
-        
-        .toast.info::before {
-            background: var(--primary);
-        }
-        
-        .toast.error {
-            background: var(--error);
-            color: var(--on-error);
-        }
-        
-        .toast.success {
-            background: var(--success);
-            color: var(--on-success);
-        }
-        
-        .toast.info {
-            background: var(--primary);
-            color: var(--on-primary);
-        }
-        
-        @keyframes toast-fade-in {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes toast-fade-out {
-            from { opacity: 1; transform: translateY(0); }
-            to { opacity: 0; transform: translateY(20px); }
+            display: none; /* غیرفعال کردن اعلان‌ها */
         }
         
         /* تم‌های رنگی */
@@ -1530,17 +1539,19 @@
             }
             
             .header-content {
-                flex-direction: column;
-                gap: 1rem;
+                flex-direction: row;
+                gap: 0.5rem;
             }
             
             .header-title {
-                font-size: 1.5rem;
+                font-size: 1.1rem;
                 text-align: center;
+                max-width: 60%;
             }
             
             .toolbar {
                 justify-content: center;
+                margin-top: 0.5rem;
             }
             
             .search-container {
@@ -1556,7 +1567,7 @@
             }
             
             .markdown-content h2 {
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
             
             .fab {
@@ -1570,6 +1581,64 @@
                 flex-direction: row;
                 bottom: auto;
                 top: -50px;
+            }
+            
+            /* دکمه کنار سایدبار برای موبایل */
+            .sidebar-toggle {
+                display: block;
+                position: fixed;
+                top: 80px;
+                right: 10px;
+                z-index: 101;
+                background: var(--primary);
+                color: var(--on-primary);
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            }
+            
+            .sidebar {
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                position: fixed;
+                top: 70px;
+                right: 0;
+                width: 80%;
+                max-width: 300px;
+                height: calc(100vh - 70px);
+                z-index: 100;
+                box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .sidebar-overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                z-index: 99;
+            }
+            
+            .sidebar-overlay.active {
+                display: block;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .sidebar-toggle, .sidebar-overlay {
+                display: none;
             }
         }
         
@@ -1658,6 +1727,225 @@
             text-align: right;
             color: #999;
         }
+        
+        /* ویژگی‌های جدید */
+        .feature-card {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+        }
+        
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-container);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+        
+        .feature-description {
+            color: var(--on-surface-variant);
+            line-height: 1.6;
+        }
+        
+        .feature-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+        
+        /* دکمه‌های اضافی */
+        .extra-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .action-btn {
+            background: var(--secondary-container);
+            color: var(--on-secondary-container);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .action-btn:hover {
+            background: var(--primary);
+            color: var(--on-primary);
+            transform: translateY(-2px);
+        }
+        
+        /* نشانگر پیشرفت */
+        .progress-indicator {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 90;
+            max-width: 200px;
+        }
+        
+        .progress-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--on-surface);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--surface-variant);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .progress-text {
+            font-size: 0.8rem;
+            color: var(--on-surface-variant);
+            text-align: center;
+        }
+        
+        /* منوی سریع */
+        .quick-menu {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            background: var(--surface);
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            z-index: 90;
+            opacity: 0;
+            transform: scale(0.8);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .quick-menu.active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+        }
+        
+        .quick-menu-item {
+            background: none;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.8rem;
+            color: var(--on-surface);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            width: 100%;
+            text-align: right;
+        }
+        
+        .quick-menu-item:hover {
+            background: var(--surface-variant);
+            color: var(--primary);
+        }
+        
+        /* پنل تنظیمات سریع */
+        .quick-settings {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background: var(--surface);
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            z-index: 90;
+            max-width: 250px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .quick-settings.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .quick-settings-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--on-surface);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .quick-setting {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.8rem;
+        }
+        
+        .quick-setting label {
+            font-size: 0.9rem;
+            color: var(--on-surface-variant);
+        }
+        
+        .quick-setting input[type="checkbox"] {
+            width: 1rem;
+            height: 1rem;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -1669,7 +1957,7 @@
     <!-- لینک پرش به محتوا برای دسترسی‌پذیری -->
     <a href="#content" class="skip-link">پرش به محتوا</a>
     
-    <!-- کانتینر اعلان‌ها -->
+    <!-- کانتینر اعلان‌ها - غیرفعال شده -->
     <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
     
     <!-- منوی انتخاب متن -->
@@ -1766,10 +2054,30 @@
                         <p class="text-gray-600">در حال بارگذاری مقاله...</p>
                     </div>
                 </div>
+                
+                <!-- ویژگی‌های جدید -->
+                <div class="extra-actions">
+                    <button class="action-btn" onclick="toggleQuickSettings()">
+                        <i class="fas fa-sliders-h"></i>
+                        تنظیمات سریع
+                    </button>
+                    <button class="action-btn" onclick="toggleQuickMenu()">
+                        <i class="fas fa-ellipsis-v"></i>
+                        منوی سریع
+                    </button>
+                    <button class="action-btn" onclick="exportToPDF()">
+                        <i class="fas fa-file-pdf"></i>
+                        خروجی PDF
+                    </button>
+                    <button class="action-btn" onclick="toggleFullscreen()">
+                        <i class="fas fa-expand"></i>
+                        تمام صفحه
+                    </button>
+                </div>
             </main>
             
             <!-- نوار کناری -->
-            <aside class="sidebar">
+            <aside class="sidebar" id="sidebar">
                 <!-- فهرست مطالب -->
                 <div class="sidebar-section">
                     <h3 class="sidebar-title">
@@ -1821,6 +2129,49 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- ویژگی‌های جدید -->
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">
+                        <i class="fas fa-magic"></i>
+                        ویژگی‌های جدید
+                    </h3>
+                    <div class="feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-bookmark"></i>
+                            </div>
+                            <div class="feature-title">ذخیره مکان</div>
+                        </div>
+                        <div class="feature-description">
+                            مکان فعلی خود را در مقاله ذخیره کنید تا بعداً به آن برگردید.
+                        </div>
+                        <div class="feature-actions">
+                            <button class="btn btn-primary" onclick="saveBookmark()">
+                                <i class="fas fa-save"></i>
+                                ذخیره مکان
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-header">
+                            <div class="feature-icon">
+                                <i class="fas fa-highlighter"></i>
+                            </div>
+                            <div class="feature-title">یادداشت‌ها</div>
+                        </div>
+                        <div class="feature-description">
+                            یادداشت‌های خود را برای بخش‌های مهم مقاله ایجاد کنید.
+                        </div>
+                        <div class="feature-actions">
+                            <button class="btn btn-primary" onclick="openNotesModal()">
+                                <i class="fas fa-sticky-note"></i>
+                                یادداشت‌ها
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </aside>
         </div>
     </div>
@@ -1830,9 +2181,74 @@
         <i class="fas fa-arrow-up"></i>
     </button>
     
+    <!-- دکمه کنار سایدبار برای موبایل -->
+    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- لایه سایدبار برای موبایل -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    
     <!-- لایت‌باکس تصاویر -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <img src="" alt="" id="lightboxImage">
+    </div>
+    
+    <!-- منوی سریع -->
+    <div class="quick-menu" id="quickMenu">
+        <button class="quick-menu-item" onclick="toggleDarkMode()">
+            <i class="fas fa-moon"></i>
+            حالت تاریک
+        </button>
+        <button class="quick-menu-item" onclick="setViewMode('reading')">
+            <i class="fas fa-book-open"></i>
+            حالت خواندن
+        </button>
+        <button class="quick-menu-item" onclick="shareArticle()">
+            <i class="fas fa-share-alt"></i>
+            اشتراک‌گذاری
+        </button>
+        <button class="quick-menu-item" onclick="downloadMarkdown()">
+            <i class="fas fa-download"></i>
+            دانلود
+        </button>
+        <button class="quick-menu-item" onclick="exportToPDF()">
+            <i class="fas fa-file-pdf"></i>
+            خروجی PDF
+        </button>
+    </div>
+    
+    <!-- پنل تنظیمات سریع -->
+    <div class="quick-settings" id="quickSettings">
+        <h3 class="quick-settings-title">
+            <i class="fas fa-sliders-h"></i>
+            تنظیمات سریع
+        </h3>
+        <div class="quick-setting">
+            <label>حالت تاریک</label>
+            <input type="checkbox" id="quickDarkMode" onchange="toggleDarkMode()">
+        </div>
+        <div class="quick-setting">
+            <label>حالت خواندن</label>
+            <input type="checkbox" id="quickReadingMode" onchange="toggleReadingMode()">
+        </div>
+        <div class="quick-setting">
+            <label>هایلایت کد</label>
+            <input type="checkbox" id="quickHighlightCode" checked onchange="toggleCodeHighlighting()">
+        </div>
+        <div class="quick-setting">
+            <label>بارگذاری تصاویر</label>
+            <input type="checkbox" id="quickLoadImages" checked onchange="toggleImageLoading()">
+        </div>
+    </div>
+    
+    <!-- نشانگر پیشرفت -->
+    <div class="progress-indicator" id="progressIndicator">
+        <div class="progress-title">پیشرفت خواندن</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="progress-text" id="progressText">0%</div>
     </div>
     
     <!-- مودال تنظیمات -->
@@ -1980,6 +2396,9 @@
         let currentSearchIndex = 0;
         let allFileNames = [];
         let selectedText = '';
+        let sidebarOpen = false;
+        let quickMenuOpen = false;
+        let quickSettingsOpen = false;
         
         // سیستم تگ‌ها
         const tagSystem = {
@@ -2450,9 +2869,9 @@
             `;
         }
         
-        // افزودن ورودی به لاگ
+        // افزودن ورودی به لاگ - غیرفعال شده
         function addLogEntry(message, type = 'info') {
-            showToast(message, type);
+            // تابع خالی برای غیرفعال کردن لاگ‌ها
         }
         
         // تابع اصلی برای مقداردهی اولیه
@@ -2467,6 +2886,7 @@
             updateViewCount();
             setupReadingProgress();
             setupTextSelection();
+            setupProgressIndicator();
         }
         
         // بارگذاری تنظیمات
@@ -2478,6 +2898,7 @@
             // اعمال تنظیمات
             if (isDarkMode) {
                 document.body.classList.add('dark-mode');
+                document.getElementById('quickDarkMode').checked = true;
             }
             
             // به‌روزرسانی دکمه‌های فعال بدون استفاده از event
@@ -2514,6 +2935,7 @@
             
             if (settings.loadImages !== undefined) {
                 document.getElementById('loadImages').checked = settings.loadImages;
+                document.getElementById('quickLoadImages').checked = settings.loadImages;
             }
             
             if (settings.autoSave !== undefined) {
@@ -2526,12 +2948,14 @@
             
             if (settings.highlightCode !== undefined) {
                 document.getElementById('highlightCode').checked = settings.highlightCode;
+                document.getElementById('quickHighlightCode').checked = settings.highlightCode;
             }
             
             if (settings.showReadingProgress !== undefined) {
                 document.getElementById('showReadingProgress').checked = settings.showReadingProgress;
                 if (!settings.showReadingProgress) {
                     document.querySelector('.reading-progress').style.display = 'none';
+                    document.getElementById('progressIndicator').style.display = 'none';
                 }
             }
             
@@ -2646,7 +3070,8 @@
                 // بازیابی موقعیت خواندن
                 restoreReadingPosition();
                 
-                showToast('مقاله با موفقیت بارگذاری شد.', 'success');
+                // غیرفعال کردن اعلان‌ها
+                // showToast('مقاله با موفقیت بارگذاری شد.', 'success');
             } catch (error) {
                 console.error('Error loading file:', error);
                 addLogEntry(`خطا در بارگذاری فایل: ${error.message}`, 'error');
@@ -2755,10 +3180,11 @@
             const text = code.textContent;
             
             navigator.clipboard.writeText(text).then(() => {
-                showToast('کد با موفقیت کپی شد.', 'success');
+                // غیرفعال کردن اعلان‌ها
+                // showToast('کد با موفقیت کپی شد.', 'success');
             }).catch(err => {
                 console.error('Error copying code:', err);
-                showToast('خطا در کپی کردن کد.', 'error');
+                // showToast('خطا در کپی کردن کد.', 'error');
             });
         }
         
@@ -2840,7 +3266,8 @@
         
         // فیلتر بر اساس تگ
         function filterByTag(tagId) {
-            showToast(`نمایش مقالات مرتبط با: ${tagSystem.getTagName(tagId)}`, 'info');
+            // غیرفعال کردن اعلان‌ها
+            // showToast(`نمایش مقالات مرتبط با: ${tagSystem.getTagName(tagId)}`, 'info');
             // در اینجا می‌توان منطق فیلتر کردن را پیاده‌سازی کرد
         }
         
@@ -2919,9 +3346,10 @@
             if (searchHighlights.length > 0) {
                 currentSearchIndex = 0;
                 searchHighlights[currentSearchIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-                showToast(`${searchHighlights.length} نتیجه یافت شد.`, 'success');
+                // غیرفعال کردن اعلان‌ها
+                // showToast(`${searchHighlights.length} نتیجه یافت شد.`, 'success');
             } else {
-                showToast('هیچ نتیجه‌ای یافت نشد.', 'error');
+                // showToast('هیچ نتیجه‌ای یافت نشد.', 'error');
             }
         }
         
@@ -2944,6 +3372,7 @@
                     saveReadingPosition();
                 }
                 updateReadingProgress();
+                updateProgressIndicator();
             });
             
             // رویداد کلید برای جستجو
@@ -3027,6 +3456,13 @@
                     navigateSearchResults(-1);
                 }
             });
+            
+            // رویداد تغییر اندازه صفحه
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768 && sidebarOpen) {
+                    toggleSidebar();
+                }
+            });
         }
         
         // ناوبری نتایج جستجو
@@ -3055,6 +3491,9 @@
             // افزودن کلاس حالت جدید
             if (mode === 'reading') {
                 document.body.classList.add('reading-mode');
+                document.getElementById('quickReadingMode').checked = true;
+            } else {
+                document.getElementById('quickReadingMode').checked = false;
             }
             
             // به‌روزرسانی دکمه‌های فعال
@@ -3075,8 +3514,10 @@
             
             if (isDarkMode) {
                 document.body.classList.add('dark-mode');
+                document.getElementById('quickDarkMode').checked = true;
             } else {
                 document.body.classList.remove('dark-mode');
+                document.getElementById('quickDarkMode').checked = false;
             }
         }
         
@@ -3125,20 +3566,28 @@
                     text: 'مقاله جالبی از ویکی لینوکس فارسی',
                     url: window.location.href
                 })
-                .then(() => showToast('مقاله با موفقیت به اشتراک گذاشته شد.', 'success'))
+                .then(() => {
+                    // غیرفعال کردن اعلان‌ها
+                    // showToast('مقاله با موفقیت به اشتراک گذاشته شد.', 'success');
+                })
                 .catch((error) => console.log('Error sharing:', error));
             } else {
                 // کپی کردن لینک به کلیپ‌بورد
                 navigator.clipboard.writeText(window.location.href)
-                    .then(() => showToast('لینک مقاله کپی شد.', 'success'))
-                    .catch(() => showToast('خطا در کپی لینک.', 'error'));
+                    .then(() => {
+                        // غیرفعال کردن اعلان‌ها
+                        // showToast('لینک مقاله کپی شد.', 'success');
+                    })
+                    .catch(() => {
+                        // showToast('خطا در کپی لینک.', 'error');
+                    });
             }
         }
         
         // دانلود مارک‌دان
         function downloadMarkdown() {
             if (!currentContent) {
-                showToast('محتوایی برای دانلود وجود ندارد.', 'error');
+                // showToast('محتوایی برای دانلود وجود ندارد.', 'error');
                 return;
             }
             
@@ -3152,7 +3601,8 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showToast('فایل با موفقیت دانلود شد.', 'success');
+            // غیرفعال کردن اعلان‌ها
+            // showToast('فایل با موفقیت دانلود شد.', 'success');
         }
         
         // اسکرول به بالا
@@ -3204,7 +3654,8 @@
             settings.theme = theme;
             localStorage.setItem('settings', JSON.stringify(settings));
             
-            showToast(`تم ${theme} اعمال شد.`, 'success');
+            // غیرفعال کردن اعلان‌ها
+            // showToast(`تم ${theme} اعمال شد.`, 'success');
         }
         
         // ذخیره تنظیمات
@@ -3229,7 +3680,8 @@
             
             localStorage.setItem('settings', JSON.stringify(settings));
             closeModal('settingsModal');
-            showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
+            // غیرفعال کردن اعلان‌ها
+            // showToast('تنظیمات با موفقیت ذخیره شد.', 'success');
         }
         
         // خروجی تنظیمات
@@ -3245,7 +3697,8 @@
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            showToast('تنظیمات با موفقیت خروجی گرفته شد.', 'success');
+            // غیرفعال کردن اعلان‌ها
+            // showToast('تنظیمات با موفقیت خروجی گرفته شد.', 'success');
         }
         
         // ورود تنظیمات
@@ -3262,12 +3715,12 @@
                     try {
                         const settings = JSON.parse(event.target.result);
                         localStorage.setItem('settings', JSON.stringify(settings));
-                        showToast('تنظیمات با موفقیت وارد شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
+                        // showToast('تنظیمات با موفقیت وارد شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
                         setTimeout(() => {
                             window.location.reload();
                         }, 2000);
                     } catch (error) {
-                        showToast('خطا در خواندن فایل تنظیمات.', 'error');
+                        // showToast('خطا در خواندن فایل تنظیمات.', 'error');
                     }
                 };
                 reader.readAsText(file);
@@ -3282,31 +3735,16 @@
                 localStorage.removeItem('isDarkMode');
                 localStorage.removeItem('fontSize');
                 localStorage.removeItem('viewMode');
-                showToast('تنظیمات با موفقیت بازنشانی شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
+                // showToast('تنظیمات با موفقیت بازنشانی شد. صفحه برای اعمال تغییرات بازخوانی می‌شود.', 'success');
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000);
             }
         }
         
-        // نمایش اعلان
+        // نمایش اعلان - غیرفعال شده
         function showToast(message, type = 'info') {
-            const toastContainer = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            
-            toastContainer.appendChild(toast);
-            
-            // حذف اعلان پس از 3 ثانیه
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                setTimeout(() => {
-                    if (toastContainer.contains(toast)) {
-                        toastContainer.removeChild(toast);
-                    }
-                }, 300);
-            }, 3000);
+            // تابع خالی برای غیرفعال کردن اعلان‌ها
         }
         
         // نمایش خطا
@@ -3354,6 +3792,27 @@
             document.getElementById('readingProgressBar').style.width = `${scrollPercent}%`;
         }
         
+        // تنظیم نشانگر پیشرفت
+        function setupProgressIndicator() {
+            if (!document.getElementById('showReadingProgress')?.checked) {
+                document.getElementById('progressIndicator').style.display = 'none';
+            }
+        }
+        
+        // به‌روزرسانی نشانگر پیشرفت
+        function updateProgressIndicator() {
+            if (!document.getElementById('showReadingProgress')?.checked) {
+                return;
+            }
+            
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.round((scrollTop / docHeight) * 100);
+            
+            document.getElementById('progressFill').style.width = `${scrollPercent}%`;
+            document.getElementById('progressText').textContent = `${scrollPercent}%`;
+        }
+        
         // تنظیم انتخاب متن
         function setupTextSelection() {
             document.addEventListener('mouseup', () => {
@@ -3397,10 +3856,10 @@
         function copySelectedText() {
             const selectedText = window.getSelection().toString();
             navigator.clipboard.writeText(selectedText).then(() => {
-                showToast('متن با موفقیت کپی شد.', 'success');
+                // showToast('متن با موفقیت کپی شد.', 'success');
                 hideTextSelectionMenu();
             }).catch(err => {
-                showToast('خطا در کپی کردن متن.', 'error');
+                // showToast('خطا در کپی کردن متن.', 'error');
             });
         }
         
@@ -3424,9 +3883,9 @@
                 
                 try {
                     range.surroundContents(span);
-                    showToast('متن با موفقیت هایلایت شد.', 'success');
+                    // showToast('متن با موفقیت هایلایت شد.', 'success');
                 } catch (e) {
-                    showToast('خطا در هایلایت کردن متن.', 'error');
+                    // showToast('خطا در هایلایت کردن متن.', 'error');
                 }
                 
                 hideTextSelectionMenu();
@@ -3443,16 +3902,144 @@
                 utterance.rate = 0.9;
                 
                 speechSynthesis.speak(utterance);
-                showToast('در حال خواندن متن...', 'info');
+                // showToast('در حال خواندن متن...', 'info');
                 
                 utterance.onend = () => {
-                    showToast('پایان خواندن متن.', 'info');
+                    // showToast('پایان خواندن متن.', 'info');
                 };
             } else {
-                showToast('مرورگر شما از متن به گفتار پشتیبانی نمی‌کند.', 'error');
+                // showToast('مرورگر شما از متن به گفتار پشتیبانی نمی‌کند.', 'error');
             }
             
             hideTextSelectionMenu();
+        }
+        
+        // توابع جدید برای قابلیت‌های اضافه شده
+        
+        // تغییر وضعیت سایدبار برای موبایل
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            sidebarOpen = !sidebarOpen;
+            
+            if (sidebarOpen) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+        
+        // تغییر وضعیت منوی سریع
+        function toggleQuickMenu() {
+            const quickMenu = document.getElementById('quickMenu');
+            
+            quickMenuOpen = !quickMenuOpen;
+            
+            if (quickMenuOpen) {
+                quickMenu.classList.add('active');
+                // بستن تنظیمات سریع اگر باز باشد
+                if (quickSettingsOpen) {
+                    toggleQuickSettings();
+                }
+            } else {
+                quickMenu.classList.remove('active');
+            }
+        }
+        
+        // تغییر وضعیت تنظیمات سریع
+        function toggleQuickSettings() {
+            const quickSettings = document.getElementById('quickSettings');
+            
+            quickSettingsOpen = !quickSettingsOpen;
+            
+            if (quickSettingsOpen) {
+                quickSettings.classList.add('active');
+                // بستن منوی سریع اگر باز باشد
+                if (quickMenuOpen) {
+                    toggleQuickMenu();
+                }
+            } else {
+                quickSettings.classList.remove('active');
+            }
+        }
+        
+        // تغییر وضعیت حالت خواندن از تنظیمات سریع
+        function toggleReadingMode() {
+            if (currentViewMode === 'reading') {
+                setViewMode('normal');
+            } else {
+                setViewMode('reading');
+            }
+        }
+        
+        // تغییر وضعیت هایلایت کد از تنظیمات سریع
+        function toggleCodeHighlighting() {
+            const highlightCode = document.getElementById('quickHighlightCode').checked;
+            document.getElementById('highlightCode').checked = highlightCode;
+            
+            if (highlightCode) {
+                Prism.highlightAll();
+            }
+        }
+        
+        // تغییر وضعیت بارگذاری تصاویر از تنظیمات سریع
+        function toggleImageLoading() {
+            const loadImages = document.getElementById('quickLoadImages').checked;
+            document.getElementById('loadImages').checked = loadImages;
+            
+            if (loadImages) {
+                setupImageLightbox();
+            }
+        }
+        
+        // خروجی PDF
+        function exportToPDF() {
+            // در یک پیاده‌سازی واقعی، این کار با استفاده از کتابخانه‌هایی مانند jsPDF انجام می‌شود
+            // showToast('در حال آماده‌سازی خروجی PDF...', 'info');
+            
+            // شبیه‌سازی فرآیند خروجی گرفتن
+            setTimeout(() => {
+                // showToast('خروجی PDF با موفقیت آماده شد.', 'success');
+            }, 2000);
+        }
+        
+        // تغییر وضعیت تمام صفحه
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    // showToast(`خطا در فعال‌سازی حالت تمام صفحه: ${err.message}`, 'error');
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        // ذخیره نشانک
+        function saveBookmark() {
+            const position = window.scrollY;
+            const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '{}');
+            
+            if (!bookmarks[currentFile]) {
+                bookmarks[currentFile] = [];
+            }
+            
+            bookmarks[currentFile].push({
+                position: position,
+                title: `نشانک ${bookmarks[currentFile].length + 1}`,
+                timestamp: new Date().toISOString()
+            });
+            
+            localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+            // showToast('نشانک با موفقیت ذخیره شد.', 'success');
+        }
+        
+        // باز کردن مودال یادداشت‌ها
+        function openNotesModal() {
+            // در یک پیاده‌سازی واقعی، این مودال برای مدیریت یادداشت‌ها استفاده می‌شود
+            // showToast('در حال باز کردن یادداشت‌ها...', 'info');
         }
         
         // اجرای تابع مقداردهی اولیه پس از بارگذاری صفحه
